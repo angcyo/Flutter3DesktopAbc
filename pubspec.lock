@@ -62,6 +62,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter3_desktop_core:
+    dependency: "direct main"
+    description:
+      path: "Flutter3Desktop/flutter3_desktop_core"
+      relative: true
+    source: path
+    version: "0.0.1"
   flutter_lints:
     dependency: "direct dev"
     description:
