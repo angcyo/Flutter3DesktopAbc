@@ -14,3 +14,10 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+# 启动图标的修改
+
+[flutter_launcher_icons: ^0.14.2](https://pub.dev/packages/flutter_launcher_icons)
+[makeanyicon: ^0.1.0](https://pub.dev/packages/makeanyicon)
+
+
