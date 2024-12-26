@@ -6,39 +6,29 @@ import 'router.dart';
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>
 /// @date 2024/12/25
 ///
-
+/// 入口小部件
 class DesktopApp extends StatelessWidget {
   const DesktopApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final title = 'Flutter Desktop Demo';
+    final themeData = ThemeData(
+      colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      useMaterial3: true,
+    );
+
     /*return MaterialApp(
-      title: 'Flutter Desktop Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      title: title,
+      theme: themeData,
       home: const MyHomePage(title: 'Flutter Desktop Demo Home Page'),
     );*/
 
     //路由
     return MaterialApp.router(
+      title: title,
+      theme: themeData,
       routerConfig: router,
     );
   }
