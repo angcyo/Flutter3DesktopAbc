@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter3_desktop_abc/src/app/go_router_ex.dart';
+import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 
 ///
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>
@@ -14,6 +16,14 @@ class GoRouterAbc extends StatefulWidget {
 class _GoRouterAbcState extends State<GoRouterAbc> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    final goRouter = context.goRouter;
+    final goRouterState = context.goRouterState;
+    goRouter.routerDelegate.currentConfiguration;
+    return textSpanBuilder((builder) {
+      builder.addText("当前路由Uri->${goRouterState.uri}");
+      builder.newLine();
+      builder.addText(
+          "currentConfiguration->${goRouter.routerDelegate.currentConfiguration}");
+    });
   }
 }

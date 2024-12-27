@@ -17,6 +17,7 @@ class DesktopApp extends StatelessWidget {
     final themeData = ThemeData(
       colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       useMaterial3: true,
+      fontFamily: "menlo", //默认字体
     );
 
     /*return MaterialApp(
