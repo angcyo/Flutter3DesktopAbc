@@ -31,6 +31,12 @@ class _MainPageState extends State<MainPage> {
   List<AbcRouteConfig> get abcRouteList => widget.abcRouteList;
 
   @override
+  void initState() {
+    super.initState();
+    _jumpToTarget();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
     //debugger();
@@ -97,6 +103,7 @@ class _MainPageState extends State<MainPage> {
 
   /// 构建导航小部件
   Widget _buildNavigationWidget(BuildContext context) {
+    final globalTheme = GlobalTheme.of(context);
     final routeList = abcRouteList.filter((e) => !isNil(e.$2));
     return CustomScrollView(
       slivers: [
@@ -108,17 +115,22 @@ class _MainPageState extends State<MainPage> {
           l.d("build abc item[$index]:${abcConfig.$1}");
           const size = 24.0;
           Widget? result = ListTile(
-              leading: SizedBox(
-                  width: size,
-                  height: size,
-                  child: loadAssetImageWidget("assets/png/flutter.png")),
-              title: Text('${index + 1}.${abcConfig.$2}'),
-              onTap: () {
-                //l.d("...$index");
-                //Navigator.pushNamed(context, '/abc/$index');
-                //Navigator.push(context, '/abc/$index');
-                _jumpToTarget(abcConfig.$1);
-              });
+            leading: SizedBox(
+                width: size,
+                height: size,
+                child: loadAssetImageWidget("assets/png/flutter.png")),
+            title: Text('${index + 1}.${abcConfig.$2}'),
+            hoverColor: globalTheme.accentColor.withHoverAlphaColor,
+            selectedTileColor: globalTheme.accentColor,
+            selected:
+                context.goRouterState.uri.toString().startsWith(abcConfig.$1),
+            onTap: () {
+              //l.d("...$index");
+              //Navigator.pushNamed(context, '/abc/$index');
+              //Navigator.push(context, '/abc/$index');
+              _jumpToTarget(abcConfig.$1);
+            },
+          ).material();
           result = Column(
             children: [
               result,
