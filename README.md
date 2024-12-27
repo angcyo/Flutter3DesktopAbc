@@ -23,6 +23,7 @@ https://docs.flutter.dev/deployment/macos
 # 启动图标的修改
 
 [flutter_launcher_icons: ^0.14.2](https://pub.dev/packages/flutter_launcher_icons)
+[icons_launcher: ^3.0.0](https://pub.dev/packages/icons_launcher)
 [makeanyicon: ^0.1.0](https://pub.dev/packages/makeanyicon)
 
 

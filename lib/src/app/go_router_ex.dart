@@ -16,4 +16,17 @@ extension GoRouterEx on BuildContext {
   /// 当路由的状态
   /// [GoRouterState]
   GoRouterState get goRouterState => GoRouterState.of(this);
+
+  /// 当前路由下, 是否可以返回[GoRouter.pop]
+  /// [GoRouter.of(context).pop]
+  bool get goRouterCanPop {
+    final RouteMatchList currentConfiguration =
+        goRouter.routerDelegate.currentConfiguration;
+    final RouteMatch lastMatch = currentConfiguration.last;
+    final Uri location = lastMatch is ImperativeRouteMatch
+        ? lastMatch.matches.uri
+        : currentConfiguration.uri;
+    final bool canPop = location.pathSegments.length > 1;
+    return canPop;
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter3_desktop_abc/src/app/go_router_ex.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:go_router/go_router.dart';
 
@@ -25,31 +26,71 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final kNavigationWidth = 300.0;
+  final kTitleHeight = kMinInteractiveDimension;
 
   List<AbcRouteConfig> get abcRouteList => widget.abcRouteList;
 
   @override
   Widget build(BuildContext context) {
-    final routerState = GoRouterState.of(context);
     final globalTheme = GlobalTheme.of(context);
     //debugger();
     return constrainLayout(() {
-      _buildNavigationWidget(context).applyConstraint(
+      //顶部标题
+      _buildTitleBarWidget(context).applyConstraint(
         left: parent.left,
         top: parent.top,
+        right: parent.right,
+        width: matchConstraint,
+        height: kTitleHeight,
+      );
+      //左边导航
+      _buildNavigationWidget(context).applyConstraint(
+        left: parent.left,
+        top: sId(-1).bottom,
         bottom: parent.bottom,
         width: kNavigationWidth,
         height: matchConstraint,
       );
+      //内容区域
       _buildContentWidget(context, widget.body).applyConstraint(
         left: sId(-1).right,
-        top: parent.top,
+        top: sId(-1).top,
         right: parent.right,
         bottom: parent.bottom,
         width: matchConstraint,
         height: matchConstraint,
       );
     }).backgroundColor(globalTheme.themeWhiteColor);
+  }
+
+  //--
+
+  /// 构建标题小部件
+  Widget _buildTitleBarWidget(BuildContext context) {
+    final globalTheme = GlobalTheme.of(context);
+    /*return DragToMoveArea(
+      child: [
+        "title".text(),
+      ].row()!,
+    );*/
+    return WindowCaption(
+      brightness: globalTheme.accentBrightness,
+      title: [
+        _buildLeadingButton(context),
+        "Flutter3DesktopAbc - ${context.goRouterState.uri}".text()
+      ].row(),
+    );
+  }
+
+  /// Builds the app bar leading button using the current location [Uri].
+  ///
+  /// The [Scaffold]'s default back button cannot be used because it doesn't
+  /// have the context of the current child.
+  ///
+  /// https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/shell_route_top_route.dart
+  Widget? _buildLeadingButton(BuildContext context) {
+    final bool canPop = context.goRouterCanPop;
+    return canPop ? BackButton(onPressed: GoRouter.of(context).pop) : null;
   }
 
   //--
