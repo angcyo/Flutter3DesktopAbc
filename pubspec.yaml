@@ -118,4 +118,5 @@ flutter:
           weight: 700
 
   assets:
+    - assets/config/
     - assets/png/

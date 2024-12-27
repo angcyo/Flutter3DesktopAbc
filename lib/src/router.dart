@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:go_router/go_router.dart';
 
+import 'routes/abc/basics_abc.dart';
 import 'routes/abc/go_router_abc.dart';
 import 'routes/abc/start_abc.dart';
 import 'routes/main_page.dart';
@@ -49,7 +52,7 @@ typedef AbcRouteConfig = (String, String?, WidgetBuilder);
 final flutter3AbcRoutes = <AbcRouteConfig>[
   ("/", null, (context) => const StartAbc()),
   ("/go_router", "GoRouterAbc", (context) => const GoRouterAbc()),
-  ("/basics", "BasicsAbc", (context) => const Text("abc")),
+  ("/basics", "BasicsAbc", (context) => const BasicsAbc()),
 ];
 
 /// 路由配置

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 
 import 'router.dart';
 
@@ -31,6 +32,18 @@ class DesktopApp extends StatelessWidget {
       title: title,
       theme: themeData,
       routerConfig: router,
+      //--
+      localizationsDelegates: const [
+        LibRes.delegate, // 必须
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      //http://www.lingoes.net/en/translator/langcode.htm
+      supportedLocales: [
+        /*...LibRes.delegate.supportedLocales,*/ //可以不需要
+        const Locale.fromSubtags(languageCode: 'zh', countryCode: 'CN'),
+      ],
     );
   }
 }

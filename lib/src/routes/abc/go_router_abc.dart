@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter3_desktop_abc/src/app/go_router_ex.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../router.dart';
 
 ///
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>
@@ -56,6 +60,37 @@ class _GoRouterAbcState extends State<GoRouterAbc> {
         }
       }),
       /*_buildLeadingButton(context),*/
+      [
+        GradientButton(
+          child: "go route".text(),
+          onTap: () {
+            debugger();
+            buildContext?.go("/basics");
+          },
+        ),
+        GradientButton(
+          child: "push route".text(),
+          onTap: () {
+            buildContext?.pushWidget(GoRouterAbc());
+          },
+        ),
+        GradientButton(
+          child: "push route(root)".text(),
+          onTap: () {
+            rootGoRouterNavigatorKey.currentState
+                ?.push(GoRouterAbc().toRoute());
+          },
+        ),
+        GradientButton(
+          child: "push route(shell)".text(),
+          onTap: () {
+            shellGoRouterNavigatorKey.currentState
+                ?.push(GoRouterAbc().toRoute());
+          },
+        ),
+      ]
+          .flowLayout(padding: edgeOnly(all: kX), childGap: kX)
+          ?.matchParentWidth(),
     ].scroll(axis: Axis.vertical)!;
   }
 }

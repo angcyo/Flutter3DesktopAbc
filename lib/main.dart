@@ -8,6 +8,9 @@ import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 ///
 @pragma("vm:entry-point", "call")
 void main() async {
-  await initWindow(size: Size(1280, 720));
-  runApp(const DesktopApp());
+  //await initWindow(size: Size(1280, 720));
+  //runApp(const DesktopApp());
+  runGlobalApp(const DesktopApp(), beforeAction: () async {
+    await initWindow(size: Size(1280, 720));
+  });
 }
