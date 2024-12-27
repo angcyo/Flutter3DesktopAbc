@@ -1,12 +1,12 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:go_router/go_router.dart';
 
 import 'routes/abc/basics_abc.dart';
+import 'routes/abc/event_abc.dart';
 import 'routes/abc/go_router_abc.dart';
 import 'routes/abc/start_abc.dart';
+import 'routes/abc/test_abc.dart';
 import 'routes/main_page.dart';
 
 ///
@@ -53,6 +53,8 @@ final flutter3AbcRoutes = <AbcRouteConfig>[
   ("/", null, (context) => const StartAbc()),
   ("/go_router", "GoRouterAbc", (context) => const GoRouterAbc()),
   ("/basics", "BasicsAbc", (context) => const BasicsAbc()),
+  ("/event", "EventAbc", (context) => const EventAbc()),
+  ("/test", "TestAbc", (context) => const TestAbc()),
 ];
 
 /// 路由配置
