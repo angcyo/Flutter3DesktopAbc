@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter3_desktop_abc/src/app/go_router_ex.dart';
 import 'package:flutter3_desktop_abc/src/routes/abc/basics_abc.dart';
@@ -20,17 +18,28 @@ class GoRouterAbc extends StatefulWidget {
 }
 
 class _GoRouterAbcState extends State<GoRouterAbc> {
+  int buildCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
     //debugger();
     final goRouter = context.goRouter;
-    final goRouterState = context.goRouterState;
+    final goRouterStateOrNull = context.goRouterStateOrNull;
     final currentConfiguration = goRouter.routerDelegate.currentConfiguration;
     return [
       textSpanBuilder((builder) {
+        builder.addText("${nowTimeString()}->${buildCount++}");
+        builder.newLine();
+        builder.addText("当Modal前路由->${parentRoute?.settings} :$parentRoute");
+        builder.newLine();
         builder.addText(
-            "当前路由->${goRouterState.uri} topRoute:${goRouterState.topRoute}");
+            "当前Go路由->${goRouterStateOrNull?.uri} topRoute:${goRouterStateOrNull?.topRoute}");
         builder.newLine();
         builder.newLine();
         builder.addText("currentConfiguration->$currentConfiguration");
@@ -65,16 +74,21 @@ class _GoRouterAbcState extends State<GoRouterAbc> {
       /*_buildLeadingButton(context),*/
       [
         GradientButton(
-          child: "go route".text(),
+          child: "go".text(),
           onTap: () {
-            debugger();
             buildContext?.go("/basics");
+          },
+        ),
+        GradientButton(
+          child: "go this".text(),
+          onTap: () {
+            buildContext?.go("/go_router");
           },
         ),
         GradientButton(
           child: "push route".text(),
           onTap: () {
-            buildContext?.pushWidget(BasicsAbc());
+            buildContext?.pushWidget(GoRouterAbc());
           },
         ),
         GradientButton(
