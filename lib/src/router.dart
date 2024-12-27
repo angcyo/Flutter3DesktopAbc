@@ -69,9 +69,39 @@ final router = GoRouter(
       },
       routes: flutter3AbcRoutes
           .map((e) => GoRoute(
-              path: e.$1,
-              name: e.$2,
-              builder: (context, state) => e.$3(context)))
+                path: e.$1,
+                name: e.$2,
+                pageBuilder: (context, state) {
+                  //debugger();
+                  final child = e.$3(context);
+                  final route = child.toRoute(type: TranslationType.zoom);
+                  return CustomTransitionPage(
+                      key: state.pageKey,
+                      child: child,
+                      transitionsBuilder: (
+                        BuildContext context,
+                        Animation<double> animation,
+                        Animation<double> secondaryAnimation,
+                        Widget child,
+                      ) {
+                        //l.d("[${child.hash()}]animation:$animation");
+                        //l.v("[${child.hash()}]secondaryAnimation:$secondaryAnimation");
+                        return route.buildTransitions(
+                          context,
+                          animation,
+                          secondaryAnimation,
+                          child,
+                        );
+                        /*return ZoomPageTransitionsBuilder().buildTransitions(
+                          context.pageRoute!,
+                          context,
+                          animation,
+                          secondaryAnimation,
+                          child,
+                        );*/
+                      });
+                },
+              ))
           .toList(),
     )
   ],
