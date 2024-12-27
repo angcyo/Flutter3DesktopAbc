@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter3_desktop_abc/src/app/go_router_ex.dart';
+import 'package:flutter3_desktop_abc/src/routes/abc/basics_abc.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,6 +22,8 @@ class GoRouterAbc extends StatefulWidget {
 class _GoRouterAbcState extends State<GoRouterAbc> {
   @override
   Widget build(BuildContext context) {
+    final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
+    debugger();
     final goRouter = context.goRouter;
     final goRouterState = context.goRouterState;
     final currentConfiguration = goRouter.routerDelegate.currentConfiguration;
@@ -72,6 +75,12 @@ class _GoRouterAbcState extends State<GoRouterAbc> {
           child: "push route".text(),
           onTap: () {
             buildContext?.pushWidget(GoRouterAbc());
+          },
+        ),
+        GradientButton(
+          child: "push route with root".text(),
+          onTap: () {
+            buildContext?.pushWidget(BasicsAbc(), rootNavigator: true);
           },
         ),
         GradientButton(

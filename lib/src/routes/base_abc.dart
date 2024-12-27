@@ -65,10 +65,13 @@ mixin BaseAbcStateMixin<T extends StatefulWidget> on State<T> {
   //---
 
   /// 构建标题栏
+  /// [CloseButton]
+  /// [BackButton]
   @protected
   PreferredSizeWidget buildAppBar(BuildContext context) {
     final themeData = Theme.of(context);
     return AppBar(
+      automaticallyImplyLeading: true,
       title: Text(title ?? '${widget.runtimeType}'),
       flexibleSpace: linearGradientWidget(
         listOf(themeData.primaryColor, themeData.primaryColorDark),
