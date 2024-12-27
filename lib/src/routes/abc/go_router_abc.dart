@@ -23,7 +23,7 @@ class _GoRouterAbcState extends State<GoRouterAbc> {
   @override
   Widget build(BuildContext context) {
     final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
-    debugger();
+    //debugger();
     final goRouter = context.goRouter;
     final goRouterState = context.goRouterState;
     final currentConfiguration = goRouter.routerDelegate.currentConfiguration;
@@ -74,7 +74,7 @@ class _GoRouterAbcState extends State<GoRouterAbc> {
         GradientButton(
           child: "push route".text(),
           onTap: () {
-            buildContext?.pushWidget(GoRouterAbc());
+            buildContext?.pushWidget(BasicsAbc());
           },
         ),
         GradientButton(
@@ -86,15 +86,13 @@ class _GoRouterAbcState extends State<GoRouterAbc> {
         GradientButton(
           child: "push route(root)".text(),
           onTap: () {
-            rootGoRouterNavigatorKey.currentState
-                ?.push(GoRouterAbc().toRoute());
+            rootGoRouterNavigatorKey.currentState?.push(BasicsAbc().toRoute());
           },
         ),
         GradientButton(
           child: "push route(shell)".text(),
           onTap: () {
-            shellGoRouterNavigatorKey.currentState
-                ?.push(GoRouterAbc().toRoute());
+            shellGoRouterNavigatorKey.currentState?.push(BasicsAbc().toRoute());
           },
         ),
       ]

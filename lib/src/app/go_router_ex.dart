@@ -15,6 +15,8 @@ extension GoRouterEx on BuildContext {
 
   /// 当路由的状态
   /// [GoRouterState]
+  ///
+  /// [GoRouterStateRegistryScope]
   GoRouterState get goRouterState => GoRouterState.of(this);
 
   /// 当前路由下, 是否可以返回[GoRouter.pop]
