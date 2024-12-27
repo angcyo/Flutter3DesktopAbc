@@ -52,6 +52,7 @@ final flutter3AbcRoutes = <AbcRouteConfig>[
   ("/basics", "BasicsAbc", (context) => const Text("abc")),
 ];
 
+/// 路由配置
 final router = GoRouter(
   //初始化的路由
   initialLocation: "/",
