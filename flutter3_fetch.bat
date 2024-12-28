@@ -43,5 +43,17 @@ IF EXIST "%CD%\%desktopFolder%\" (
     git clone git@github.com:angcyo/Flutter3Desktop.git
 )
 
+set "abcFolder=Flutter3Abc"
+IF EXIST "%CD%\%abcFolder%\" (
+    cd %abcFolder%
+    echo 准备拉取仓库：%abcFolder%
+    git fetch
+    git rebase origin/main
+    cd ..
+) else (
+    echo 准备克隆仓库：%abcFolder%
+    git clone git@github.com:angcyo/Flutter3Abc.git
+)
+
 echo "结束"
 pause
