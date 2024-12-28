@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter3_abc/flutter3_abc.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:go_router/go_router.dart';
 
-import 'routes/abc/basics_abc.dart';
 import 'routes/abc/event_abc.dart';
 import 'routes/abc/go_router_abc.dart';
 import 'routes/abc/start_abc.dart';
@@ -40,19 +40,14 @@ final GlobalKey<NavigatorState> rootGoRouterNavigatorKey =
 final GlobalKey<NavigatorState> shellGoRouterNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'GoRouter_shell');
 
-/// 标识需要执行的abc
-const kGo = '√';
-
 /// 是否执行第一个/否则执行最后一个
 const goFirst = false;
 
-typedef AbcRouteConfig = (String, String?, WidgetBuilder);
-
 /// abc页面路由
-final flutter3AbcRoutes = <AbcRouteConfig>[
+final flutter3DesktopAbcRoutes = <AbcRouteConfig>[
   ("/", null, (context) => const StartAbc()),
+  ...flutter3AbcRoutes,
   ("/go_router", "GoRouterAbc", (context) => const GoRouterAbc()),
-  ("/basics", "BasicsAbc", (context) => const BasicsAbc()),
   ("/event", "EventAbc", (context) => const EventAbc()),
   ("/test", "TestAbc", (context) => const TestAbc()),
 ];
@@ -68,11 +63,11 @@ final router = GoRouter(
       navigatorKey: shellGoRouterNavigatorKey,
       builder: (context, state, child) {
         return MainPage(
-          abcRouteList: flutter3AbcRoutes, //abcRouteList,
+          abcRouteList: flutter3DesktopAbcRoutes, //abcRouteList,
           body: child,
         ).material();
       },
-      routes: flutter3AbcRoutes
+      routes: flutter3DesktopAbcRoutes
           .map((e) => GoRoute(
                 path: e.$1,
                 name: e.$2,

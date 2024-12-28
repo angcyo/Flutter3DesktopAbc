@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
+import 'package:lp_res/lp_res.dart';
 
 import 'router.dart';
 
@@ -21,6 +22,9 @@ class DesktopApp extends StatelessWidget {
       fontFamily: "menlo", //默认字体
     );
 
+    GlobalConfig.def.globalThemeData = themeData;
+    /*GlobalConfig.def.globalTheme = appColor;*/
+
     /*return MaterialApp(
       title: title,
       theme: themeData,
@@ -34,6 +38,7 @@ class DesktopApp extends StatelessWidget {
       routerConfig: router,
       //--
       localizationsDelegates: const [
+        LPRes.delegate, // 必须
         LibRes.delegate, // 必须
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

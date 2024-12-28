@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter3_abc/flutter3_abc.dart';
 import 'package:flutter3_desktop_abc/src/app/go_router_ex.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:go_router/go_router.dart';
@@ -113,17 +114,20 @@ class _MainPageState extends State<MainPage> {
             return null;
           }
           l.d("build abc item[$index]:${abcConfig.$1}");
+          //debugger();
           const size = 24.0;
           Widget? result = ListTile(
             leading: SizedBox(
                 width: size,
                 height: size,
-                child: loadAssetImageWidget("assets/png/flutter.png")),
+                child: loadAssetImageWidget("assets/png/flutter.png"
+                    .ensurePackagePrefix("flutter3_abc"))),
             title: Text('${index + 1}.${abcConfig.$2}'),
             hoverColor: globalTheme.accentColor.withHoverAlphaColor,
             selectedTileColor: globalTheme.accentColor,
             selected:
-                context.goRouterState.uri.toString().startsWith(abcConfig.$1),
+                "/${context.goRouterState.uri.pathSegments.firstOrNull}" ==
+                    abcConfig.$1,
             onTap: () {
               //l.d("...$index");
               //Navigator.pushNamed(context, '/abc/$index');

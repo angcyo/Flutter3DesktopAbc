@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter3_abc/flutter3_abc.dart';
 import 'package:flutter3_desktop_abc/src/app/go_router_ex.dart';
-import 'package:flutter3_desktop_abc/src/routes/abc/basics_abc.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:go_router/go_router.dart';
 

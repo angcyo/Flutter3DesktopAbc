@@ -3,8 +3,12 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  file_selector_windows
   flutter_acrylic
+  flutter_inappwebview_windows
   isar_flutter_libs
+  lp_plugin
+  nsd_windows
   permission_handler_windows
   screen_retriever_windows
   share_plus
@@ -13,6 +17,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
+  lp_image_handle_ffi
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)

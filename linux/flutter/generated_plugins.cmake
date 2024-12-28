@@ -3,14 +3,17 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  file_selector_linux
   flutter_acrylic
   isar_flutter_libs
+  lp_plugin
   screen_retriever_linux
   url_launcher_linux
   window_manager
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
+  lp_image_handle_ffi
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)
