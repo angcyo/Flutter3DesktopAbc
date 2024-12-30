@@ -43,6 +43,8 @@ dependencies:
 
   lp_res:
     path: ./Flutter3Extend/lp_res
+  lp_module:
+    path: ./Flutter3Extend/lp_module
 
   # https://pub.dev/packages/go_router
   # https://pub.dev/packages/collection

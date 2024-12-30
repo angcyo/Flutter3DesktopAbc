@@ -402,6 +402,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  flutter3_oss:
+    dependency: transitive
+    description:
+      path: "Flutter3Core/flutter3_oss"
+      relative: true
+    source: path
+    version: "0.0.1"
   flutter3_pub:
     dependency: transitive
     description:
@@ -640,6 +647,14 @@ packages:
       url: "git@github.com:angcyo/flutter_move_task_back.git"
     source: git
     version: "1.0.0"
+  flutter_oss_aliyun:
+    dependency: transitive
+    description:
+      name: flutter_oss_aliyun
+      sha256: "8280c1e8dfb792dec6449d1e6052e1d3492b3b3a1dfee456cc41d3f31b4cbc26"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.4.2"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -987,6 +1002,13 @@ packages:
     dependency: transitive
     description:
       path: "Flutter3Extend/lp_native/lp_image_handle_ffi"
+      relative: true
+    source: path
+    version: "0.0.1"
+  lp_module:
+    dependency: "direct main"
+    description:
+      path: "Flutter3Extend/lp_module"
       relative: true
     source: path
     version: "0.0.1"
@@ -1444,6 +1466,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
+  scrollview_observer:
+    dependency: transitive
+    description:
+      name: scrollview_observer
+      sha256: d607bc97165113b4ce6aa860a3865cfa6b849445a48c216461d74bc96be6cb94
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.24.0"
   share_plus:
     dependency: transitive
     description:

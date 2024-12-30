@@ -25,7 +25,7 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage> with ScrollObserverMixin {
   final kNavigationWidth = 300.0;
   final kTitleHeight = kMinInteractiveDimension;
 
@@ -34,7 +34,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    _jumpToTarget();
+    _jumpToTarget(null, true);
   }
 
   @override
@@ -106,68 +106,69 @@ class _MainPageState extends State<MainPage> {
   Widget _buildNavigationWidget(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
     final routeList = abcRouteList.filter((e) => !isNil(e.$2));
-    return CustomScrollView(
-      slivers: [
-        SliverList.builder(itemBuilder: (context, index) {
-          final abcConfig = routeList.getOrNull(index);
-          if (abcConfig == null) {
-            return null;
-          }
-          l.d("build abc item[$index]:${abcConfig.$1}");
-          //debugger();
-          const size = 24.0;
-          Widget? result = ListTile(
-            leading: SizedBox(
-                width: size,
-                height: size,
-                child: loadAssetImageWidget("assets/png/flutter.png"
-                    .ensurePackagePrefix("flutter3_abc"))),
-            title: Text('${index + 1}.${abcConfig.$2}'),
-            hoverColor: globalTheme.accentColor.withHoverAlphaColor,
-            selectedTileColor: globalTheme.accentColor,
-            selected:
-                "/${context.goRouterState.uri.pathSegments.firstOrNull}" ==
-                    abcConfig.$1,
-            onTap: () {
-              //l.d("...$index");
-              //Navigator.pushNamed(context, '/abc/$index');
-              //Navigator.push(context, '/abc/$index');
-              _jumpToTarget(abcConfig.$1);
-            },
-          ).material();
-          result = Column(
-            children: [
-              result,
-              const Divider(
-                height: 0.5,
-                thickness: 0.5,
-              ),
-            ],
-          );
-          return result;
-        })
-      ],
-    );
+    return buildObserverCustomScrollView(context, [
+      buildObserverSliverListBuilder(context, (context, index) {
+        final abcConfig = routeList.getOrNull(index);
+        if (abcConfig == null) {
+          return null;
+        }
+        l.d("build abc item[$index]:${abcConfig.$1}");
+        //debugger();
+        const size = 24.0;
+        Widget? result = ListTile(
+          leading: SizedBox(
+              width: size,
+              height: size,
+              child: loadAssetImageWidget("assets/png/flutter.png"
+                  .ensurePackagePrefix("flutter3_abc"))),
+          title: Text('${index + 1}.${abcConfig.$2}'),
+          hoverColor: globalTheme.accentColor.withHoverAlphaColor,
+          selectedTileColor: globalTheme.accentColor,
+          selected: "/${context.goRouterState.uri.pathSegments.firstOrNull}" ==
+              abcConfig.$1,
+          onTap: () {
+            //l.d("...$index");
+            //Navigator.pushNamed(context, '/abc/$index');
+            //Navigator.push(context, '/abc/$index');
+            _jumpToTarget(abcConfig.$1);
+          },
+        ).material();
+        result = Column(
+          children: [
+            result,
+            const Divider(
+              height: 0.5,
+              thickness: 0.5,
+            ),
+          ],
+        );
+        return result;
+      })
+    ]);
   }
 
   /// 上一次跳转的路由路径
   String? _lastJumpPath;
 
   /// 跳转到目标页面
-  void _jumpToTarget([String? targetPath]) {
+  void _jumpToTarget([String? targetPath, bool? scrollToIndex]) {
     String? goKey = targetPath;
+    int? scrollIndex;
     if (goKey != null) {
       //指定跳转
     } else if (_lastJumpPath != null) {
       goKey = _lastJumpPath;
     } else {
+      int index = -1;
       for (AbcRouteConfig config in abcRouteList) {
         if (config.$2?.contains(kGo) == true) {
           goKey = config.$1;
+          scrollIndex = index;
           if (goFirst) {
             break;
           }
         }
+        index++;
       }
     }
     //goKey ??= _abcKeyList.lastOrNull;
@@ -175,6 +176,9 @@ class _MainPageState extends State<MainPage> {
       _lastJumpPath = goKey;
       postDelayCallback(() {
         context.go(goKey!);
+        if (scrollIndex != null && scrollToIndex == true) {
+          scrollObserverTo(scrollIndex, duration: null);
+        }
       });
     }
   }
