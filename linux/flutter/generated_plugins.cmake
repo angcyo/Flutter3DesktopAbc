@@ -5,9 +5,12 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   file_selector_linux
   flutter_acrylic
+  hotkey_manager_linux
+  irondash_engine_context
   isar_flutter_libs
   lp_plugin
   screen_retriever_linux
+  super_native_extensions
   url_launcher_linux
   window_manager
 )

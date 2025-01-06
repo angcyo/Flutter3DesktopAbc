@@ -170,7 +170,7 @@ packages:
     source: hosted
     version: "0.7.10"
   device_info_plus:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: device_info_plus
       sha256: "4fa68e53e26ab17b70ca39f072c285562cfc1589df5bb1e9295db90f6645f431"
@@ -754,6 +754,46 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  hotkey_manager:
+    dependency: transitive
+    description:
+      name: hotkey_manager
+      sha256: "06f0655b76c8dd322fb7101dc615afbdbf39c3d3414df9e059c33892104479cd"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.3"
+  hotkey_manager_linux:
+    dependency: transitive
+    description:
+      name: hotkey_manager_linux
+      sha256: "83676bda8210a3377bc6f1977f193bc1dbdd4c46f1bdd02875f44b6eff9a8473"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
+  hotkey_manager_macos:
+    dependency: transitive
+    description:
+      name: hotkey_manager_macos
+      sha256: "03b5967e64357b9ac05188ea4a5df6fe4ed4205762cb80aaccf8916ee1713c96"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
+  hotkey_manager_platform_interface:
+    dependency: transitive
+    description:
+      name: hotkey_manager_platform_interface
+      sha256: "98ffca25b8cc9081552902747b2942e3bc37855389a4218c9d50ca316b653b13"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
+  hotkey_manager_windows:
+    dependency: transitive
+    description:
+      name: hotkey_manager_windows
+      sha256: "0d03ced9fe563ed0b68f0a0e1b22c9ffe26eb8053cb960e401f68a4f070e0117"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   hsluv:
     dependency: transitive
     description:
@@ -882,6 +922,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.19.0"
+  irondash_engine_context:
+    dependency: transitive
+    description:
+      name: irondash_engine_context
+      sha256: cd7b769db11a2b5243b037c8a9b1ecaef02e1ae27a2d909ffa78c1dad747bb10
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.4"
+  irondash_message_channel:
+    dependency: transitive
+    description:
+      name: irondash_message_channel
+      sha256: b4101669776509c76133b8917ab8cfc704d3ad92a8c450b92934dd8884a2f060
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.0"
   isar:
     dependency: transitive
     description:
@@ -1371,6 +1427,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.15.0"
+  pixel_snap:
+    dependency: transitive
+    description:
+      name: pixel_snap
+      sha256: "677410ea37b07cd37ecb6d5e6c0d8d7615a7cf3bd92ba406fd1ac57e937d1fb0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.5"
   platform:
     dependency: transitive
     description:
@@ -1632,6 +1696,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
+  super_clipboard:
+    dependency: transitive
+    description:
+      name: super_clipboard
+      sha256: "4a6ae6dfaa282ec1f2bff750976f535517ed8ca842d5deae13985eb11c00ac1f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.24"
+  super_context_menu:
+    dependency: transitive
+    description:
+      name: super_context_menu
+      sha256: "2652802b173413f05ec91e21eaa24c8b39e2c9b9168241cc75bfa8be228974c3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.24"
+  super_drag_and_drop:
+    dependency: transitive
+    description:
+      name: super_drag_and_drop
+      sha256: e1ea1528916a728b3d0c3007c0af1303947026011f78564279af68d8856a0205
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.24"
+  super_native_extensions:
+    dependency: transitive
+    description:
+      name: super_native_extensions
+      sha256: a433bba8186cd6b707560c42535bf284804665231c00bca86faf1aa4968b7637
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.24"
   svg_path_parser:
     dependency: transitive
     description:
@@ -1696,6 +1792,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.3"
+  uni_platform:
+    dependency: transitive
+    description:
+      name: uni_platform
+      sha256: e02213a7ee5352212412ca026afd41d269eb00d982faa552f419ffc2debfad84
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.3"
   universal_platform:
     dependency: transitive
     description:
