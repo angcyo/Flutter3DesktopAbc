@@ -3,6 +3,7 @@ import 'package:flutter3_abc/flutter3_abc.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:go_router/go_router.dart';
 
+import 'routes/abc/canvas_desktop_abc.dart';
 import 'routes/abc/drop_file_abc.dart';
 import 'routes/abc/go_router_abc.dart';
 import 'routes/abc/start_abc.dart';
@@ -47,6 +48,11 @@ const goFirst = false;
 final flutter3DesktopAbcRoutes = <AbcRouteConfig>[
   ("/", null, (context) => const StartAbc()),
   ...flutter3AbcRoutes,
+  (
+    "/canvasDesktop",
+    'CanvasDesktopAbc $kGo',
+    (context) => const CanvasDesktopAbc()
+  ),
   ("/go_router", "GoRouterAbc", (context) => const GoRouterAbc()),
   ("/dragFile", "DragFileAbc", (context) => const DropFileAbc()),
   ("/test", "TestAbc", (context) => const TestAbc()),
