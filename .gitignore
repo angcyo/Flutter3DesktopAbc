@@ -44,8 +44,12 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-
 Flutter3Core
 Flutter3Extend
 Flutter3Desktop
 Flutter3Abc
+.vscode
+android/.apk
+script.local.yaml
+.output
+test/.output

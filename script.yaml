@@ -1,0 +1,16 @@
+# apk/ipa所在的文件夹路径, 相对于工程根目录
+pgyer_path: [ "android/.apk/", "E:/AndroidProjects/LaserPeckerRNPro/android/.apk/", "E:/AndroidProjects/LaserPeckerRNPro-lenovo/android/.apk/" ]
+use_feishu_webhook: true
+androidCompileSdk: 34
+zipArbFiles:
+  - "Flutter3Core/flutter3_res/lib/l10n/intl_zh.arb": "lib_intl_zh.arb"
+  - "Flutter3Extend/lp_res/lib/l10n/intl_zh.arb": "lp_intl_zh.arb"
+build_config:
+  "buildPackageName": "com.angcyo.flutter3.abc"
+  "buildType": "pretest" #debug pretest release
+  "buildFlavor":
+  "ossEndpoint": "https://oss-cn-hongkong.aliyuncs.com"
+  "ossBucket": "laserpecker-prod"
+  "ossBaseUrl": "https://laserpecker-prod.oss-cn-hongkong.aliyuncs.com/"
+build_config_android:
+build_config_ios:
