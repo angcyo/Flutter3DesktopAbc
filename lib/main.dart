@@ -12,6 +12,7 @@ void main() async {
   //await initWindow(size: Size(1280, 720));
   //runApp(const DesktopApp());
   runGlobalApp(const DesktopApp(), beforeAction: () async {
+    await initDesktopApp();
     await initWindow(size: Size(1280, 720));
 
     initLpModule();

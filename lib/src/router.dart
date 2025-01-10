@@ -34,16 +34,6 @@ import 'routes/main_page.dart';
 /// [GoRouterState]
 ///
 /// [GoRouterHelper]
-
-/// https://pub.dev/documentation/go_router/latest/topics/Configuration-topic.html
-final GlobalKey<NavigatorState> rootGoRouterNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'GoRouter_root');
-final GlobalKey<NavigatorState> shellGoRouterNavigatorKey =
-    GlobalKey<NavigatorState>(debugLabel: 'GoRouter_shell');
-
-/// 是否执行第一个/否则执行最后一个
-const goFirst = false;
-
 /// abc页面路由
 final flutter3DesktopAbcRoutes = <AbcRouteConfig>[
   ("/", null, (context) => const StartAbc()),
@@ -136,3 +126,12 @@ final router = GoRouter(
   /// [RouteConfiguration._debugFullPathsFor]
   debugLogDiagnostics: isDebug,
 );
+
+/// https://pub.dev/documentation/go_router/latest/topics/Configuration-topic.html
+final GlobalKey<NavigatorState> rootGoRouterNavigatorKey =
+GlobalKey<NavigatorState>(debugLabel: 'GoRouter_root');
+final GlobalKey<NavigatorState> shellGoRouterNavigatorKey =
+GlobalKey<NavigatorState>(debugLabel: 'GoRouter_shell');
+
+/// 是否执行第一个/否则执行最后一个
+const goFirst = false;
