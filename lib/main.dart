@@ -15,6 +15,7 @@ void main() async {
     await initDesktopApp();
     await initWindow(size: Size(1280, 720));
 
+    //lp
     initLpModule();
   });
 }

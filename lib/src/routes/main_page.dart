@@ -82,7 +82,7 @@ class _MainPageState extends State<MainPage>
         width: matchConstraint,
         height: matchConstraint,
       );
-    }).backgroundColor(globalTheme.themeWhiteColor);
+    }).backgroundColor(globalTheme.surfaceBgColor);
   }
 
   //--

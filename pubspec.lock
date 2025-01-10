@@ -475,7 +475,7 @@ packages:
     source: path
     version: "0.0.1"
   flutter_acrylic:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_acrylic
       sha256: b3996dbde5abf5823cc9ead4cf2e5267c3181f15585fe47ce4dc4472e7ec827a
@@ -1092,7 +1092,7 @@ packages:
     source: path
     version: "0.0.1"
   macos_window_utils:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: macos_window_utils
       sha256: "3534f2af024f2f24112ca28789a44e6750083f8c0065414546c6593ee48a5009"

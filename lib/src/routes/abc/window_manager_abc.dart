@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter3_abc/flutter3_abc.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
+import 'package:flutter_acrylic/flutter_acrylic.dart';
+import 'package:flutter_acrylic/window.dart';
 
 ///
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>
@@ -24,6 +26,11 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
   double _progress = 0.0;
   double _opacity = 0.0;
 
+  //--
+
+  bool dark = true;
+  Color color = Colors.purpleAccent.withHoverAlphaColor;
+
   @override
   void initState() {
     super.initState();
@@ -36,17 +43,24 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
     _updateWindowInfo();
   }
 
-  _updateWindowInfo() async {
-    _wmInfoSignal.value = "窗口边界:${await $wm.getBounds()}\n"
+  void _updateWindowInfo() async {
+    _wmInfoSignal.value = "鼠标位置:${await $wm.cursorScreenPoint}\n"
+        "窗口边界:${await $wm.getBounds()}\n"
         "窗口大小:${await $wm.getSize()} 位置:${await $wm.getPosition()}"
-        "焦点:${(await $wm.isFocused()).dc} 是否全屏:${(await $wm.isFullScreen()).dc} 置顶:${(await $wm.isAlwaysOnTop()).dc}";
+        "焦点:${(await $wm.isFocused()).dc} 是否全屏:${(await $wm.isFullScreen()).dc} 置顶:${(await $wm.isAlwaysOnTop()).dc}"
+        "\n\n主屏幕:${await $wm.primaryDisplay}\n\n"
+        "屏幕列表:\n${(await $wm.allDisplay).connect("\n")}\n";
   }
 
   @override
   WidgetList buildBodyList(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
     return [
-      _wmInfoSignal.buildFn(() => "${_wmInfoSignal.value ?? ""}".text()),
+      _wmInfoSignal
+          .buildFn(() => "${_wmInfoSignal.value ?? ""}".text().click(() {
+                "${_wmInfoSignal.value ?? ""}".copy();
+                _updateWindowInfo();
+              })),
       [
         "physicalSize:${flutterView.physicalSize} sw:$screenWidth sh:$screenHeight"
             .text(),
@@ -159,6 +173,84 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
           updateState();
         },
       ),
+      //--
+      [
+        /*SwitchListTile(
+          value: dark,
+          title: "dark".text(),
+          onChanged: (value) {
+            dark = value;
+            updateState();
+          },
+        ),*/
+        LabelSwitchTile(
+          label: "dark",
+          value: dark,
+          onValueChanged: (value) {
+            dark = value;
+          },
+        ).size(width: 140, height: 50),
+        GradientButton.normal(
+          () {
+            Window.setEffect(
+              effect: WindowEffect.transparent,
+              color: color,
+              dark: dark,
+            );
+          },
+          child: "transparent".text(),
+        ),
+        GradientButton.normal(
+          () {
+            Window.setEffect(
+              effect: WindowEffect.solid,
+              color: color,
+              dark: dark,
+            );
+          },
+          child: "solid".text(),
+        ),
+        GradientButton.normal(
+          () {
+            Window.setEffect(
+              effect: WindowEffect.aero,
+              color: color,
+              dark: dark,
+            );
+          },
+          child: "aero".text(),
+        ),
+        GradientButton.normal(
+          () {
+            Window.setEffect(
+              effect: WindowEffect.acrylic,
+              color: color,
+              dark: dark,
+            );
+          },
+          child: "acrylic".text(),
+        ),
+        GradientButton.normal(
+          () {
+            Window.setEffect(
+              effect: WindowEffect.mica,
+              color: color,
+              dark: dark,
+            );
+          },
+          child: "mica".text(),
+        ),
+        GradientButton.normal(
+          () {
+            Window.setEffect(
+              effect: WindowEffect.tabbed,
+              color: color,
+              dark: dark,
+            );
+          },
+          child: "tabbed".text(),
+        ),
+      ].flowLayout(padding: kXInsets, childGap: kX)!,
     ];
   }
 

@@ -49,6 +49,14 @@ dependencies:
   lp_module:
     path: ./Flutter3Extend/lp_module
 
+  # https://pub.dev/packages/flutter_acrylic
+  # 适用于 Windows、macOS 和 Linux 上 Flutter 的窗口亚克力、云母和透明效果
+  # https://pub.dev/packages/macos_window_utils
+  flutter_acrylic: ^1.1.4
+  # https://pub.dev/packages/macos_window_utils
+  # platform :osx, '10.14.6'
+  macos_window_utils: ^1.6.1
+
 dependency_overrides:
 #  # https://pub.dev/packages/collection
 #  #in flutter3_shelf
