@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter3_abc/flutter3_abc.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
-import 'package:go_router/go_router.dart';
 
 import '../router.dart';
 
@@ -24,16 +23,33 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> with ScrollObserverMixin {
-  final kNavigationWidth = 300.0;
+class _MainPageState extends State<MainPage>
+    with ScrollObserverMixin, WindowListener, WindowListenerMixin {
+  /// 导航栏宽度
+  double _navigationWidth = 300.0;
   final kTitleHeight = kMinInteractiveDimension;
 
   List<AbcRouteConfig> get abcRouteList => widget.abcRouteList;
 
   @override
+  bool get enableConfirmClose => true;
+
+  @override
   void initState() {
     super.initState();
     _jumpToTarget(null, true);
+  }
+
+  @override
+  void onSelfWindowSizeChanged() {
+    l.i("onSelfWindowSizeChanged->$windowSizeMixin");
+    final wm = windowSizeMixin?.width ?? 0;
+    if (wm >= 1200) {
+      _navigationWidth = 400.0;
+    } else {
+      _navigationWidth = 300.0;
+    }
+    updateState();
   }
 
   @override
@@ -54,7 +70,7 @@ class _MainPageState extends State<MainPage> with ScrollObserverMixin {
         left: parent.left,
         top: sId(-1).bottom,
         bottom: parent.bottom,
-        width: kNavigationWidth,
+        width: _navigationWidth,
         height: matchConstraint,
       );
       //内容区域

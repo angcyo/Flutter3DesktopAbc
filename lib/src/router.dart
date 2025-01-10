@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter3_abc/flutter3_abc.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
-import 'package:go_router/go_router.dart';
 
 import 'routes/abc/canvas_desktop_abc.dart';
 import 'routes/abc/drop_file_abc.dart';
 import 'routes/abc/go_router_abc.dart';
 import 'routes/abc/start_abc.dart';
 import 'routes/abc/test_abc.dart';
+import 'routes/abc/window_manager_abc.dart';
 import 'routes/main_page.dart';
 
 ///
@@ -39,8 +39,13 @@ final flutter3DesktopAbcRoutes = <AbcRouteConfig>[
   ("/", null, (context) => const StartAbc()),
   ...flutter3AbcRoutes,
   (
+    "/windowManager",
+    "WindowManagerAbc $kGo",
+    (context) => const WindowManagerAbc()
+  ),
+  (
     "/canvasDesktop",
-    'CanvasDesktopAbc $kGo',
+    'CanvasDesktopAbc ',
     (context) => const CanvasDesktopAbc()
   ),
   ("/go_router", "GoRouterAbc", (context) => const GoRouterAbc()),
@@ -129,9 +134,9 @@ final router = GoRouter(
 
 /// https://pub.dev/documentation/go_router/latest/topics/Configuration-topic.html
 final GlobalKey<NavigatorState> rootGoRouterNavigatorKey =
-GlobalKey<NavigatorState>(debugLabel: 'GoRouter_root');
+    GlobalKey<NavigatorState>(debugLabel: 'GoRouter_root');
 final GlobalKey<NavigatorState> shellGoRouterNavigatorKey =
-GlobalKey<NavigatorState>(debugLabel: 'GoRouter_shell');
+    GlobalKey<NavigatorState>(debugLabel: 'GoRouter_shell');
 
 /// 是否执行第一个/否则执行最后一个
 const goFirst = false;
