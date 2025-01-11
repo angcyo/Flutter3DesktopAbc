@@ -31,6 +31,10 @@ PODS:
     - FlutterMacOS
   - nsd_macos (0.0.1):
     - FlutterMacOS
+  - open_dir_macos (0.0.1):
+    - FlutterMacOS
+  - open_file_mac (0.0.1):
+    - FlutterMacOS
   - OrderedSet (6.0.3)
   - package_info_plus (0.0.1):
     - FlutterMacOS
@@ -67,6 +71,8 @@ DEPENDENCIES:
   - mobile_scanner (from `Flutter/ephemeral/.symlinks/plugins/mobile_scanner/macos`)
   - network_info_plus (from `Flutter/ephemeral/.symlinks/plugins/network_info_plus/macos`)
   - nsd_macos (from `Flutter/ephemeral/.symlinks/plugins/nsd_macos/macos`)
+  - open_dir_macos (from `Flutter/ephemeral/.symlinks/plugins/open_dir_macos/macos`)
+  - open_file_mac (from `Flutter/ephemeral/.symlinks/plugins/open_file_mac/macos`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
   - screen_retriever_macos (from `Flutter/ephemeral/.symlinks/plugins/screen_retriever_macos/macos`)
@@ -112,6 +118,10 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/network_info_plus/macos
   nsd_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/nsd_macos/macos
+  open_dir_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/open_dir_macos/macos
+  open_file_mac:
+    :path: Flutter/ephemeral/.symlinks/plugins/open_file_mac/macos
   package_info_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos
   path_provider_foundation:
@@ -140,12 +150,14 @@ SPEC CHECKSUMS:
   hotkey_manager_macos: 1e2edb0c7ae4fe67108af44a9d3445de41404160
   irondash_engine_context: da62996ee25616d2f01bbeb85dc115d813359478
   isar_flutter_libs: 43385c99864c168fadba7c9adeddc5d38838ca6a
-  lp_image_handle_ffi: 8511a5743cc0545a62b862a835deba55cd9e14f9
+  lp_image_handle_ffi: 9e6f0f7ce75d679e289b5d650e178b36adb3db80
   lp_plugin: 441682b1fcc14edd565762e7110099337296022a
   macos_window_utils: 933f91f64805e2eb91a5bd057cf97cd097276663
   mobile_scanner: 0a05256215b047af27b9495db3b77640055e8824
   network_info_plus: 2cb02d8435635eae13b3b79279681985121cf30c
   nsd_macos: 1a38a38a33adbb396b4c6f303bc076073514cadc
+  open_dir_macos: 9649018f88e71eb9fb8aa3d95caec30a73c08c5b
+  open_file_mac: 0e554648e2a87ce59e9438e3e5ca3e552e90d89a
   OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
   package_info_plus: 12f1c5c2cfe8727ca46cbd0b26677728972d9a5b
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
