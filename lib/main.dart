@@ -12,6 +12,11 @@ void main() async {
   //await initWindow(size: Size(1280, 720));
   //runApp(const DesktopApp());
   runGlobalApp(const DesktopApp(), beforeAction: () async {
+    /*GlobalConfig.def.openUrlFn = (context, url, meta) {
+      context?.openSingleWebView(url);
+      return Future.value(true);
+    };*/
+
     await initDesktopApp();
     await initWindow(size: Size(1280, 720));
 

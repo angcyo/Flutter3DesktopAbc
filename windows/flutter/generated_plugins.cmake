@@ -11,6 +11,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   isar_flutter_libs
   lp_plugin
   nsd_windows
+  open_dir_windows
   permission_handler_windows
   screen_retriever_windows
   share_plus

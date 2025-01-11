@@ -9,6 +9,8 @@ list(APPEND FLUTTER_PLUGIN_LIST
   irondash_engine_context
   isar_flutter_libs
   lp_plugin
+  open_dir_linux
+  open_file_linux
   screen_retriever_linux
   super_native_extensions
   url_launcher_linux
