@@ -20,6 +20,53 @@ class CanvasDesktopAbc extends StatefulWidget {
 class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
     with DropStateMixin {
   final CanvasDelegate canvasDelegate = CanvasDelegate();
+  final CanvasListener canvasListener =
+      CanvasListener(onBuildCanvasMenu: (delegate, manger, menus) {
+    if (manger.isSelectedElement) {
+      menus.add("导出Svg...".text().menuStyleItem().ink(() async {
+        //第一个元素的名称
+        final firstName = manger.selectedElementList?.size() == 1
+            ? manger.selectedElementList?.firstOrNull?.paintState.elementName
+            : null;
+        final svgXml =
+            await manger.selectedElementList?.toSvgXml(byEngrave: false);
+        svgXml
+            ?.writeToFile(
+                fileName: firstName == null ? "untitled.svg" : "$firstName.svg",
+                useCacheFolder: true)
+            .getValue((file, error) {
+          file?.share();
+        });
+      }).popMenu());
+      menus.add("导出Svg(加工)...".text().menuStyleItem().ink(() async {
+        //第一个元素的名称
+        final firstName = manger.selectedElementList?.size() == 1
+            ? manger.selectedElementList?.firstOrNull?.paintState.elementName
+            : null;
+        final svgXml =
+            await manger.selectedElementList?.toSvgXml(byEngrave: true);
+        svgXml
+            ?.writeToFile(
+                fileName: firstName == null ? "untitled.svg" : "$firstName.svg",
+                useCacheFolder: true)
+            .getValue((file, error) {
+          file?.share();
+        });
+      }).popMenu());
+    }
+  });
+
+  @override
+  void initState() {
+    canvasDelegate.addCanvasListener(canvasListener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    canvasDelegate.removeCanvasListener(canvasListener);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
