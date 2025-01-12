@@ -20,41 +20,44 @@ class CanvasDesktopAbc extends StatefulWidget {
 class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
     with DropStateMixin {
   final CanvasDelegate canvasDelegate = CanvasDelegate();
-  final CanvasListener canvasListener =
+  late final CanvasListener canvasListener =
       CanvasListener(onBuildCanvasMenu: (delegate, manger, menus) {
     if (manger.isSelectedElement) {
-      menus.add("导出Svg...".text().menuStyleItem().ink(() async {
-        //第一个元素的名称
-        final firstName = manger.selectedElementList?.size() == 1
-            ? manger.selectedElementList?.firstOrNull?.paintState.elementName
-            : null;
-        final svgXml =
-            await manger.selectedElementList?.toSvgXml(byEngrave: false);
-        svgXml
-            ?.writeToFile(
-                fileName: firstName == null ? "untitled.svg" : "$firstName.svg",
-                useCacheFolder: true)
-            .getValue((file, error) {
-          file?.share();
-        });
+      menus.add("导出Svg...".text().menuStyleItem().ink(() {
+        exportSvg(manger);
       }).popMenu());
-      menus.add("导出Svg(加工)...".text().menuStyleItem().ink(() async {
-        //第一个元素的名称
-        final firstName = manger.selectedElementList?.size() == 1
-            ? manger.selectedElementList?.firstOrNull?.paintState.elementName
-            : null;
-        final svgXml =
-            await manger.selectedElementList?.toSvgXml(byEngrave: true);
-        svgXml
-            ?.writeToFile(
-                fileName: firstName == null ? "untitled.svg" : "$firstName.svg",
-                useCacheFolder: true)
-            .getValue((file, error) {
-          file?.share();
-        });
+      menus.add("导出Svg(加工)...".text().menuStyleItem().ink(() {
+        exportSvg(manger, byEngrave: true);
       }).popMenu());
     }
   });
+
+  /// 导出svg
+  void exportSvg(CanvasMenuManager manger, {bool byEngrave = false}) async {
+    //第一个元素的名称
+    final firstName = manger.selectedElementList?.size() == 1
+        ? manger.selectedElementList?.firstOrNull?.paintState.elementName
+        : null;
+    final svgXml =
+        await manger.selectedElementList?.toSvgXml(byEngrave: byEngrave);
+    final fileName = firstName == null ? "untitled.svg" : "$firstName.svg";
+    svgXml
+        ?.writeToFile(fileName: fileName, useCacheFolder: true)
+        .getValue((file, error) async {
+      file?.share();
+      if (isDesktop) {
+        final saveFilePath = await saveFile(
+          dialogTitle: "导出Svg...",
+          fileName: fileName,
+        );
+        l.d("saveFilePath->$saveFilePath");
+        if (saveFilePath != null) {
+          //保存到本地
+          svgXml.writeToFile(file: saveFilePath.file());
+        }
+      }
+    });
+  }
 
   @override
   void initState() {
