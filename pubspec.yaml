@@ -46,6 +46,8 @@ dependencies:
 
   lp_res:
     path: ./Flutter3Extend/lp_res
+  lp_canvas:
+    path: ./Flutter3Extend/lp_canvas
   lp_module:
     path: ./Flutter3Extend/lp_module
 

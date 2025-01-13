@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +7,8 @@ import 'package:flutter3_abc/flutter3_abc.dart';
 import 'package:flutter3_canvas/flutter3_canvas.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:lp_module/lp_module.dart';
+
+import 'tiles/canvas_desktop_layout_widget.dart';
 
 ///
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>
@@ -19,7 +22,12 @@ class CanvasDesktopAbc extends StatefulWidget {
 }
 
 class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
-    with DropStateMixin, KeyEventMixin, KeyEventStateMixin {
+    with
+        DropStateMixin,
+        KeyEventMixin,
+        KeyEventStateMixin,
+        TickerProviderStateMixin {
+  //--
   final CanvasDelegate canvasDelegate = CanvasDelegate();
   late final CanvasListener canvasListener =
       CanvasListener(onBuildCanvasMenu: (delegate, manger, menus) {
@@ -32,6 +40,12 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
       }).popMenu());
     }
   });
+
+  //--
+
+  /// 画布设计属性控制
+  late final CanvasDesignLayoutController layoutController =
+      CanvasDesignLayoutController(vsync: this, canvasDelegate: canvasDelegate);
 
   /// 导出svg
   void exportSvg(CanvasMenuManager manger, {bool byEngrave = false}) async {
@@ -127,20 +141,46 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
 
   @override
   Widget build(BuildContext context) {
-    return dropStateInfoSignal.buildFn(() {
+    final globalTheme = GlobalTheme.of(context);
+    final lineColor = globalTheme.lineColor;
+    return [dropStateInfoSignal, layoutController.isShowPropertyLayoutValue]
+        .buildFn(() {
       return buildDropRegion(
         context,
         cLayout(() {
+          //左边导航
           _buildLeftNavigation(context).alignParentConstraint(
             width: 54,
           );
-          CanvasWidget(canvasDelegate).alignParentConstraint(
+          Line(thickness: 1, color: lineColor, axis: Axis.vertical)
+              .applyConstraint(
+            left: sId(-1).right,
+            top: sId(-1).top,
+            bottom: parent.bottom,
+            height: matchConstraint,
+            width: 1,
+          );
+          if (layoutController.isShowPropertyLayout) {
+            CanvasDesktopLayoutWidget(canvasDelegate, layoutController)
+                .applyConstraint(
+              left: sId(-1).right,
+              width: 230,
+              top: sId(-1).top,
+              bottom: sId(-1).bottom,
+              height: matchConstraint,
+            );
+          }
+          //中间画布
+          CanvasWidget(
+            canvasDelegate,
+            key: ValueKey("canvas"),
+          ).alignParentConstraint(
             alignment: Alignment.centerRight,
             width: matchConstraint,
             left: sId(-1).right,
           );
 
-          //--
+          //拖拽文件覆盖层
           if (dropStateInfoSignal.value?.state.isDropOver == true) {
             "放开这个文本"
                 .text(textColor: Colors.white, fontSize: 40)
@@ -190,15 +230,44 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
   }
 
   final double _navItemSize = 42;
+  final double _decorationBorderRadius = kCanvasIcoItemRadiusSize;
 
   /// 构建导航
+  /// [CanvasIconWidget]
+  /// [IconStateWidget]
   Widget _buildLeftNavigation(BuildContext context) {
+    final globalTheme = GlobalTheme.of(context);
     return [
       Empty.height(kL),
       lpAbcSvgWidget(Assets.svg.addImage).icon(() {
         lpToast("click1".text());
       }).size(size: _navItemSize),
-      HoverAnchorLayout(
+      lpAbcSvgWidget(Assets.svg.addPen).icon(() {
+        lpToast("click1".text());
+      }).size(size: _navItemSize),
+      lpAbcSvgWidget(Assets.svg.addText).icon(() {
+        lpToast("click1".text());
+      }).size(size: _navItemSize),
+      IconStateWidget(
+        icon: lpAbcSvgWidget(Assets.svg.addMaterial),
+        selectedDecoration: layoutController.showPropertyTypeValue.value ==
+                DesignShowPropertyType.shape
+            ? lineaGradientDecoration(
+                listOf(globalTheme.primaryColorDark, globalTheme.primaryColor),
+                borderRadius: _decorationBorderRadius,
+              )
+            : null,
+        onTap: () {
+          layoutController.toggleShowPropertyType(
+            DesignShowPropertyType.shape,
+            true,
+          );
+        },
+      ).size(size: _navItemSize),
+      lpAbcSvgWidget(Assets.svg.addApps).icon(() {
+        lpToast("click1".text());
+      }).size(size: _navItemSize),
+      /*HoverAnchorLayout(
         anchor: lpAbcSvgWidget(Assets.svg.addShape).icon(() {
           lpToast("click1".text());
         }).size(size: _navItemSize),
@@ -209,7 +278,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
             lpToast("click2".text());
           }),
         ].column(),
-      ),
+      ),*/
     ].scroll(axis: Axis.vertical, gap: kX)!;
   }
 }

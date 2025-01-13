@@ -1050,7 +1050,7 @@ packages:
     source: path
     version: "0.0.1"
   lp_canvas:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "Flutter3Extend/lp_canvas"
       relative: true
