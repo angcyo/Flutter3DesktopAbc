@@ -21,7 +21,9 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
         AppLifecycleMixin,
         WindowListener,
         WindowListenerMixin,
-        TileMixin {
+        TileMixin,
+        TrayListener,
+        TrayListenerStateMixin {
   final _wmInfoSignal = $signal();
   double _progress = 0.0;
   double _opacity = 0.0;
@@ -379,6 +381,36 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
             ],
           ),
         ]),
+        GradientButton.normal(
+          () {
+            setSystemTray(
+              isWindows ? 'assets/ico/app_icon.ico' : 'assets/ico/app_icon.png',
+              menus: [
+                MenuInfo(
+                  label: "Label 1",
+                  onClick: () {
+                    toastInfo("Label 1");
+                  },
+                ),
+                MenuInfo(
+                  menuType: MenuInfoType.separator,
+                  label: "Label 2",
+                  onClick: () {
+                    toastInfo("Label 2");
+                  },
+                ),
+                MenuInfo(
+                  menuType: MenuInfoType.checkbox,
+                  label: "Label 3",
+                  onClick: () {
+                    toastInfo("Label 3");
+                  },
+                ),
+              ],
+            );
+          },
+          child: "设置系统托盘".text(),
+        ),
       ].flowLayout(padding: kXInsets, childGap: kX)!,
       //--
       _resultSignal.buildFn(() {
