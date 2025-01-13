@@ -57,6 +57,20 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
   }
 
   @override
+  Widget buildAbc(BuildContext context) {
+    return super.buildAbc(context).platformMenuBar([
+      _buildPlatformMenu(),
+      //--
+      PlatformMenuItemGroup(members: [
+        _buildPlatformMenu(),
+      ]),
+      PlatformMenuItemGroup(members: [
+        _buildPlatformMenu(),
+      ]),
+    ]);
+  }
+
+  @override
   WidgetList buildBodyList(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
     return [
@@ -385,6 +399,64 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
                     : value.toString().text();
       }),
     ];
+  }
+
+  //--
+
+  /// [PlatformMenuItem]
+  /// [PlatformMenu]
+  /// [PlatformMenuItemGroup]
+  PlatformMenuItem _buildPlatformMenu({
+    String label = "Menu Label",
+    bool isSubMenu = false,
+  }) {
+    return PlatformMenu(
+      label: label,
+      onOpen: () {
+        l.d("$label ...on open");
+      },
+      onClose: () {
+        l.d("$label ...on close");
+      },
+      menus: [
+        PlatformMenuItem(
+          label: "$label 1-1",
+          shortcut: SingleActivator(
+            LogicalKeyboardKey.keyB,
+          ),
+          onSelected: () {
+            toastInfo("$label 1-1");
+          },
+        ),
+        //--
+        PlatformMenuItemGroup(members: [
+          PlatformProvidedMenuItem(type: PlatformProvidedMenuItemType.about),
+          PlatformProvidedMenuItem(type: PlatformProvidedMenuItemType.quit),
+          PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.servicesSubmenu),
+          PlatformProvidedMenuItem(type: PlatformProvidedMenuItemType.hide),
+          PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.hideOtherApplications),
+          PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.showAllApplications),
+          PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.startSpeaking),
+          PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.stopSpeaking),
+          PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.toggleFullScreen),
+          PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.minimizeWindow),
+          PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.zoomWindow),
+          PlatformProvidedMenuItem(
+              type: PlatformProvidedMenuItemType.arrangeWindowsInFront),
+        ]),
+        //--
+        if (!isSubMenu)
+          _buildPlatformMenu(label: "Sub $label 1-2", isSubMenu: true),
+      ],
+    );
   }
 
   //--
