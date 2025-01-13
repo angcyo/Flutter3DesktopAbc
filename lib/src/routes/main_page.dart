@@ -158,7 +158,16 @@ class _MainPageState extends State<MainPage>
           ],
         );
         return result;
-      })
+      }),
+      //底部显示
+      SliverFillRemaining(
+        hasScrollBody: false,
+        fillOverscroll: false,
+        child: Container(
+          alignment: Alignment.bottomCenter,
+          child: AppTest.buildBottomWidget(context),
+        ),
+      ),
     ]);
   }
 
