@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,8 +52,10 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
     final firstName = manger.selectedElementList?.size() == 1
         ? manger.selectedElementList?.firstOrNull?.paintState.elementName
         : null;
-    final svgXml =
-        await manger.selectedElementList?.toSvgXml(byEngrave: byEngrave);
+    final svgXml = await manger.selectedElementList?.toSvgXml(
+      byEngrave: byEngrave,
+      useSvgTagData: isDebug,
+    );
     final fileName = firstName == null ? "untitled.svg" : "$firstName.svg";
     svgXml
         ?.writeToFile(fileName: fileName, useCacheFolder: true)
