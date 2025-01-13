@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter3_abc/flutter3_abc.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
@@ -296,6 +297,74 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
           },
           child: "粘贴Uri".text(),
         ),
+        //--
+        GradientButton.normal(
+          () {
+            toastInfo("click");
+          },
+          child: "本机上下文菜单".text(),
+        ).contextMenu(actions: [
+          MenuAction(
+            title: "Title 1",
+            image: MenuImage.icon(Icons.access_alarm),
+            callback: () {
+              toastInfo("Title 1");
+            },
+          ),
+          MenuAction(
+            title: "Title 2",
+            state: MenuActionState.checkOn,
+            activator: SingleActivator(
+              LogicalKeyboardKey.keyA,
+              control: true,
+            ),
+            callback: () {
+              toastInfo("Title 2");
+            },
+          ),
+          MenuAction(
+            title: "Title 3",
+            state: MenuActionState.checkMixed,
+            attributes: MenuActionAttributes(destructive: true, disabled: true),
+            callback: () {
+              toastInfo("Title 3");
+            },
+          ),
+          MenuAction(
+            title: "Title 4",
+            state: MenuActionState.radioOn,
+            activator: SingleActivator(
+              LogicalKeyboardKey.keyB,
+              control: true,
+              meta: true,
+              shift: true,
+              alt: true,
+            ),
+            callback: () {
+              toastInfo("Title 4");
+            },
+          ),
+          Menu(
+            title: "Sub Menu",
+            image: MenuImage.icon(Icons.search),
+            children: [
+              MenuAction(
+                title: "Sub Title 1",
+                state: MenuActionState.radioOn,
+                activator: SingleActivator(
+                  LogicalKeyboardKey.keyB,
+                  control: true,
+                  meta: true,
+                  shift: true,
+                  alt: true,
+                ),
+                callback: () {
+                  toastInfo("Sub Title 4");
+                },
+              ),
+            ],
+          ),
+        ]),
       ].flowLayout(padding: kXInsets, childGap: kX)!,
       //--
       _resultSignal.buildFn(() {
