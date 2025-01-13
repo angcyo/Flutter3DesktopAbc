@@ -35,15 +35,32 @@ class _MainPageState extends State<MainPage>
   bool get enableConfirmClose => true;
 
   @override
+  void reassemble() {
+    l.w("${classHash()}->reassemble");
+    $restoreMaximizedIfReassemble();
+    super.reassemble();
+  }
+
+  @override
   void initState() {
     super.initState();
     _jumpToTarget(null, true);
   }
 
   @override
-  void onSelfWindowSizeChanged() {
-    l.i("onSelfWindowSizeChanged->$windowSizeMixin");
-    final wm = windowSizeMixin?.width ?? 0;
+  void onSelfWindowSizeChanged({
+    bool? isMaximize,
+    bool? isUnmaximize,
+  }) {
+    final size = windowSizeMixin;
+    if (size == null) {
+      return;
+    }
+    l.i("onSelfWindowSizeChanged->$size");
+
+    $saveWindowBounds();
+
+    final wm = size.width;
     if (wm >= 1200) {
       _navigationWidth = 400.0;
     } else {

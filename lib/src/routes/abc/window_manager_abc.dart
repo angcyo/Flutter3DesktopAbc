@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter3_abc/flutter3_abc.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:flutter_acrylic/flutter_acrylic.dart';
-import 'package:flutter_acrylic/window.dart';
 
 ///
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>
@@ -47,7 +46,7 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
     _wmInfoSignal.value = "鼠标位置:${await $wm.cursorScreenPoint}\n"
         "窗口边界:${await $wm.getBounds()}\n"
         "窗口大小:${await $wm.getSize()} 位置:${await $wm.getPosition()}"
-        "焦点:${(await $wm.isFocused()).dc} 是否全屏:${(await $wm.isFullScreen()).dc} 置顶:${(await $wm.isAlwaysOnTop()).dc}"
+        "焦点:${(await $wm.isFocused()).dc} 是否最大化:${(await $wm.isMaximized()).dc} 是否全屏:${(await $wm.isFullScreen()).dc} 置顶:${(await $wm.isAlwaysOnTop()).dc}"
         "\n\n主屏幕:${await $wm.primaryDisplay}\n\n"
         "屏幕列表:\n${(await $wm.allDisplay).connect("\n")}\n";
   }
