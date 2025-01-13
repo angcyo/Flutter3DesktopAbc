@@ -45,7 +45,6 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
     svgXml
         ?.writeToFile(fileName: fileName, useCacheFolder: true)
         .getValue((file, error) async {
-      file?.share();
       if (isDesktop) {
         final saveFilePath = await saveFile(
           dialogTitle: "导出Svg...",
@@ -56,6 +55,8 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
           //保存到本地
           svgXml.writeToFile(file: saveFilePath.file());
         }
+      } else {
+        file?.share();
       }
     });
   }
