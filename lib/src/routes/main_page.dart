@@ -52,13 +52,13 @@ class _MainPageState extends State<MainPage>
     bool? isMaximize,
     bool? isUnmaximize,
   }) {
+    super.onSelfWindowSizeChanged(
+        isMaximize: isMaximize, isUnmaximize: isUnmaximize);
     final size = windowSizeMixin;
     if (size == null) {
       return;
     }
     l.i("onSelfWindowSizeChanged->$size");
-
-    $saveWindowBounds();
 
     final wm = size.width;
     if (wm >= 1200) {
