@@ -30,6 +30,10 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
   bool dark = true;
   Color color = Colors.purpleAccent.withHoverAlphaColor;
 
+  //--
+
+  final _resultSignal = $signal();
+
   @override
   void initState() {
     super.initState();
@@ -250,6 +254,67 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
           child: "tabbed".text(),
         ),
       ].flowLayout(padding: kXInsets, childGap: kX)!,
+      //--
+      [
+        GradientButton.normal(
+          () async {
+            final image = await captureScreenImage();
+            writeClipboardImage(image);
+          },
+          child: "复制图片".text(),
+        ),
+        GradientButton.normal(
+          () async {
+            writeClipboardText("<br>${nowTimeString()}");
+          },
+          child: "复制文本".text(),
+        ),
+        GradientButton.normal(
+          () async {
+            writeClipboardHtmlText("<br>${nowTimeString()}");
+          },
+          child: "复制文本(html)".text(),
+        ),
+        GradientButton.normal(
+          () async {
+            final image = await readClipboardImage();
+            _resultSignal.value = image;
+          },
+          child: "粘贴图片".text(),
+        ),
+        GradientButton.normal(
+          () async {
+            final text = await readClipboardText();
+            _resultSignal.value = text;
+          },
+          child: "粘贴文本".text(),
+        ),
+        GradientButton.normal(
+          () async {
+            final uri = await readClipboardUri();
+            _resultSignal.value = uri;
+          },
+          child: "粘贴Uri".text(),
+        ),
+      ].flowLayout(padding: kXInsets, childGap: kX)!,
+      //--
+      _resultSignal.buildFn(() {
+        final value = _resultSignal.value;
+        return value == null
+            ? empty
+            : "${value.runtimeType}->$value"
+                .text(style: globalTheme.textDesStyle);
+      }),
+      _resultSignal.buildFn(() {
+        final value = _resultSignal.value;
+        return value == null
+            ? empty
+            : value is UiImage
+                ? value.toImageWidget()
+                : value is String
+                    ? value.text()
+                    : value.toString().text();
+      }),
     ];
   }
 

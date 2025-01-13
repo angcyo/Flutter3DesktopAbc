@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter3_abc/flutter3_abc.dart';
 import 'package:flutter3_canvas/flutter3_canvas.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
@@ -18,7 +19,7 @@ class CanvasDesktopAbc extends StatefulWidget {
 }
 
 class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
-    with DropStateMixin {
+    with DropStateMixin, KeyEventMixin, KeyEventStateMixin {
   final CanvasDelegate canvasDelegate = CanvasDelegate();
   late final CanvasListener canvasListener =
       CanvasListener(onBuildCanvasMenu: (delegate, manger, menus) {
@@ -62,6 +63,58 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
   @override
   void initState() {
     canvasDelegate.addCanvasListener(canvasListener);
+    //粘贴
+    registerKeyEvent([
+      if (isMacOs) ...[
+        [
+          LogicalKeyboardKey.meta,
+          LogicalKeyboardKey.keyV,
+        ],
+      ],
+      if (!isMacOs) ...[
+        [
+          LogicalKeyboardKey.control,
+          LogicalKeyboardKey.keyV,
+        ],
+      ],
+    ], (info) {
+      () async {
+        // 获取剪切板image
+        final image = await readClipboardImage();
+        if (image != null) {
+          LpElementParser()
+            ..image = image
+            ..parse(
+              autoAddToCanvas: true,
+              canvasDelegate: canvasDelegate,
+              context: context,
+            );
+        }
+        // 获取剪切板text
+        final text = await readClipboardText();
+        if (!isNil(text)) {
+          LpElementParser()
+            ..text = text
+            ..parse(
+              autoAddToCanvas: true,
+              canvasDelegate: canvasDelegate,
+              context: context,
+            );
+        }
+        // 获取剪切板Uri
+        final uri = await readClipboardUri();
+        if (uri != null) {
+          LpElementParser()
+            ..url = uri.filePath
+            ..parse(
+              autoAddToCanvas: true,
+              canvasDelegate: canvasDelegate,
+              context: context,
+            );
+        }
+      }();
+      return true;
+    });
     super.initState();
   }
 
@@ -128,6 +181,11 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
     if (dropTextList.isEmpty && dropUriList.isEmpty) {
       lpToast("不支持的数据类型".text());
     }
+  }
+
+  @override
+  bool onKeyEventHandleMixin(KeyEvent event) {
+    return super.onKeyEventHandleMixin(event);
   }
 
   final double _navItemSize = 42;
