@@ -182,7 +182,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
           );
 
           //拖拽文件覆盖层
-          if (dropStateInfoSignal.value?.state.isDropOver == true) {
+          if (isDropOverMixin) {
             "放开这个文本"
                 .text(textColor: Colors.white, fontSize: 40)
                 .center()

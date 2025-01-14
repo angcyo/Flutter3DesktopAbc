@@ -59,6 +59,11 @@ dependencies:
   # platform :osx, '10.14.6'
   macos_window_utils: ^1.6.1
 
+  flutter3_code:
+    path: ./Flutter3Core/flutter3_code
+  # in flutter3_code / lp_canvas
+  image: any
+
 dependency_overrides:
 #  # https://pub.dev/packages/collection
 #  #in flutter3_shelf

@@ -5,6 +5,7 @@ import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'routes/abc/canvas_desktop_abc.dart';
 import 'routes/abc/drop_file_abc.dart';
 import 'routes/abc/go_router_abc.dart';
+import 'routes/abc/image_pixel_abc.dart';
 import 'routes/abc/start_abc.dart';
 import 'routes/abc/test_abc.dart';
 import 'routes/abc/window_manager_abc.dart';
@@ -43,6 +44,7 @@ final flutter3DesktopAbcRoutes = <AbcRouteConfig>[
     "WindowManagerAbc $kGo",
     (context) => const WindowManagerAbc()
   ),
+  ("/imagePixel", 'ImagePixelAbc ', (context) => const ImagePixelAbc()),
   (
     "/canvasDesktop",
     'CanvasDesktopAbc ',
