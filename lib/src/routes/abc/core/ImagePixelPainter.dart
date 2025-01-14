@@ -32,6 +32,9 @@ class ImagePixelPainter extends ElementPainter {
 
   int get imageHeight => _imagePixelInfo?.image.height ?? 0;
 
+  /// 缓存绘制的图片
+  Picture? _picture;
+
   //--
 
   set imagePixelInfo(ImagePixelInfo? value) {
@@ -44,6 +47,31 @@ class ImagePixelPainter extends ElementPainter {
     } else {
       initPaintProperty();
     }
+    _picture = drawPicture((canvas) {
+      final imagePixelInfo = _imagePixelInfo;
+      if (imagePixelInfo != null) {
+        var left = 0.0;
+        var top = 0.0;
+        var pixelIndex = 0;
+        final paint = Paint()
+          ..strokeWidth = 0
+          ..style = PaintingStyle.fill;
+        for (final pixel in imagePixelInfo.image) {
+          paint.color = pixel.uiColor;
+          canvas.drawRect(
+              Rect.fromLTWH(left, top, pixelSize, pixelSize), paint);
+          left += pixelSize + pixelGap;
+
+          pixelIndex++;
+          if (pixelIndex >= imageWidth) {
+            left = 0;
+            pixelIndex = 0;
+            top += pixelSize + pixelGap;
+          }
+          /*debugger(when: pixelIndex++ == 0);*/
+        }
+      }
+    });
     refresh();
   }
 
@@ -51,38 +79,18 @@ class ImagePixelPainter extends ElementPainter {
     //initPaintProperty()
   }
 
+  ///
   @override
   void painting(Canvas canvas, PaintMeta paintMeta) {
-    lTime.tick();
     super.painting(canvas, paintMeta);
-    l.w("一帧耗时->${lTime.time()}");
   }
 
   @override
   void onPaintingSelf(Canvas canvas, PaintMeta paintMeta) {
     //debugger();
     super.onPaintingSelf(canvas, paintMeta);
-    final imagePixelInfo = _imagePixelInfo;
-    if (imagePixelInfo != null) {
-      var left = 0.0;
-      var top = 0.0;
-      var pixelIndex = 0;
-      final paint = Paint()
-        ..strokeWidth = 0
-        ..style = PaintingStyle.fill;
-      for (final pixel in imagePixelInfo.image) {
-        paint.color = pixel.uiColor;
-        canvas.drawRect(Rect.fromLTWH(left, top, pixelSize, pixelSize), paint);
-        left += pixelSize + pixelGap;
-
-        pixelIndex++;
-        if (pixelIndex >= imageWidth) {
-          left = 0;
-          pixelIndex = 0;
-          top += pixelSize + pixelGap;
-        }
-        /*debugger(when: pixelIndex++ == 0);*/
-      }
+    if (_picture != null) {
+      canvas.drawPicture(_picture!);
     }
     paintPropertyBounds(canvas, paintMeta, paint);
   }
