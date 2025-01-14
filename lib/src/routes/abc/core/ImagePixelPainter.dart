@@ -32,9 +32,6 @@ class ImagePixelPainter extends ElementPainter {
 
   int get imageHeight => _imagePixelInfo?.image.height ?? 0;
 
-  /// 缓存绘制的图片
-  Picture? _picture;
-
   //--
 
   set imagePixelInfo(ImagePixelInfo? value) {
@@ -47,7 +44,23 @@ class ImagePixelPainter extends ElementPainter {
     } else {
       initPaintProperty();
     }
-    _picture = drawPicture((canvas) {
+    invalidate();
+  }
+
+  void test() {
+    //initPaintProperty()
+  }
+
+  ///
+  @override
+  void painting(Canvas canvas, PaintMeta paintMeta) {
+    super.painting(canvas, paintMeta);
+  }
+
+  @override
+  void onPaintingSelf(Canvas canvas, PaintMeta paintMeta) {
+    //debugger();
+    paintingSelfOnPicture((canvas) {
       final imagePixelInfo = _imagePixelInfo;
       if (imagePixelInfo != null) {
         var left = 0.0;
@@ -72,26 +85,7 @@ class ImagePixelPainter extends ElementPainter {
         }
       }
     });
-    refresh();
-  }
-
-  void test() {
-    //initPaintProperty()
-  }
-
-  ///
-  @override
-  void painting(Canvas canvas, PaintMeta paintMeta) {
-    super.painting(canvas, paintMeta);
-  }
-
-  @override
-  void onPaintingSelf(Canvas canvas, PaintMeta paintMeta) {
-    //debugger();
     super.onPaintingSelf(canvas, paintMeta);
-    if (_picture != null) {
-      canvas.drawPicture(_picture!);
-    }
     paintPropertyBounds(canvas, paintMeta, paint);
   }
 }
