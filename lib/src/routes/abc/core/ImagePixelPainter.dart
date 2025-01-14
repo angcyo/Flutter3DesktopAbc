@@ -82,49 +82,52 @@ class ImagePixelPainter extends ElementPainter {
   }
 
   @override
+  void onPaintingSelfOnPicture(Canvas canvas) {
+    super.onPaintingSelfOnPicture(canvas);
+    final imagePixelInfo = _imagePixelInfo;
+    if (imagePixelInfo != null) {
+      PixelTransparentPainter(cellSize: pixelSize)
+          .paint(canvas, elementsBounds?.size ?? Size.zero);
+
+      _cellValueList = [];
+      var left = 0.0;
+      var top = 0.0;
+
+      var x = 0 /*列*/;
+      var y = 0 /*行*/;
+
+      final paint = Paint()
+        ..strokeWidth = 0
+        ..style = PaintingStyle.fill;
+      for (final pixel in imagePixelInfo.image) {
+        //debugger();
+        final cell = ImagePixelCellValue(
+          x: x,
+          y: y,
+          pixel: pixel /*imagePixelInfo.image.getPixel(x, y)*/,
+          bounds: Rect.fromLTWH(left, top, pixelSize, pixelSize),
+        );
+        _cellValueList?.add(cell);
+
+        paint.color = cell.uiColor;
+        canvas.drawRect(cell.bounds, paint);
+        left += pixelSize + pixelGap;
+
+        x++;
+        if (x >= imageWidth) {
+          left = 0;
+          x = 0;
+          y++;
+          top += pixelSize + pixelGap;
+        }
+        /*debugger(when: pixelIndex++ == 0);*/
+      }
+    }
+  }
+
+  @override
   void onPaintingSelf(Canvas canvas, PaintMeta paintMeta) {
     //debugger();
-    paintingSelfOnPicture((canvas) {
-      final imagePixelInfo = _imagePixelInfo;
-      if (imagePixelInfo != null) {
-        PixelTransparentPainter(cellSize: pixelSize)
-            .paint(canvas, elementsBounds?.size ?? Size.zero);
-
-        _cellValueList = [];
-        var left = 0.0;
-        var top = 0.0;
-
-        var x = 0 /*列*/;
-        var y = 0 /*行*/;
-
-        final paint = Paint()
-          ..strokeWidth = 0
-          ..style = PaintingStyle.fill;
-        for (final pixel in imagePixelInfo.image) {
-          //debugger();
-          final cell = ImagePixelCellValue(
-            x: x,
-            y: y,
-            pixel: pixel /*imagePixelInfo.image.getPixel(x, y)*/,
-            bounds: Rect.fromLTWH(left, top, pixelSize, pixelSize),
-          );
-          _cellValueList?.add(cell);
-
-          paint.color = cell.uiColor;
-          canvas.drawRect(cell.bounds, paint);
-          left += pixelSize + pixelGap;
-
-          x++;
-          if (x >= imageWidth) {
-            left = 0;
-            x = 0;
-            y++;
-            top += pixelSize + pixelGap;
-          }
-          /*debugger(when: pixelIndex++ == 0);*/
-        }
-      }
-    });
     super.onPaintingSelf(canvas, paintMeta);
     if (_hoverCellValue != null) {
       paint.withSavePaint(() {
