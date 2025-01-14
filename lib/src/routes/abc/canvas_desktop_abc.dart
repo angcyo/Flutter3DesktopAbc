@@ -81,13 +81,13 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
     canvasDelegate.addCanvasListener(canvasListener);
     //粘贴
     registerKeyEvent([
-      if (isMacOs) ...[
+      if (isMacOS) ...[
         [
           LogicalKeyboardKey.meta,
           LogicalKeyboardKey.keyV,
         ],
       ],
-      if (!isMacOs) ...[
+      if (!isMacOS) ...[
         [
           LogicalKeyboardKey.control,
           LogicalKeyboardKey.keyV,
