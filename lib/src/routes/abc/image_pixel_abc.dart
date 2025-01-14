@@ -29,6 +29,7 @@ class _ImagePixelAbcState extends State<ImagePixelAbc>
     canvasDelegate.canvasStyle
       ..enableElementControl = false
       ..enableElementEvent = true
+      ..enableElementKeyEvent = true
       ..showGrid = false;
     canvasDelegate.canvasElementManager.addElement(imagePixelPainter);
     super.initState();
