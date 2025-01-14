@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter3_canvas/flutter3_canvas.dart';
 import 'package:flutter3_code/flutter3_code.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
@@ -19,7 +19,8 @@ class ImagePixelAbc extends StatefulWidget {
   State<ImagePixelAbc> createState() => _ImagePixelAbcState();
 }
 
-class _ImagePixelAbcState extends State<ImagePixelAbc> with DropStateMixin {
+class _ImagePixelAbcState extends State<ImagePixelAbc>
+    with DropStateMixin, KeyEventMixin, KeyEventStateMixin {
   final CanvasDelegate canvasDelegate = CanvasDelegate();
   final ImagePixelPainter imagePixelPainter = ImagePixelPainter();
 
@@ -27,9 +28,38 @@ class _ImagePixelAbcState extends State<ImagePixelAbc> with DropStateMixin {
   void initState() {
     canvasDelegate.canvasStyle
       ..enableElementControl = false
+      ..enableElementEvent = true
       ..showGrid = false;
     canvasDelegate.canvasElementManager.addElement(imagePixelPainter);
     super.initState();
+    //粘贴
+    registerKeyEvent([
+      if (isMacOS) ...[
+        [
+          LogicalKeyboardKey.meta,
+          LogicalKeyboardKey.keyV,
+        ],
+      ],
+      if (!isMacOS) ...[
+        [
+          LogicalKeyboardKey.control,
+          LogicalKeyboardKey.keyV,
+        ],
+      ],
+    ], (info) {
+      () async {
+        final imageBytes = await readClipboardImageBytes();
+        if (imageBytes != null) {
+          _handleImage(bytes: imageBytes);
+        }
+        // 获取剪切板Uri
+        final uri = await readClipboardUri();
+        if (uri != null) {
+          _handleImage(uri: uri);
+        }
+      }();
+      return true;
+    });
   }
 
   @override
@@ -62,8 +92,6 @@ class _ImagePixelAbcState extends State<ImagePixelAbc> with DropStateMixin {
     final dropImageList = await event.session.images;
     final dropUriList = await event.session.uris;
 
-    //uri.filePath
-
     Uint8List? bytes;
     if (!isNil(dropImageList)) {
       bytes = dropImageList.first;
@@ -71,6 +99,15 @@ class _ImagePixelAbcState extends State<ImagePixelAbc> with DropStateMixin {
       bytes = await dropUriList.first.getBytes();
     }
 
+    _handleImage(bytes: bytes);
+  }
+
+  @callPoint
+  void _handleImage({
+    Uint8List? bytes,
+    Uri? uri,
+  }) async {
+    bytes ??= await uri?.getBytes();
     //--
     if (bytes != null) {
       LImageFormat imageFormat = bytes.imageFormatForData;
