@@ -385,6 +385,8 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
           () {
             setSystemTray(
               isWindows ? 'assets/ico/app_icon.ico' : 'assets/ico/app_icon.png',
+              title: "Title",
+              tooltip: "Tooltip",
               menus: [
                 MenuInfo(
                   label: "Label 1",
@@ -410,6 +412,12 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
             );
           },
           child: "设置系统托盘".text(),
+        ),
+        GradientButton.normal(
+          () {
+            setSystemTray(null);
+          },
+          child: "清除系统托盘".text(),
         ),
       ].flowLayout(padding: kXInsets, childGap: kX)!,
       //--
