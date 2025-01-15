@@ -79,7 +79,7 @@ class _ImagePixelAbcState extends State<ImagePixelAbc>
         );
 
         //属性控制
-        ImagePixelPropertyControlWidget(imagePixelPainter)
+        ImagePixelPropertyControlWidget(canvasDelegate, imagePixelPainter)
             .alignParentConstraint(
           alignment: Alignment.centerRight,
           width: 200,

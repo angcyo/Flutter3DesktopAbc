@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter3_canvas/flutter3_canvas.dart';
 import 'package:flutter3_code/flutter3_code.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 
@@ -10,9 +11,13 @@ import '../core/ImagePixelPainter.dart';
 ///
 /// 图片像素属性信息, 以及导出控制
 class ImagePixelPropertyControlWidget extends StatefulWidget {
+  final CanvasDelegate canvasDelegate;
+
   final ImagePixelPainter imagePixelPainter;
 
-  const ImagePixelPropertyControlWidget(this.imagePixelPainter, {super.key});
+  const ImagePixelPropertyControlWidget(
+      this.canvasDelegate, this.imagePixelPainter,
+      {super.key});
 
   @override
   State<ImagePixelPropertyControlWidget> createState() =>
@@ -204,6 +209,15 @@ class _ImagePixelPropertyControlWidgetState
             }
           },
           child: "另存为".text(),
+        ),
+        GradientButton.normal(
+          () async {
+            context.showWidgetDialog(
+              CanvasFollowTestDialog(widget.canvasDelegate),
+              barrierColor: Colors.transparent,
+            );
+          },
+          child: "test".text(),
         ),
       ].flowLayout(padding: edgeOnly(horizontal: kX), childGap: kX),
     ].scrollVertical()!;
