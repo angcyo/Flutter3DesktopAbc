@@ -24,9 +24,23 @@ class ImagePixelPainter extends ElementPainter {
   @configProperty
   double pixelGap = 1;
 
+  /// 单元格点击事件
+  @configProperty
+  ValueCallback<ImagePixelCellValue>? onTapCellAction;
+
+  /// Gif 绘制的帧高度
+  @dp
+  @viewCoordinate
+  @configProperty
+  double frameHeight = 80;
+  double frameGap = 10;
+
   //--
 
   ImagePixelInfo? _imagePixelInfo;
+
+  /// 多帧的数据
+  List<UiImage>? _imageFrames;
 
   int get imageWidth => _imagePixelInfo?.image.width ?? 0;
 
@@ -38,7 +52,13 @@ class ImagePixelPainter extends ElementPainter {
   /// 悬停的cell
   ImagePixelCellValue? _hoverCellValue;
 
+  /// 按下的cell
+  @output
+  ImagePixelCellValue? tapCellValue;
+
   //--
+
+  ImagePixelInfo? get imagePixelInfo => _imagePixelInfo;
 
   set imagePixelInfo(ImagePixelInfo? value) {
     _cellValueList = null;
@@ -52,6 +72,10 @@ class ImagePixelPainter extends ElementPainter {
       initPaintProperty();
     }
     invalidate();
+  }
+
+  ImagePixelPainter() {
+    forceVisibleInCanvasBox = true;
   }
 
   void test() {
@@ -79,6 +103,21 @@ class ImagePixelPainter extends ElementPainter {
         });
       }
     }
+    if (_imageFrames != null) {
+      double left = kXx;
+      final double top = paintMeta.viewBounds == null
+          ? 0
+          : paintMeta.viewBounds!.bottom - frameHeight - kXx;
+      for (final uiImage in _imageFrames!) {
+        //debugger();
+        //canvas.drawImage(uiImage, Offset(kXx, top), paint);
+        final width = canvas
+            .drawImageSize(uiImage,
+                offset: Offset(left, top), height: frameHeight)!
+            .width;
+        left += width + frameGap;
+      }
+    }
   }
 
   @override
@@ -86,7 +125,7 @@ class ImagePixelPainter extends ElementPainter {
     super.onPaintingSelfOnPicture(canvas);
     final imagePixelInfo = _imagePixelInfo;
     if (imagePixelInfo != null) {
-      PixelTransparentPainter(cellSize: pixelSize)
+      PixelTransparentPainter(cellSize: (pixelSize + pixelGap) * 2)
           .paint(canvas, elementsBounds?.size ?? Size.zero);
 
       _cellValueList = [];
@@ -122,6 +161,19 @@ class ImagePixelPainter extends ElementPainter {
         }
         /*debugger(when: pixelIndex++ == 0);*/
       }
+
+      //
+      _imageFrames = [];
+      if (imagePixelInfo.image.numFrames > 1) {
+        () async {
+          //debugger();
+          for (var index = 0; index < imagePixelInfo.image.numFrames; index++) {
+            final frame = imagePixelInfo.image.getFrame(index);
+            _imageFrames?.add(await frame.uiImage);
+          }
+          refresh();
+        }();
+      }
     }
   }
 
@@ -129,15 +181,26 @@ class ImagePixelPainter extends ElementPainter {
   void onPaintingSelf(Canvas canvas, PaintMeta paintMeta) {
     //debugger();
     super.onPaintingSelf(canvas, paintMeta);
-    if (_hoverCellValue != null) {
+    _paintingCell(canvas, tapCellValue);
+    _paintingCell(canvas, _hoverCellValue, alpha: 0.5);
+    paintPropertyBounds(canvas, paintMeta, paint);
+  }
+
+  ///
+  void _paintingCell(
+    Canvas canvas,
+    ImagePixelCellValue? cellValue, {
+    double? alpha /*[0~1]*/,
+  }) {
+    if (cellValue != null) {
       paint.withSavePaint(() {
         paint
           ..style = PaintingStyle.stroke
-          ..color = canvasStyle?.canvasAccentColor ?? Colors.purpleAccent;
-        canvas.drawRect(_hoverCellValue!.bounds.inflate(0.5), paint);
+          ..color = (canvasStyle?.canvasAccentColor ?? Colors.purpleAccent)
+              .withValues(alpha: alpha);
+        canvas.drawRect(cellValue.bounds.inflate(0.5), paint);
       });
     }
-    paintPropertyBounds(canvas, paintMeta, paint);
   }
 
   //--
@@ -148,7 +211,7 @@ class ImagePixelPainter extends ElementPainter {
 
   @override
   bool handleEvent(PointerEvent event) {
-    if (event.isPointerHover) {
+    if (event.isPointerHover || event.isPointerDown) {
       _hoverPoint = event.localPosition;
       _hoverCellValue = null;
       final point = canvasViewBox?.toScenePoint(event.localPosition);
@@ -157,6 +220,15 @@ class ImagePixelPainter extends ElementPainter {
             ?.findFirst((e) => e.bounds.inflate(pixelGap).contains(point));
       }
       //l.d("!!handleEvent->${event.localPosition} $point ${_hoverCellValue?.uiColor.toHexColor()}");
+      if (_hoverCellValue == null) {
+        canvasDelegate?.addCursorStyle(MouseCursor.defer);
+      } else {
+        canvasDelegate?.addCursorStyle(SystemMouseCursors.click);
+        if (event.isPointerDown) {
+          tapCellValue = _hoverCellValue;
+          onTapCellAction?.call(_hoverCellValue!);
+        }
+      }
       refresh();
     }
     return super.handleEvent(event);

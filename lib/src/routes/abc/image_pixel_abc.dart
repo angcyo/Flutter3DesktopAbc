@@ -7,6 +7,7 @@ import 'package:flutter3_code/flutter3_code.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 
 import 'core/ImagePixelPainter.dart';
+import 'tiles/image_pixel_property_control_widget.dart';
 
 ///
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>
@@ -65,14 +66,32 @@ class _ImagePixelAbcState extends State<ImagePixelAbc>
 
   @override
   Widget build(BuildContext context) {
-    //image
+    final globalTheme = GlobalTheme.of(context);
+    final lineColor = globalTheme.lineColor;
     return [dropStateInfoSignal].buildFn(() {
       return buildDropRegion(context, cLayout(() {
         //中间画布
         CanvasWidget(
           canvasDelegate,
           key: ValueKey("canvas"),
-        ).matchParentConstraint();
+        ).matchParentConstraint(
+          right: sId(1).left,
+        );
+
+        //属性控制
+        ImagePixelPropertyControlWidget(imagePixelPainter)
+            .alignParentConstraint(
+          alignment: Alignment.centerRight,
+          width: 200,
+        );
+        Line(thickness: 1, color: lineColor, axis: Axis.vertical)
+            .applyConstraint(
+          right: sId(-1).left,
+          top: sId(-1).top,
+          bottom: parent.bottom,
+          height: matchConstraint,
+          width: 1,
+        );
 
         //拖拽文件覆盖层
         if (isDropOverMixin) {
@@ -120,6 +139,8 @@ class _ImagePixelAbcState extends State<ImagePixelAbc>
           imageFormat: imageFormat,
           image: image,
         );
+        canvasDelegate.canvasFollowManager
+            .followCanvasContent(restoreDef: true);
       }
     }
   }
