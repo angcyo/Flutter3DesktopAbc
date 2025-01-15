@@ -96,6 +96,7 @@ class ImagePixelPainter extends ElementPainter {
   ///
   @override
   void painting(Canvas canvas, PaintMeta paintMeta) {
+    //lTime.tick();
     super.painting(canvas, paintMeta);
     if (_hoverCellValue != null) {
       if (_hoverPoint != null) {
@@ -128,10 +129,12 @@ class ImagePixelPainter extends ElementPainter {
         left += width + frameGap;
       }
     }
+    //l.w("[ImagePixelPainter.painting]一帧耗时->${lTime.time()}");
   }
 
   @override
   void onPaintingSelfOnPicture(Canvas canvas) {
+    l.d("...onPaintingSelfOnPicture");
     super.onPaintingSelfOnPicture(canvas);
     final imagePixelInfo = _imagePixelInfo;
     if (imagePixelInfo != null) {
