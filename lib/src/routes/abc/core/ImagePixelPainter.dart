@@ -37,6 +37,16 @@ class ImagePixelPainter extends ElementPainter {
 
   //--
 
+  /// 是否激活cell点击颜色编辑
+  @configProperty
+  bool enableCellColorEdit = false;
+
+  /// 画笔颜色, 用来修改cell的颜色值
+  @configProperty
+  Color cellPaintColor = Colors.transparent;
+
+  //--
+
   ImagePixelInfo? _imagePixelInfo;
 
   /// 多帧的数据
@@ -225,6 +235,12 @@ class ImagePixelPainter extends ElementPainter {
       } else {
         canvasDelegate?.addCursorStyle(SystemMouseCursors.click);
         if (event.isPointerDown) {
+          if (enableCellColorEdit) {
+            //开始编辑颜色
+            _hoverCellValue?.updateColor(
+                _imagePixelInfo?.image, cellPaintColor);
+            invalidate();
+          }
           tapCellValue = _hoverCellValue;
           onTapCellAction?.call(_hoverCellValue!);
         }
@@ -245,6 +261,19 @@ class ImagePixelPainter extends ElementPainter {
       return true;
     }
     return super.handleKeyEvent(event);
+  }
+
+  /// 一键设置所有颜色值
+  @api
+  void setAllColor([Color? color]) {
+    if (isNil(_cellValueList)) {
+      return;
+    }
+    color ??= cellPaintColor;
+    for (final cell in _cellValueList!) {
+      cell.updateColor(_imagePixelInfo?.image, color);
+    }
+    invalidate();
   }
 }
 
@@ -305,8 +334,11 @@ class ImagePixelCellValue {
 
   /// 更新色值
   @api
-  void updateColor(LImage image, Color color) {
-    image.setPixelRgba(x, y, color.r, color.g, color.b, color.a);
+  void updateColor(LImage? image, Color color) {
+    if (image == null) {
+      return;
+    }
+    image.setPixelRgba(x, y, color.R, color.G, color.B, color.A);
     final pixel = image.getPixel(x, y);
     uiColor = pixel.uiColor;
     r = pixel.r;
@@ -317,6 +349,6 @@ class ImagePixelCellValue {
 
   @override
   String toString() {
-    return "($a, $r, $g, $b)\n${uiColor.toHexColor()}";
+    return "ARGB($a, $r, $g, $b)\n${uiColor.toHexColor()}";
   }
 }
