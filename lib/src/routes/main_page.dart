@@ -75,7 +75,7 @@ class _MainPageState extends State<MainPage>
   @override
   void initState() {
     super.initState();
-    _jumpToTarget(null, true);
+    _jumpToTarget();
   }
 
   @override
@@ -226,7 +226,15 @@ class _MainPageState extends State<MainPage>
                 height: size,
                 child: loadAssetImageWidget("assets/png/flutter.png"
                     .ensurePackagePrefix("flutter3_abc"))),
-            title: Text('${index + 1}.${abcConfig.$2}'),
+            title: textSpanBuilder((builder) {
+              builder.addText("${index + 1}.${abcConfig.$2}");
+              if (abcConfig.$1 == lastJumpPath) {
+                builder.addText(" last",
+                    style: globalTheme.textDesStyle.copyWith(
+                      color: globalTheme.successColor,
+                    ));
+              }
+            }),
             hoverColor: globalTheme.accentColor.withHoverAlphaColor,
             selectedTileColor: globalTheme.accentColor,
             selected:
@@ -263,20 +271,19 @@ class _MainPageState extends State<MainPage>
     ].column()!;
   }
 
-  /// 上一次跳转的路由路径
-  String? _lastJumpPath;
-
   /// 跳转到目标页面
-  void _jumpToTarget([String? targetPath, bool? scrollToIndex]) {
+  void _jumpToTarget([String? targetPath, bool? scrollToIndex = true]) {
     String? goKey = targetPath;
     int? scrollIndex;
     if (goKey != null) {
       //指定跳转
-    } else if (_lastJumpPath != null) {
-      goKey = _lastJumpPath;
-    } else {
-      int index = -1;
-      for (AbcRouteConfig config in abcRouteList) {
+    } else if (lastJumpPath != null) {
+      goKey = lastJumpPath;
+    }
+
+    int index = -1;
+    for (AbcRouteConfig config in abcRouteList) {
+      if (goKey == null) {
         if (config.$2?.contains(kGo) == true) {
           goKey = config.$1;
           scrollIndex = index;
@@ -284,12 +291,16 @@ class _MainPageState extends State<MainPage>
             break;
           }
         }
-        index++;
+      } else if (goKey == config.$1) {
+        scrollIndex = index;
+        break;
       }
+      index++;
     }
+
     //goKey ??= _abcKeyList.lastOrNull;
     if (goKey?.isNotEmpty == true) {
-      _lastJumpPath = goKey;
+      lastJumpPath = goKey;
       postDelayCallback(() {
         context.go(goKey!);
         if (scrollIndex != null && scrollToIndex == true) {
