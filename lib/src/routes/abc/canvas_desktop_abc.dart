@@ -103,7 +103,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
             ..parse(
               autoAddToCanvas: true,
               canvasDelegate: canvasDelegate,
-              context: context,
+              context: buildContext,
             );
         }
         // 获取剪切板text
@@ -114,7 +114,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
             ..parse(
               autoAddToCanvas: true,
               canvasDelegate: canvasDelegate,
-              context: context,
+              context: buildContext,
             );
         }
         // 获取剪切板Uri
@@ -125,7 +125,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
             ..parse(
               autoAddToCanvas: true,
               canvasDelegate: canvasDelegate,
-              context: context,
+              context: buildContext,
             );
         }
       }();
@@ -207,7 +207,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
         ..parse(
           autoAddToCanvas: true,
           canvasDelegate: canvasDelegate,
-          context: context,
+          context: buildContext,
         );
     }
     for (final uri in dropUriList) {
@@ -216,7 +216,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
         ..parse(
           autoAddToCanvas: true,
           canvasDelegate: canvasDelegate,
-          context: context,
+          context: buildContext,
         );
     }
 
@@ -225,6 +225,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
     }
   }
 
+  /// 键盘事件处理
   @override
   bool onKeyEventHandleMixin(KeyEvent event) {
     return super.onKeyEventHandleMixin(event);

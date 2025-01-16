@@ -31,6 +31,37 @@ class _MainPageState extends State<MainPage>
 
   List<AbcRouteConfig> get abcRouteList => widget.abcRouteList;
 
+  List<AbcRouteConfig> get routeList =>
+      abcRouteList.filter((e) => !isNil(e.$2));
+
+  late final searchRouteConfig = TextFieldConfig(
+    labelText: "跳转路由",
+    hintText: "搜索过滤",
+    autoOptionsMaxHeight: isDesktopOrWeb ? screenHeight / 2 : screenHeight / 3,
+    autoDisplayStringForOption: (option) =>
+        (option as AbcRouteConfig?)?.$2 ?? "",
+    autoOptionsBuilder: (
+      TextFieldConfig config,
+      TextEditingValue textEditingValue,
+    ) {
+      final text = textEditingValue.text;
+      if (isNil(text)) {
+        return routeList;
+      }
+      //过滤路由
+      final result = routeList
+          .filter(
+              (e) => e.$2?.toLowerCase().contains(text.toLowerCase()) == true)
+          .toList();
+      return result;
+    },
+    onAutoOptionSelected: (value) {
+      if (value is AbcRouteConfig) {
+        _jumpToTarget(value.$1);
+      }
+    },
+  );
+
   @override
   bool get enableConfirmClose => true;
 
@@ -137,55 +168,99 @@ class _MainPageState extends State<MainPage>
   /// 构建导航小部件
   Widget _buildNavigationWidget(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
-    final routeList = abcRouteList.filter((e) => !isNil(e.$2));
-    return buildObserverCustomScrollView(context, [
-      buildObserverSliverListBuilder(context, (context, index) {
-        final abcConfig = routeList.getOrNull(index);
-        if (abcConfig == null) {
-          return null;
-        }
-        l.d("build abc item[$index]:${abcConfig.$1}");
-        //debugger();
-        const size = 24.0;
-        Widget? result = ListTile(
-          leading: SizedBox(
-              width: size,
-              height: size,
-              child: loadAssetImageWidget("assets/png/flutter.png"
-                  .ensurePackagePrefix("flutter3_abc"))),
-          title: Text('${index + 1}.${abcConfig.$2}'),
-          hoverColor: globalTheme.accentColor.withHoverAlphaColor,
-          selectedTileColor: globalTheme.accentColor,
-          selected: "/${context.goRouterState.uri.pathSegments.firstOrNull}" ==
-              abcConfig.$1,
-          onTap: () {
-            //l.d("...$index");
-            //Navigator.pushNamed(context, '/abc/$index');
-            //Navigator.push(context, '/abc/$index');
-            _jumpToTarget(abcConfig.$1);
-          },
-        ).material();
-        result = Column(
-          children: [
-            result,
-            const Divider(
-              height: 0.5,
-              thickness: 0.5,
+    return [
+      //--
+      SingleInputWidget(
+        config: searchRouteConfig,
+      ).paddingOnly(horizontal: kX, vertical: kH),
+      /*Autocomplete<AbcRouteConfig>(
+        optionsBuilder: (TextEditingValue textEditingValue) {
+          final text = textEditingValue.text;
+          if (isNil(text)) {
+            return routeList;
+          }
+          //过滤路由
+          final result = routeList
+              .filter((e) =>
+                  e.$2?.toLowerCase().contains(text.toLowerCase()) == true)
+              .toList();
+          return result;
+        },
+        fieldViewBuilder: (
+          BuildContext context,
+          TextEditingController textEditingController,
+          FocusNode focusNode,
+          VoidCallback onFieldSubmitted,
+        ) {
+          return SingleInputWidget(
+            config: TextFieldConfig(
+              controller: textEditingController,
+              focusNode: focusNode,
+              onSubmitted: (value) {
+                onFieldSubmitted();
+              },
+              labelText: "跳转路由",
+              hintText: "搜索过滤",
             ),
-          ],
-        );
-        return result;
-      }),
-      //底部显示
-      SliverFillRemaining(
-        hasScrollBody: false,
-        fillOverscroll: false,
-        child: Container(
-          alignment: Alignment.bottomCenter,
-          child: AppTest.buildBottomWidget(context),
+          ).paddingOnly(horizontal: kX, vertical: kH);
+        },
+        displayStringForOption: (option) => option.$2 ?? "",
+        onSelected: (AbcRouteConfig value) {
+          _jumpToTarget(value.$1);
+        },
+        optionsMaxHeight: isDesktopOrWeb ? screenHeight / 2 : screenHeight / 3,
+      ),*/
+      //--
+      buildObserverCustomScrollView(context, [
+        buildObserverSliverListBuilder(context, (context, index) {
+          final abcConfig = routeList.getOrNull(index);
+          if (abcConfig == null) {
+            return null;
+          }
+          l.d("build abc item[$index]:${abcConfig.$1}");
+          //debugger();
+          const size = 24.0;
+          Widget? result = ListTile(
+            leading: SizedBox(
+                width: size,
+                height: size,
+                child: loadAssetImageWidget("assets/png/flutter.png"
+                    .ensurePackagePrefix("flutter3_abc"))),
+            title: Text('${index + 1}.${abcConfig.$2}'),
+            hoverColor: globalTheme.accentColor.withHoverAlphaColor,
+            selectedTileColor: globalTheme.accentColor,
+            selected:
+                "/${context.goRouterState.uri.pathSegments.firstOrNull}" ==
+                    abcConfig.$1,
+            onTap: () {
+              //l.d("...$index");
+              //Navigator.pushNamed(context, '/abc/$index');
+              //Navigator.push(context, '/abc/$index');
+              _jumpToTarget(abcConfig.$1);
+            },
+          ).material();
+          result = Column(
+            children: [
+              result,
+              const Divider(
+                height: 0.5,
+                thickness: 0.5,
+              ),
+            ],
+          );
+          return result;
+        }),
+        //底部显示
+        SliverFillRemaining(
+          hasScrollBody: false,
+          fillOverscroll: false,
+          child: Container(
+            alignment: Alignment.bottomCenter,
+            child: AppTest.buildBottomWidget(context),
+          ),
         ),
-      ),
-    ]);
+      ]).expanded(),
+    ].column()!;
   }
 
   /// 上一次跳转的路由路径
