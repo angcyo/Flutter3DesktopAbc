@@ -244,7 +244,7 @@ class _MainPageState extends State<MainPage>
               //l.d("...$index");
               //Navigator.pushNamed(context, '/abc/$index');
               //Navigator.push(context, '/abc/$index');
-              _jumpToTarget(abcConfig.$1);
+              _jumpToTarget(abcConfig.$1, false);
             },
           ).material();
           result = Column(
