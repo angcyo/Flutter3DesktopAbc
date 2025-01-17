@@ -7,7 +7,7 @@ import Foundation
 
 import device_info_plus
 import file_selector_macos
-import flutter_blue_plus
+import flutter_blue_plus_macos
 import flutter_inappwebview_macos
 import flutter_local_notifications
 import hotkey_manager_macos
