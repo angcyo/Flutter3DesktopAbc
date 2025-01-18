@@ -162,8 +162,11 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
             width: 1,
           );
           if (layoutController.isShowPropertyLayout) {
-            CanvasDesktopLayoutWidget(canvasDelegate, layoutController)
-                .applyConstraint(
+            CanvasDesktopLayoutWidget(
+              canvasDelegate,
+              layoutController,
+              key: ValueKey("CanvasDesktopLayout"),
+            ).applyConstraint(
               left: sId(-1).right,
               width: 230,
               top: sId(-1).top,
@@ -240,9 +243,22 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
   Widget _buildLeftNavigation(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
     return [
-      Empty.height(kL),
-      lpAbcSvgWidget(Assets.svg.addImage).icon(() {
-        lpToast("click1".text());
+      empty,
+      lpAbcSvgWidget(Assets.svg.addImage).icon(() async {
+        //选择图片/添加图片
+        final file = await pickFile();
+        if (file == null) {
+          return;
+        }
+        wrapLoadingTimeout(() async {
+          final parser = LpElementParser()..assignElementPosition = true;
+          return await parser.parse(
+            url: file.path,
+            autoAddToCanvas: true,
+            context: context,
+            canvasDelegate: canvasDelegate,
+          );
+        }());
       }).size(size: _navItemSize),
       lpAbcSvgWidget(Assets.svg.addPen).icon(() {
         lpToast("click1".text());
@@ -281,6 +297,11 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
           }),
         ].column(),
       ),*/
-    ].scroll(axis: Axis.vertical, gap: kX)!;
+    ].scroll(
+      axis: Axis.vertical,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      gap: kX,
+      key: ValueKey("LeftNavigation"),
+    )!;
   }
 }
