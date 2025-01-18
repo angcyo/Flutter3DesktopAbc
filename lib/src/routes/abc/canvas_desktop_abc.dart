@@ -39,6 +39,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
       }).popMenu());
     }
   });
+  final CanvasOverlayComponent overlayComponent = CanvasOverlayComponent();
 
   //--
 
@@ -131,6 +132,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
       }();
       return true;
     });
+    canvasDelegate.attachOverlay(overlayComponent);
     super.initState();
   }
 
