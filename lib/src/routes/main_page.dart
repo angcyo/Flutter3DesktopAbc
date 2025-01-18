@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter3_abc/flutter3_abc.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
@@ -187,6 +189,10 @@ class _MainPageState extends State<MainPage>
   /// 构建导航小部件
   Widget _buildNavigationWidget(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
+    /*postDelayCallback((){
+      //debugger();
+      scrollObserverToBottom();
+    }, 3.seconds);*/
     return [
       //--
       SingleInputWidget(
