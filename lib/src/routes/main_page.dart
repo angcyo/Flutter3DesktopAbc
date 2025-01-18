@@ -25,8 +25,20 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage>
     with ScrollObserverMixin, WindowListener, WindowListenerMixin {
+  static const _kMinNavigationWidth = 100.0;
+
   /// 导航栏宽度
-  double _navigationWidth = 300.0;
+  double get _navigationWidth => "_navigationWidth".hiveGet<double>() ?? 300.0;
+
+  set _navigationWidth(double value) {
+    "_navigationWidth".hiveSet(value.maxOf(_kMinNavigationWidth));
+    updateState();
+  }
+
+  bool get isMinNavigation => _navigationWidth <= _kMinNavigationWidth;
+
+  //--
+
   final kTitleHeight = kMinInteractiveDimension;
 
   List<AbcRouteConfig> get abcRouteList => widget.abcRouteList;
@@ -91,13 +103,13 @@ class _MainPageState extends State<MainPage>
     }
     l.i("onSelfWindowSizeChanged->$size");
 
-    final wm = size.width;
+    /*final wm = size.width;
     if (wm >= 1200) {
       _navigationWidth = 400.0;
     } else {
       _navigationWidth = 300.0;
     }
-    updateState();
+    updateState();*/
   }
 
   @override
@@ -121,6 +133,13 @@ class _MainPageState extends State<MainPage>
         width: _navigationWidth,
         height: matchConstraint,
       );
+      //导航大小拖拽线
+      DragLineWidget(
+              onDragChanged: (from, to, delta) {
+                _navigationWidth += delta;
+              },
+              key: ValueKey("DragLine"))
+          .alignConstraint();
       //内容区域
       _buildContentWidget(context, widget.body).applyConstraint(
         left: sId(-1).right,
@@ -148,7 +167,7 @@ class _MainPageState extends State<MainPage>
       title: [
         _buildLeadingButton(context),
         "Flutter3DesktopAbc - ${context.goRouterState.uri}".text()
-      ].row(),
+      ].row(key: ValueKey("Title")),
     );
   }
 
@@ -227,12 +246,16 @@ class _MainPageState extends State<MainPage>
                 child: loadAssetImageWidget("assets/png/flutter.png"
                     .ensurePackagePrefix("flutter3_abc"))),
             title: textSpanBuilder((builder) {
-              builder.addText("${index + 1}.${abcConfig.$2}");
-              if (abcConfig.$1 == lastJumpPath) {
-                builder.addText(" last",
-                    style: globalTheme.textDesStyle.copyWith(
-                      color: globalTheme.successColor,
-                    ));
+              if (isMinNavigation) {
+                builder.addText("${index + 1}");
+              } else {
+                builder.addText("${index + 1}.${abcConfig.$2}");
+                if (abcConfig.$1 == lastJumpPath) {
+                  builder.addText(" last",
+                      style: globalTheme.textDesStyle.copyWith(
+                        color: globalTheme.successColor,
+                      ));
+                }
               }
             }),
             hoverColor: globalTheme.accentColor.withHoverAlphaColor,
@@ -268,7 +291,7 @@ class _MainPageState extends State<MainPage>
           ),
         ),
       ]).expanded(),
-    ].column()!;
+    ].column(key: ValueKey("Navigation"))!;
   }
 
   /// 跳转到目标页面
@@ -316,6 +339,7 @@ class _MainPageState extends State<MainPage>
   Widget _buildContentWidget(BuildContext context, Widget? body) {
     final globalTheme = GlobalTheme.of(context);
     return DecoratedBox(
+      key: ValueKey("Content"),
       decoration: strokeDecoration(color: globalTheme.accentColor),
       child: body,
     );
