@@ -269,6 +269,33 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
         _overlayComponent = null;
         canvasDelegate.attachOverlay(null);
       };
+    } else if (component is CanvasPointerOverlayComponent) {
+      //触发添加文本
+      component.cursorStyle = SystemMouseCursors.text;
+      component.onPointerAction = (event) {
+        if (event.isPointerUp) {
+          @dp
+          @sceneCoordinate
+          final position =
+              canvasDelegate.canvasViewBox.toScenePoint(event.localPosition);
+          LpElementParser()
+            ..text = "HELLO"
+            ..textFontSize = 10
+            ..onCreateElementBeanAction = (type) {
+              return ElementBean()
+                ..left = position.dx.toMmFromDp()
+                ..top = position.dy.toMmFromDp();
+            }
+            ..parse(
+              autoAddToCanvas: true,
+              canvasDelegate: canvasDelegate,
+              context: buildContext,
+            );
+          _overlayComponent = null;
+          canvasDelegate.attachOverlay(null);
+        }
+        return true;
+      };
     }
     _overlayComponent = component;
     canvasDelegate.attachOverlay(component);
@@ -279,6 +306,10 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
   /// [IconStateWidget]
   Widget _buildLeftNavigation(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
+    final selectedDecoration = lineaGradientDecoration(
+      listOf(globalTheme.primaryColorDark, globalTheme.primaryColor),
+      borderRadius: _decorationBorderRadius,
+    );
     return [
       empty,
       lpAbcSvgWidget(Assets.svg.addImage).icon(() async {
@@ -300,10 +331,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
       IconStateWidget(
         icon: lpAbcSvgWidget(Assets.svg.addPen),
         selectedDecoration: _overlayComponent is CanvasPenOverlayComponent
-            ? lineaGradientDecoration(
-                listOf(globalTheme.primaryColorDark, globalTheme.primaryColor),
-                borderRadius: _decorationBorderRadius,
-              )
+            ? selectedDecoration
             : null,
         onTap: () {
           if (_overlayComponent is CanvasPenOverlayComponent) {
@@ -314,17 +342,25 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
           updateState();
         },
       ).size(size: _navItemSize),
-      lpAbcSvgWidget(Assets.svg.addText).icon(() {
-        lpToast("click1".text());
-      }).size(size: _navItemSize),
+      IconStateWidget(
+        icon: lpAbcSvgWidget(Assets.svg.addText),
+        selectedDecoration: _overlayComponent is CanvasPointerOverlayComponent
+            ? selectedDecoration
+            : null,
+        onTap: () {
+          if (_overlayComponent is CanvasPointerOverlayComponent) {
+            _installOverlayComponent(null);
+          } else {
+            _installOverlayComponent(CanvasPointerOverlayComponent());
+          }
+          updateState();
+        },
+      ).size(size: _navItemSize),
       IconStateWidget(
         icon: lpAbcSvgWidget(Assets.svg.addMaterial),
         selectedDecoration: layoutController.showPropertyTypeValue.value ==
                 DesignShowPropertyType.shape
-            ? lineaGradientDecoration(
-                listOf(globalTheme.primaryColorDark, globalTheme.primaryColor),
-                borderRadius: _decorationBorderRadius,
-              )
+            ? selectedDecoration
             : null,
         onTap: () {
           layoutController.toggleShowPropertyType(
