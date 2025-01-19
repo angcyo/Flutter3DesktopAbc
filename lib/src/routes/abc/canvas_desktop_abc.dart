@@ -250,8 +250,10 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
         final svgPath = overlay.outputSvgPath;
         if (!isNil(svgPath)) {
           //添加svg元素
+          //l.d("svgPath->$svgPath");
           LpElementParser()
             ..svgPath = svgPath
+            ..useDataPosition = true
             ..tooLargeOverType = TooLargeOverType.origin
             ..parse(
               autoAddToCanvas: true,
