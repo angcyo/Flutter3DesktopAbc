@@ -39,7 +39,6 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
       }).popMenu());
     }
   });
-  final CanvasOverlayComponent overlayComponent = CanvasOverlayComponent();
 
   //--
 
@@ -132,7 +131,6 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
       }();
       return true;
     });
-    canvasDelegate.attachOverlay(overlayComponent);
     super.initState();
   }
 
@@ -239,6 +237,41 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
   final double _navItemSize = 42;
   final double _decorationBorderRadius = kCanvasIcoItemRadiusSize;
 
+  /// 画布覆盖层组件
+  CanvasOverlayComponent? _overlayComponent;
+
+  /// 安装画布覆盖层组件
+  void _installOverlayComponent(CanvasOverlayComponent? component) {
+    if (_overlayComponent != null) {
+      //有旧的
+    }
+    component?.onOverlayDetachFromCanvasDelegate = (delegate, overlay) {
+      if (overlay is CanvasPenOverlayComponent) {
+        final svgPath = overlay.outputSvgPath;
+        if (!isNil(svgPath)) {
+          //添加svg元素
+          LpElementParser()
+            ..svgPath = svgPath
+            ..tooLargeOverType = TooLargeOverType.origin
+            ..parse(
+              autoAddToCanvas: true,
+              canvasDelegate: canvasDelegate,
+              context: buildContext,
+            );
+        }
+      }
+      updateState();
+    };
+    if (component is CanvasPenOverlayComponent) {
+      component.onSvgPathAction = (svgPath) {
+        _overlayComponent = null;
+        canvasDelegate.attachOverlay(null);
+      };
+    }
+    _overlayComponent = component;
+    canvasDelegate.attachOverlay(component);
+  }
+
   /// 构建导航
   /// [CanvasIconWidget]
   /// [IconStateWidget]
@@ -262,9 +295,23 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
           );
         }());
       }).size(size: _navItemSize),
-      lpAbcSvgWidget(Assets.svg.addPen).icon(() {
-        lpToast("click1".text());
-      }).size(size: _navItemSize),
+      IconStateWidget(
+        icon: lpAbcSvgWidget(Assets.svg.addPen),
+        selectedDecoration: _overlayComponent is CanvasPenOverlayComponent
+            ? lineaGradientDecoration(
+                listOf(globalTheme.primaryColorDark, globalTheme.primaryColor),
+                borderRadius: _decorationBorderRadius,
+              )
+            : null,
+        onTap: () {
+          if (_overlayComponent is CanvasPenOverlayComponent) {
+            _installOverlayComponent(null);
+          } else {
+            _installOverlayComponent(CanvasPenOverlayComponent());
+          }
+          updateState();
+        },
+      ).size(size: _navItemSize),
       lpAbcSvgWidget(Assets.svg.addText).icon(() {
         lpToast("click1".text());
       }).size(size: _navItemSize),
