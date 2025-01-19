@@ -7,7 +7,8 @@ import 'package:flutter3_canvas/flutter3_canvas.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:lp_module/lp_module.dart';
 
-import 'tiles/canvas_desktop_layout_widget.dart';
+import 'tiles/canvas_desktop_design_layout_widget.dart';
+import 'tiles/canvas_desktop_property_layout_widget.dart';
 
 ///
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>
@@ -140,6 +141,9 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
     super.dispose();
   }
 
+  final _designLayoutWidth = 246.0;
+  final _propertyLayoutWidth = 246.0;
+
   @override
   Widget build(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
@@ -162,18 +166,27 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
             width: 1,
           );
           if (layoutController.isShowPropertyLayout) {
-            CanvasDesktopLayoutWidget(
+            //左侧动态布局
+            CanvasDesktopDesignLayoutWidget(
               canvasDelegate,
               layoutController,
-              key: ValueKey("CanvasDesktopLayout"),
+              key: ValueKey("CanvasDesktopDesignLayout"),
             ).applyConstraint(
               left: sId(-1).right,
-              width: 230,
+              width: _designLayoutWidth,
               top: sId(-1).top,
               bottom: sId(-1).bottom,
               height: matchConstraint,
             );
           }
+          //右侧属性
+          CanvasDesktopPropertyLayoutWidget(
+            canvasDelegate,
+            key: ValueKey("CanvasDesktopPropertyLayout"),
+          ).alignParentConstraint(
+            alignment: Alignment.centerRight,
+            width: _propertyLayoutWidth,
+          );
           //中间画布
           CanvasWidget(
             canvasDelegate,
@@ -181,7 +194,8 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
           ).alignParentConstraint(
             alignment: Alignment.centerRight,
             width: matchConstraint,
-            left: sId(-1).right,
+            left: sId(-2).right,
+            right: sId(-1).left,
           );
 
           //拖拽文件覆盖层

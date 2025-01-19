@@ -8,22 +8,22 @@ import 'package:lp_module/lp_module.dart';
 /// @date 2025/01/13
 ///
 /// [CanvasDesktopAbc] 中用来控制布局显示不同界面的组件
-class CanvasDesktopLayoutWidget extends StatefulWidget {
+class CanvasDesktopDesignLayoutWidget extends StatefulWidget {
   final CanvasDelegate canvasDelegate;
   final CanvasDesignLayoutController layoutController;
 
-  const CanvasDesktopLayoutWidget(
+  const CanvasDesktopDesignLayoutWidget(
     this.canvasDelegate,
     this.layoutController, {
     super.key,
   });
 
   @override
-  State<CanvasDesktopLayoutWidget> createState() =>
-      _CanvasDesktopLayoutWidgetState();
+  State<CanvasDesktopDesignLayoutWidget> createState() =>
+      _CanvasDesktopDesignLayoutWidgetState();
 }
 
-class _CanvasDesktopLayoutWidgetState extends State<CanvasDesktopLayoutWidget> {
+class _CanvasDesktopDesignLayoutWidgetState extends State<CanvasDesktopDesignLayoutWidget> {
   final double _iconSize = 36;
 
   @override
