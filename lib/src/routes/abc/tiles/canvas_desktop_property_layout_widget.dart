@@ -63,11 +63,7 @@ class _CanvasDesktopPropertyLayoutWidgetState
       return [];
     }
     return [
-      "请先选择元素"
-          .text()
-          .center()
-          .backgroundColor(globalTheme.warnColor)
-          .sliverExpand(),
+      "请先选择元素".text().center().sliverExpand(),
     ];
   }
 }

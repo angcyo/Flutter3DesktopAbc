@@ -8,6 +8,7 @@ import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:lp_module/lp_module.dart';
 
 import 'tiles/canvas_desktop_design_layout_widget.dart';
+import 'tiles/canvas_desktop_menu_layout_widget.dart';
 import 'tiles/canvas_desktop_property_layout_widget.dart';
 
 ///
@@ -153,8 +154,17 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
       return buildDropRegion(
         context,
         cLayout(() {
+          //顶部菜单
+          CanvasDesktopMenuLayoutWidget(
+            canvasDelegate,
+            key: ValueKey("CanvasDesktopMenuLayout"),
+          ).alignParentConstraint(
+            alignment: Alignment.topCenter,
+            height: 60,
+          );
           //左边导航
           _buildLeftNavigation(context).alignParentConstraint(
+            top: sId(-1).bottom,
             width: 54,
           );
           Line(thickness: 1, color: lineColor, axis: Axis.vertical)
@@ -186,6 +196,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
           ).alignParentConstraint(
             alignment: Alignment.centerRight,
             width: _propertyLayoutWidth,
+            top: sId(-1).top,
           );
           //中间画布
           CanvasWidget(
@@ -196,6 +207,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
             width: matchConstraint,
             left: sId(-2).right,
             right: sId(-1).left,
+            top: sId(-1).top,
           );
 
           //拖拽文件覆盖层
@@ -325,25 +337,27 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
       borderRadius: _decorationBorderRadius,
     );
     return [
-      empty,
-      lpAbcSvgWidget(Assets.svg.addImage).icon(() async {
-        //选择图片/添加图片
-        final file = await pickFile();
-        if (file == null) {
-          return;
-        }
-        wrapLoadingTimeout(() async {
-          final parser = LpElementParser()..assignElementPosition = true;
-          return await parser.parse(
-            url: file.path,
-            autoAddToCanvas: true,
-            context: context,
-            canvasDelegate: canvasDelegate,
-          );
-        }());
-      }).size(size: _navItemSize),
+      loadAbcSvgWidget(Assets.svg.addImage)
+          .icon(() async {
+            //选择图片/添加图片
+            final file = await pickFile();
+            if (file == null) {
+              return;
+            }
+            wrapLoadingTimeout(() async {
+              final parser = LpElementParser()..assignElementPosition = true;
+              return await parser.parse(
+                url: file.path,
+                autoAddToCanvas: true,
+                context: context,
+                canvasDelegate: canvasDelegate,
+              );
+            }());
+          })
+          .size(size: _navItemSize)
+          .paddingOnly(top: kL),
       IconStateWidget(
-        icon: lpAbcSvgWidget(Assets.svg.addPen),
+        icon: loadAbcSvgWidget(Assets.svg.addPen),
         selectedDecoration: _overlayComponent is CanvasPenOverlayComponent
             ? selectedDecoration
             : null,
@@ -357,7 +371,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
         },
       ).size(size: _navItemSize),
       IconStateWidget(
-        icon: lpAbcSvgWidget(Assets.svg.addText),
+        icon: loadAbcSvgWidget(Assets.svg.addText),
         selectedDecoration: _overlayComponent is CanvasPointerOverlayComponent
             ? selectedDecoration
             : null,
@@ -371,7 +385,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
         },
       ).size(size: _navItemSize),
       IconStateWidget(
-        icon: lpAbcSvgWidget(Assets.svg.addMaterial),
+        icon: loadAbcSvgWidget(Assets.svg.addMaterial),
         selectedDecoration: layoutController.showPropertyTypeValue.value ==
                 DesignShowPropertyType.shape
             ? selectedDecoration
@@ -383,7 +397,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
           );
         },
       ).size(size: _navItemSize),
-      lpAbcSvgWidget(Assets.svg.addApps).icon(() {
+      loadAbcSvgWidget(Assets.svg.addApps).icon(() {
         lpToast("click1".text());
       }).size(size: _navItemSize),
       /*HoverAnchorLayout(
