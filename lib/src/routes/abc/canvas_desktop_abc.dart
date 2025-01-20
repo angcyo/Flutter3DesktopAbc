@@ -149,7 +149,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
   Widget build(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
     final lineColor = globalTheme.lineColor;
-    return [dropStateInfoSignal, layoutController.isShowPropertyLayoutValue]
+    return [dropStateInfoSignal, layoutController.showPropertyTypeValue]
         .buildFn(() {
       return buildDropRegion(
         context,
@@ -400,6 +400,19 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
       loadAbcSvgWidget(Assets.svg.addApps).icon(() {
         lpToast("click1".text());
       }).size(size: _navItemSize),
+      IconStateWidget(
+        icon: loadAbcSvgWidget(Assets.svg.iconLayer),
+        selectedDecoration: layoutController.showPropertyTypeValue.value ==
+                DesignShowPropertyType.layer
+            ? selectedDecoration
+            : null,
+        onTap: () {
+          layoutController.toggleShowPropertyType(
+            DesignShowPropertyType.layer,
+            true,
+          );
+        },
+      ).size(size: _navItemSize),
       /*HoverAnchorLayout(
         anchor: lpAbcSvgWidget(Assets.svg.addShape).icon(() {
           lpToast("click1".text());
