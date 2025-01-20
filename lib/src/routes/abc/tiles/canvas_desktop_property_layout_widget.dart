@@ -3,6 +3,11 @@ import 'package:flutter3_canvas/flutter3_canvas.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:lp_canvas/lp_canvas.dart';
 
+import 'canvas_align_tile.dart';
+import 'canvas_average_tile.dart';
+import 'canvas_flip_tile.dart';
+import 'canvas_path_tile.dart';
+
 ///
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>
 /// @date 2025/01/19
@@ -51,7 +56,8 @@ class _CanvasDesktopPropertyLayoutWidgetState
           .backgroundColor(globalTheme.itemWhiteBgColor),
       _buildPropertyList(context)
           .scrollVertical()
-          ?.backgroundColor(globalTheme.whiteColor)
+          ?.matchParentWidth()
+          .backgroundColor(globalTheme.whiteColor)
           .expanded(),
     ].column()!;
   }
@@ -60,7 +66,15 @@ class _CanvasDesktopPropertyLayoutWidgetState
   WidgetNullList _buildPropertyList(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
     if (isSelectedElement) {
-      return [];
+      return [
+        "设计".text(style: globalTheme.textDesStyle).paddingOnly(all: kH),
+        [
+          CanvasAlignTrigger(widget.canvasDelegate),
+          CanvasFlipTrigger(widget.canvasDelegate),
+          CanvasAverageTrigger(widget.canvasDelegate),
+          CanvasPathTrigger(widget.canvasDelegate),
+        ].flowLayout(equalWidthRange: "4~")?.matchParentWidth(),
+      ];
     }
     return [
       "请先选择元素".text().center().sliverExpand(),

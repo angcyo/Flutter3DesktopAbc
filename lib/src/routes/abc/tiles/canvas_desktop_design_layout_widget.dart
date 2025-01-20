@@ -140,7 +140,7 @@ class _CanvasDesktopDesignLayoutWidgetState
       selected: true,
       followPainter: true,
       followContent: true,
-      selectType: ElementSelectType.ignore /*为了支持连续添加*/,
+      selectType: ElementSelectType.user,
     );
   }
 }
