@@ -29,17 +29,25 @@ class _CanvasDesktopPropertyLayoutWidgetState
     with CanvasDelegateMixin, CanvasListenerMixin {
   @override
   void initState() {
-    hookCanvasListener(CanvasListener(onCanvasElementSelectChangedAction:
-        (elementSelect, from, to, selectType) {
-      assert(() {
-        //debugger();
-        l.v('重新选中元素[$selectType]->$to');
-        return true;
-      }());
-      if (selectType != ElementSelectType.ignore) {
-        updateState();
-      }
-    }));
+    hookCanvasListener(CanvasListener(
+      onCanvasElementSelectChangedAction:
+          (elementSelect, from, to, selectType) {
+        assert(() {
+          //debugger();
+          l.v('重新选中元素[$selectType]->$to');
+          return true;
+        }());
+        if (selectType != ElementSelectType.ignore) {
+          updateState();
+        }
+      },
+      onCanvasElementPropertyChangedAction:
+          (element, from, to, propertyType, fromObj, undoType) {
+        if (propertyType == PainterPropertyType.paint) {
+          updateState();
+        }
+      },
+    ));
     super.initState();
   }
 
@@ -67,16 +75,55 @@ class _CanvasDesktopPropertyLayoutWidgetState
   WidgetNullList _buildPropertyList(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
     if (isSelectedElement) {
+      final canvasDelegate = widget.canvasDelegate;
+      final selectedElement = canvasDelegate.selectedElement;
+      final selectedElementBounds = canvasDelegate.selectedElementBounds;
+      final unit = canvasDelegate.axisUnit;
       return [
         "设计".text(style: globalTheme.textDesStyle).paddingOnly(all: kH),
         //--
         [
-          CanvasAlignTrigger(widget.canvasDelegate),
-          CanvasFlipTrigger(widget.canvasDelegate),
-          CanvasAverageTrigger(widget.canvasDelegate),
-          CanvasPathTrigger(widget.canvasDelegate),
+          CanvasAlignTrigger(canvasDelegate),
+          CanvasFlipTrigger(canvasDelegate),
+          CanvasAverageTrigger(canvasDelegate),
+          CanvasPathTrigger(canvasDelegate),
         ].flowLayout(equalWidthRange: "4~")?.matchParentWidth(),
-        //--
+        hLine(context, indent: kH).paddingOnly(vertical: kH),
+        //--size
+        [
+          textSpanBuilder((builder) {
+            builder.addText("X ", style: globalTheme.textDesStyle);
+            builder.addText(
+              unit.formatFromDp(selectedElementBounds?.left ?? 0),
+              style: globalTheme.textBodyStyle,
+            );
+          }).paddingOnly(all: kL),
+          textSpanBuilder((builder) {
+            builder.addText("Y ", style: globalTheme.textDesStyle);
+            builder.addText(
+              unit.formatFromDp(selectedElementBounds?.top ?? 0),
+              style: globalTheme.textBodyStyle,
+            );
+          }).paddingOnly(all: kL),
+          textSpanBuilder((builder) {
+            builder.addText("W ", style: globalTheme.textDesStyle);
+            builder.addText(
+              unit.formatFromDp(selectedElementBounds?.width ?? 0),
+              style: globalTheme.textBodyStyle,
+            );
+          }).paddingOnly(all: kL),
+          textSpanBuilder((builder) {
+            builder.addText("H ", style: globalTheme.textDesStyle);
+            builder.addText(
+              unit.formatFromDp(selectedElementBounds?.height ?? 0),
+              style: globalTheme.textBodyStyle,
+            );
+          }).paddingOnly(all: kL),
+        ]
+            .flowLayout(equalWidthRange: "2~", lineChildCount: 2)
+            ?.matchParentWidth(),
+        hLine(context, indent: kH).paddingOnly(vertical: kH),
+        //--params
         ...buildParamsLayout(
           context,
           selectedEngraveSingleElements?.map((e) => e.elementBean!),
