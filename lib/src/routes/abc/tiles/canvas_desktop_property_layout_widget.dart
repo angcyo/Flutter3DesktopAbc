@@ -7,6 +7,7 @@ import 'canvas_align_tile.dart';
 import 'canvas_average_tile.dart';
 import 'canvas_flip_tile.dart';
 import 'canvas_path_tile.dart';
+import 'params_layout.dart';
 
 ///
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>
@@ -68,12 +69,18 @@ class _CanvasDesktopPropertyLayoutWidgetState
     if (isSelectedElement) {
       return [
         "设计".text(style: globalTheme.textDesStyle).paddingOnly(all: kH),
+        //--
         [
           CanvasAlignTrigger(widget.canvasDelegate),
           CanvasFlipTrigger(widget.canvasDelegate),
           CanvasAverageTrigger(widget.canvasDelegate),
           CanvasPathTrigger(widget.canvasDelegate),
         ].flowLayout(equalWidthRange: "4~")?.matchParentWidth(),
+        //--
+        ...buildParamsLayout(
+          context,
+          selectedEngraveSingleElements?.map((e) => e.elementBean!),
+        ),
       ];
     }
     return [
