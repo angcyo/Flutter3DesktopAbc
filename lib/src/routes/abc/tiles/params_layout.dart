@@ -8,6 +8,10 @@ import 'package:lp_canvas/lp_canvas.dart';
 /// @date 2025/01/20
 ///
 /// 参数相关布局
+///
+/// [buildDesign2LabelNumberSliderTile]
+/// [Design2Mixin]
+///
 WidgetNullList buildParamsLayout(
   BuildContext context,
   Iterable<ElementBean>? beans, {
@@ -15,12 +19,12 @@ WidgetNullList buildParamsLayout(
   int minFeed = 1,
   int maxFeed = 800,
 }) {
-  final double _iconSize = 20;
+  final double iconSize = 20;
   final bean = beans?.firstOrNull;
   return [
     LabelNumberSliderTile(
       labelWidget: [
-        lpCanvasSvgWidget(Assets.svg.optionPower, size: _iconSize)
+        lpCanvasSvgWidget(Assets.svg.optionPower, size: iconSize)
             .darkColorFiltered(),
         "功率(%)".text(),
       ].row(gap: kL)?.paddingOnly(horizontal: kX),
@@ -37,7 +41,7 @@ WidgetNullList buildParamsLayout(
     if (!showFeed)
       LabelNumberSliderTile(
         labelWidget: [
-          lpCanvasSvgWidget(Assets.svg.optionDepth, size: _iconSize)
+          lpCanvasSvgWidget(Assets.svg.optionDepth, size: iconSize)
               .darkColorFiltered(),
           "深度(%)".text(),
         ].row(gap: kL)?.paddingOnly(horizontal: kX),
@@ -55,7 +59,7 @@ WidgetNullList buildParamsLayout(
     if (showFeed)
       LabelNumberSliderTile(
         labelWidget: [
-          lpCanvasSvgWidget(Assets.svg.optionSpeed, size: _iconSize)
+          lpCanvasSvgWidget(Assets.svg.optionSpeed, size: iconSize)
               .darkColorFiltered(),
           "速度(mm/s)".text(),
         ].row(gap: kL)?.paddingOnly(horizontal: kX),
@@ -72,7 +76,7 @@ WidgetNullList buildParamsLayout(
       ).paddingOnly(top: kX),
     LabelNumberTile(
       labelWidget: [
-        lpCanvasSvgWidget(Assets.svg.optionCount, size: _iconSize)
+        lpCanvasSvgWidget(Assets.svg.optionCount, size: iconSize)
             .darkColorFiltered(),
         "加工次数".text(),
       ].row(gap: kL)?.paddingOnly(horizontal: kX),
