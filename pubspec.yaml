@@ -30,6 +30,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  # https://github.com/flutter/engine/blob/main/docs/impeller/Flutter-GPU.md
+  # https://medium.com/flutter/getting-started-with-flutter-gpu-f33d497b7c11
+  flutter_gpu:
+    sdk: flutter
+
+  # https://pub.dev/packages/flutter_scene
+  # https://pub.dev/packages/collection
+  # https://pub.dev/packages/flutter_gpu
+  # https://pub.dev/packages/flutter_gpu_shaders
+  # https://pub.dev/packages/flutter_scene_importer
+  # https://pub.dev/packages/native_assets_cli
+  # https://pub.dev/packages/vector_math
+  # Because flutter3_desktop_abc depends on flutter_scene >=0.6.0-0
+  # which requires SDK version >=3.7.0-75.0.dev <4.0.0, version solving failed.
+  #flutter_scene: ^0.7.0-0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

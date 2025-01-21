@@ -71,6 +71,10 @@ WidgetNullList buildParamsLayout(
         element?.tryParseElementTextProperty();
       },
     ).paddingOnly(all: kH),
+    //--
+    //雕刻密度
+    //图像模式
+    //--
     LabelNumberSliderTile(
       labelWidget: [
         lpCanvasSvgWidget(Assets.svg.optionPower, size: iconSize)
