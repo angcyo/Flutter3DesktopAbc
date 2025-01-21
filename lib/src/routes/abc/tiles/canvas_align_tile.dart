@@ -17,7 +17,9 @@ class CanvasAlignTrigger extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
-    final enable = canvasDelegate.selectedElementCount > 1;
+    final enable = canvasDelegate.selectedElementCount > 1 ||
+        (canvasDelegate.selectedElementCount == 1 &&
+            canvasDelegate.canvasContentRect != null);
     return [
       loadAbcSvgWidget(Assets.svg.alignLeft),
       loadAbcSvgWidget(Assets.svg.navArrowTip,
@@ -85,6 +87,8 @@ class CanvasAlignTile extends StatelessWidget {
       canvasDelegate.canvasElementManager.alignElement(
         canvasDelegate.canvasElementManager.elementSelectComponent,
         alignType,
+        alignCanvasContent:
+            canvasDelegate.selectedElementCount == 1 ? true : null,
       );
     }).material();
   }
