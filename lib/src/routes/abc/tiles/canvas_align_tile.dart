@@ -43,7 +43,7 @@ class CanvasAlignTrigger extends StatelessWidget {
         )
         .center()
         .material()
-        .disable(disable: !enable);
+        .disable(!enable);
   }
 }
 

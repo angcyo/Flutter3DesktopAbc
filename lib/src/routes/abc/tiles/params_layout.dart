@@ -12,16 +12,64 @@ import 'package:lp_canvas/lp_canvas.dart';
 /// [buildDesign2LabelNumberSliderTile]
 /// [Design2Mixin]
 ///
+/// 当前只能修改第一个元素的属性, 其余元素不会修改
+@implementation
 WidgetNullList buildParamsLayout(
   BuildContext context,
-  Iterable<ElementBean>? beans, {
+  Iterable<LpElementMixin>? elements, {
   bool showFeed = false,
   int minFeed = 1,
   int maxFeed = 800,
 }) {
+  //final beans = elements?.map((e) => e.elementBean);
+  final globalTheme = GlobalTheme.of(context);
   final double iconSize = 20;
-  final bean = beans?.firstOrNull;
+  final element = elements?.firstOrNull;
+  final bean = element?.elementBean;
+  final dataEngraveType = bean?.dataEngraveType;
+
   return [
+    SegmentTile(
+      segments: (dataEngraveType == null ||
+              dataEngraveType == DataEngraveTypeEnum.image)
+          ? [
+              "雕刻"
+                  .text(textAlign: TextAlign.center)
+                  .paddingOnly(horizontal: kL, vertical: kM),
+            ]
+          : [
+              "线条雕刻"
+                  .text(textAlign: TextAlign.center)
+                  .paddingOnly(horizontal: kL, vertical: kM),
+              "填充雕刻"
+                  .text(textAlign: TextAlign.center)
+                  .paddingOnly(horizontal: kL, vertical: kM),
+              "切割雕刻"
+                  .text(textAlign: TextAlign.center)
+                  .paddingOnly(horizontal: kL, vertical: kM),
+            ],
+      selectedIndexList: [
+        switch (dataEngraveType) {
+          DataEngraveTypeEnum.line => 0,
+          DataEngraveTypeEnum.fill => 1,
+          DataEngraveTypeEnum.cut => 2,
+          _ => 0,
+        },
+      ],
+      selectedTextStyle:
+          globalTheme.textBodyStyle.copyWith(fontWeight: FontWeight.bold),
+      tilePadding: edgeOnly(all: kM),
+      equalWidthRange: "",
+      onSelectedAction: (list) {
+        bean?.dataEngraveType = switch (list.firstOrNull) {
+          0 => DataEngraveTypeEnum.line,
+          1 => DataEngraveTypeEnum.fill,
+          2 => DataEngraveTypeEnum.cut,
+          _ => DataEngraveTypeEnum.line,
+        };
+        element?.tryParseElementTextProperty();
+      },
+    ).paddingOnly(all: kH),
     LabelNumberSliderTile(
       labelWidget: [
         lpCanvasSvgWidget(Assets.svg.optionPower, size: iconSize)

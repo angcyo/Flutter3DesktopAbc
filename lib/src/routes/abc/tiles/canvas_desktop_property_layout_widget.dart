@@ -124,10 +124,7 @@ class _CanvasDesktopPropertyLayoutWidgetState
             ?.matchParentWidth(),
         hLine(context, indent: kH).paddingOnly(vertical: kH),
         //--params
-        ...buildParamsLayout(
-          context,
-          selectedEngraveSingleElements?.map((e) => e.elementBean!),
-        ),
+        ...buildParamsLayout(context, selectedEngraveSingleElements),
       ];
     }
     return [

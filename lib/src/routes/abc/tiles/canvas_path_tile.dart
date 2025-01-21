@@ -44,7 +44,7 @@ class CanvasPathTrigger extends StatelessWidget {
         )
         .center()
         .material()
-        .disable(disable: !enable);
+        .disable(!enable);
   }
 }
 

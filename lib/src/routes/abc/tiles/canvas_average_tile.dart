@@ -39,7 +39,7 @@ class CanvasAverageTrigger extends StatelessWidget {
         )
         .center()
         .material()
-        .disable(disable: !enable);
+        .disable(!enable);
   }
 }
 
