@@ -27,7 +27,8 @@ WidgetNullList buildParamsLayout(
   final element = elements?.firstOrNull;
   final bean = element?.elementBean;
   final dataEngraveType = bean?.dataEngraveType;
-
+  final hP = kL;
+  final vP = kL;
   return [
     SegmentTile(
       segments: (dataEngraveType == null ||
@@ -35,18 +36,18 @@ WidgetNullList buildParamsLayout(
           ? [
               "雕刻"
                   .text(textAlign: TextAlign.center)
-                  .paddingOnly(horizontal: kL, vertical: kM),
+                  .paddingOnly(horizontal: hP, vertical: vP),
             ]
           : [
               "线条雕刻"
                   .text(textAlign: TextAlign.center)
-                  .paddingOnly(horizontal: kL, vertical: kM),
+                  .paddingOnly(horizontal: hP, vertical: vP),
               "填充雕刻"
                   .text(textAlign: TextAlign.center)
-                  .paddingOnly(horizontal: kL, vertical: kM),
+                  .paddingOnly(horizontal: hP, vertical: vP),
               "切割雕刻"
                   .text(textAlign: TextAlign.center)
-                  .paddingOnly(horizontal: kL, vertical: kM),
+                  .paddingOnly(horizontal: hP, vertical: vP),
             ],
       selectedIndexList: [
         switch (dataEngraveType) {
