@@ -256,8 +256,8 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
 
   /// 键盘事件处理
   @override
-  bool onKeyEventHandleMixin(KeyEvent event) {
-    return super.onKeyEventHandleMixin(event);
+  bool onHandleKeyEventMixin(KeyEvent event) {
+    return super.onHandleKeyEventMixin(event);
   }
 
   final double _navItemSize = 42;
