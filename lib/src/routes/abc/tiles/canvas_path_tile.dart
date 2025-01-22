@@ -32,7 +32,7 @@ class CanvasPathTrigger extends StatelessWidget {
         .paddingOnly(all: kH)
         .ink(() {})
         .hoverLayout(
-          [
+          overlayBuilder: (ctx) => [
             CanvasOperationTile(canvasDelegate, PathOperation.union),
             CanvasOperationTile(canvasDelegate, PathOperation.difference),
             CanvasOperationTile(canvasDelegate, PathOperation.intersect),

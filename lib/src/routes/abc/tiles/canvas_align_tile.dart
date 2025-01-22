@@ -29,7 +29,7 @@ class CanvasAlignTrigger extends StatelessWidget {
         .paddingOnly(all: kH)
         .ink(() {})
         .hoverLayout(
-          [
+          overlayBuilder: (ctx) => [
             CanvasAlignTile(canvasDelegate, CanvasAlignType.left),
             CanvasAlignTile(canvasDelegate, CanvasAlignType.right),
             CanvasAlignTile(canvasDelegate, CanvasAlignType.top),

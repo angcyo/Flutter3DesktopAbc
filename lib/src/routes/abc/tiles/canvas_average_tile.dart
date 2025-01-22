@@ -27,14 +27,14 @@ class CanvasAverageTrigger extends StatelessWidget {
         .paddingOnly(all: kH)
         .ink(() {})
         .hoverLayout(
-          [
+          overlayBuilder: (ctx) => [
             CanvasAverageTile(canvasDelegate, CanvasAverageType.horizontal),
             CanvasAverageTile(canvasDelegate, CanvasAverageType.vertical),
             CanvasAverageTile(canvasDelegate, CanvasAverageType.height),
             CanvasAverageTile(canvasDelegate, CanvasAverageType.width),
             CanvasAverageTile(canvasDelegate, CanvasAverageType.size),
           ].scrollVertical(),
-          arrowPosition:  ArrowPosition.bottomCenter,
+          arrowPosition: ArrowPosition.bottomCenter,
           enable: enable,
         )
         .center()

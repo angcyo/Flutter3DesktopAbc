@@ -26,7 +26,7 @@ class CanvasFlipTrigger extends StatelessWidget {
         .paddingOnly(all: kH)
         .ink(() {})
         .hoverLayout(
-          [
+          overlayBuilder: (ctx) => [
             CanvasFlipTile(canvasDelegate, flipX: true),
             CanvasFlipTile(canvasDelegate, flipY: true),
           ].scrollVertical(),

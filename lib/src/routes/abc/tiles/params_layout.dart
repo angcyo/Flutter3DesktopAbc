@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:lp_canvas/assets_generated/assets.gen.dart';
 import 'package:lp_canvas/lp_canvas.dart';
@@ -73,6 +73,12 @@ WidgetNullList buildParamsLayout(
     ).paddingOnly(all: kH),
     //--
     //雕刻密度
+    LabelMenuTile(
+      label: "雕刻密度",
+      labelTextStyle: globalTheme.textDesStyle,
+      value: 100,
+      valueList: $deviceSettingBeanCache?.fillDpiList,
+    ).backgroundColor(Colors.black12),
     //图像模式
     //--
     LabelNumberSliderTile(
