@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter3_abc/flutter3_abc.dart' as abc;
+import 'package:flutter3_canvas/flutter3_canvas.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:lp_canvas/assets_generated/assets.gen.dart';
 import 'package:lp_canvas/lp_canvas.dart';
@@ -12,6 +13,14 @@ import 'package:lp_canvas/lp_canvas.dart';
 ///
 /// [buildDesign2LabelNumberSliderTile]
 /// [Design2Mixin]
+
+//--
+const _hP = kL;
+const _vP = kL;
+
+/// 导出类型
+var _exportTypeIndex = 0;
+
 ///
 /// 当前只能修改第一个元素的属性, 其余元素不会修改
 @implementation
@@ -30,9 +39,6 @@ WidgetNullList buildParamsLayout(
   final bean = element?.elementBean;
   final dataEngraveType = bean?.dataEngraveType;
   //--
-  final hP = kL;
-  final vP = kL;
-  //--
   final isFill = dataEngraveType == DataEngraveTypeEnum.fill;
   final isImage = dataEngraveType == DataEngraveTypeEnum.image;
   return [
@@ -41,18 +47,18 @@ WidgetNullList buildParamsLayout(
           ? [
               "雕刻"
                   .text(textAlign: TextAlign.center)
-                  .paddingOnly(horizontal: hP, vertical: vP),
+                  .paddingOnly(horizontal: _hP, vertical: _vP),
             ]
           : [
               "线条雕刻"
                   .text(textAlign: TextAlign.center)
-                  .paddingOnly(horizontal: hP, vertical: vP),
+                  .paddingOnly(horizontal: _hP, vertical: _vP),
               "填充雕刻"
                   .text(textAlign: TextAlign.center)
-                  .paddingOnly(horizontal: hP, vertical: vP),
+                  .paddingOnly(horizontal: _hP, vertical: _vP),
               "切割雕刻"
                   .text(textAlign: TextAlign.center)
-                  .paddingOnly(horizontal: hP, vertical: vP),
+                  .paddingOnly(horizontal: _hP, vertical: _vP),
             ],
       selectedIndexList: [
         switch (dataEngraveType) {
@@ -178,5 +184,42 @@ WidgetNullList buildParamsLayout(
         //_updateElementLaserOption();
       },
     ),
+  ];
+}
+
+/// 构建导出数据布局
+@implementation
+WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
+  final context = state.context;
+  final globalTheme = GlobalTheme.of(context);
+  return [
+    "导出".text(style: globalTheme.textDesStyle).paddingOnly(all: kH),
+    SegmentTile(
+      segments: [
+        "PNG"
+            .text(textAlign: TextAlign.center)
+            .paddingOnly(horizontal: _hP, vertical: _vP),
+        "SVG"
+            .text(textAlign: TextAlign.center)
+            .paddingOnly(horizontal: _hP, vertical: _vP),
+        "GCODE"
+            .text(textAlign: TextAlign.center)
+            .paddingOnly(horizontal: _hP, vertical: _vP),
+      ],
+      selectedIndexList: [_exportTypeIndex],
+      /*selectedTextStyle:
+          globalTheme.textBodyStyle.copyWith(fontWeight: FontWeight.bold),*/
+      /*tilePadding: edgeOnly(all: kM),*/
+      selectedDecoration: null,
+      equalWidthRange: "",
+      onSelectedAction: (list) {
+        _exportTypeIndex = list.firstOrNull ?? 0;
+      },
+      borderColor: globalTheme.itemWhiteBgColor,
+    ).paddingOnly(horizontal: kH),
+    [
+      GradientButton.normal(() {}, child: "粘贴".text()),
+      GradientButton.normal(() {}, child: "导出".text()),
+    ].flowLayout(padding: edgeOnly(all: kH), childGap: kX),
   ];
 }

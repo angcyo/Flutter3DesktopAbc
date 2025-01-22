@@ -125,6 +125,8 @@ class _CanvasDesktopPropertyLayoutWidgetState
         hLine(context, indent: kH).paddingOnly(vertical: kH),
         //--params
         ...buildParamsLayout(this, selectedEngraveSingleElements),
+        hLine(context, indent: kH).paddingOnly(vertical: kH),
+        ...buildExportLayout(this, canvasDelegate),
       ];
     }
     return [
