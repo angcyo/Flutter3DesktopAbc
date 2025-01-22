@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter3_abc/flutter3_abc.dart' as abc;
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:lp_canvas/assets_generated/assets.gen.dart';
 import 'package:lp_canvas/lp_canvas.dart';
@@ -15,24 +16,28 @@ import 'package:lp_canvas/lp_canvas.dart';
 /// 当前只能修改第一个元素的属性, 其余元素不会修改
 @implementation
 WidgetNullList buildParamsLayout(
-  BuildContext context,
+  State state,
   Iterable<LpElementMixin>? elements, {
   bool showFeed = false,
   int minFeed = 1,
   int maxFeed = 800,
 }) {
   //final beans = elements?.map((e) => e.elementBean);
+  final context = state.context;
   final globalTheme = GlobalTheme.of(context);
   final double iconSize = 20;
   final element = elements?.firstOrNull;
   final bean = element?.elementBean;
   final dataEngraveType = bean?.dataEngraveType;
+  //--
   final hP = kL;
   final vP = kL;
+  //--
+  final isFill = dataEngraveType == DataEngraveTypeEnum.fill;
+  final isImage = dataEngraveType == DataEngraveTypeEnum.image;
   return [
     SegmentTile(
-      segments: (dataEngraveType == null ||
-              dataEngraveType == DataEngraveTypeEnum.image)
+      segments: (dataEngraveType == null || isImage)
           ? [
               "雕刻"
                   .text(textAlign: TextAlign.center)
@@ -69,17 +74,44 @@ WidgetNullList buildParamsLayout(
           _ => DataEngraveTypeEnum.line,
         };
         element?.tryParseElementTextProperty();
+        state.updateState();
       },
     ).paddingOnly(all: kH),
     //--
     //雕刻密度
-    LabelMenuTile(
-      label: "雕刻密度",
-      labelTextStyle: globalTheme.textDesStyle,
-      value: 100,
-      valueList: $deviceSettingBeanCache?.fillDpiList,
-    ).backgroundColor(Colors.black12),
+    if (isFill || isImage)
+      LabelMenuTile(
+        label: "雕刻密度",
+        labelTextStyle: globalTheme.textDesStyle,
+        value: bean?.fillDpi ?? kLpBaseFillDpi,
+        valueList: $deviceSettingBeanCache?.fillDpiList,
+        arrowWidget: abc
+            .loadAbcSvgWidget(abc.Assets.svg.navArrowTip,
+                tintColor: globalTheme.icoGrayColor)
+            .paddingOnly(all: kS),
+        onSelectedAction: (index, value) {
+          bean?.fillDpi = value;
+        },
+      ),
     //图像模式
+    if (isImage)
+      LabelMenuTile(
+        label: "图像模式",
+        labelTextStyle: globalTheme.textDesStyle,
+        value: bean?.imageType ?? "灰度",
+        valueList: [
+          "灰度",
+          ...MachineImageType.values.map((e) => e.name),
+        ],
+        arrowWidget: abc
+            .loadAbcSvgWidget(abc.Assets.svg.navArrowTip,
+                tintColor: globalTheme.icoGrayColor)
+            .paddingOnly(all: kS),
+        onSelectedAction: (index, value) {
+          bean?.imageType =
+              index == 0 ? null : MachineImageType.values[index - 1].name;
+        },
+      ),
     //--
     LabelNumberSliderTile(
       labelWidget: [
