@@ -21,6 +21,19 @@ const _vP = kL;
 /// 导出类型
 var _exportTypeIndex = 0;
 
+/// 用于雕刻?
+var _exportByEngrave = false;
+
+/// 支持导出的类型
+const _exportTypeList = [
+  "PNG",
+  "SVG",
+  "GCODE",
+];
+
+/// 导出的缓存路径
+const _exportFolder = "export";
+
 ///
 /// 当前只能修改第一个元素的属性, 其余元素不会修改
 @implementation
@@ -118,6 +131,19 @@ WidgetNullList buildParamsLayout(
               index == 0 ? null : MachineImageType.values[index - 1].name;
         },
       ),
+    if (isFill)
+      LabelNumberSliderTile(
+        labelWidget: [
+          "过点扫描(%)".text(),
+        ].row(gap: kL)?.paddingOnly(horizontal: kX),
+        value: clamp(((bean?.overScan ?? 0) * 100).round(), 0, 100),
+        minValue: 0,
+        maxValue: 100,
+        onValueChanged: (value) {
+          bean?.overScan = value.toInt() / 100;
+          //_updateElementLaserOption();
+        },
+      ).paddingOnly(top: kX),
     //--
     LabelNumberSliderTile(
       labelWidget: [
@@ -190,22 +216,21 @@ WidgetNullList buildParamsLayout(
 /// 构建导出数据布局
 @implementation
 WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
-  final context = state.context;
+  final context = state.buildContext;
   final globalTheme = GlobalTheme.of(context);
+  final selectedElement = canvasDelegate?.selectedElement;
+  final bean =
+      canvasDelegate?.allSelectedSingleElementList?.firstOrNull?.elementBean;
   return [
     "导出".text(style: globalTheme.textDesStyle).paddingOnly(all: kH),
     SegmentTile(
-      segments: [
-        "PNG"
-            .text(textAlign: TextAlign.center)
-            .paddingOnly(horizontal: _hP, vertical: _vP),
-        "SVG"
-            .text(textAlign: TextAlign.center)
-            .paddingOnly(horizontal: _hP, vertical: _vP),
-        "GCODE"
-            .text(textAlign: TextAlign.center)
-            .paddingOnly(horizontal: _hP, vertical: _vP),
-      ],
+      segments: _exportTypeList
+          .map(
+            (e) => e
+                .text(textAlign: TextAlign.center)
+                .paddingOnly(horizontal: _hP, vertical: _vP),
+          )
+          .toList(),
       selectedIndexList: [_exportTypeIndex],
       /*selectedTextStyle:
           globalTheme.textBodyStyle.copyWith(fontWeight: FontWeight.bold),*/
@@ -214,12 +239,82 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
       equalWidthRange: "",
       onSelectedAction: (list) {
         _exportTypeIndex = list.firstOrNull ?? 0;
+        state.updateState();
       },
       borderColor: globalTheme.itemWhiteBgColor,
     ).paddingOnly(horizontal: kH),
+    if (_exportTypeIndex != 0)
+      LabelSwitchTile(
+        label: "用于雕刻",
+        value: _exportByEngrave,
+        onValueChanged: (value) {
+          _exportByEngrave = value;
+        },
+      ).paddingOnly(top: kH),
     [
+      GradientButton.normal(() async {
+        openFilePath((await cacheFolder(_exportFolder)).path);
+      }, child: "打开缓存路径".text()),
       GradientButton.normal(() {}, child: "粘贴".text()),
-      GradientButton.normal(() {}, child: "导出".text()),
+      GradientButton.normal(() async {
+        if (selectedElement == null) {
+          return;
+        }
+        final fileName = (selectedElement.elementName ?? "element")
+            .ensureSuffix(
+                ".${_exportTypeList[_exportTypeIndex].toLowerCase()}");
+
+        if (_exportTypeIndex == 0) {
+          //png
+          selectedElement.elementOutputImage?.let((image) async {
+            final filePath =
+                await saveFile(dialogTitle: "另存为...", fileName: fileName);
+            if (!isNil(filePath)) {
+              final file = filePath!.file();
+              await image.saveToFile(file);
+              file.copyTo((await cacheFolder(_exportFolder)).path);
+            }
+          });
+        } else {
+          //svg / gcode
+          String svgXml =
+              await [selectedElement].toSvgXml(byEngrave: _exportByEngrave);
+          if (_exportTypeIndex == 2) {
+            //gcode
+            svgXml.saveToFile((await cacheFilePath(
+                    (selectedElement.elementName ?? "element")
+                        .ensureSuffix(".${_exportTypeList[1].toLowerCase()}"),
+                    _exportFolder))
+                .file());
+            svgXml = await LpEngraveHelper.generateGcodeFromSvg(
+                  bean,
+                  svgXml: svgXml,
+                ) ??
+                "";
+          }
+          final filePath =
+              await saveFile(dialogTitle: "另存为...", fileName: fileName);
+          if (!isNil(filePath)) {
+            final file = filePath!.file();
+            await svgXml.saveToFile(file);
+            file.copyTo((await cacheFolder(_exportFolder)).path);
+          }
+        }
+      }, child: "导出".text()),
+      if (_exportTypeIndex == 2)
+        GradientButton.normal(() async {
+          if (selectedElement == null) {
+            return;
+          }
+          final svgXml =
+              await [selectedElement].toSvgXml(byEngrave: _exportByEngrave);
+          final gcode = await LpEngraveHelper.generateGcodeFromSvg(
+                bean,
+                svgXml: svgXml,
+              ) ??
+              "";
+          context?.pushWidget(abc.SimulationAbc(gcode: gcode));
+        }, child: "仿真".text()),
     ].flowLayout(padding: edgeOnly(all: kH), childGap: kX),
   ];
 }

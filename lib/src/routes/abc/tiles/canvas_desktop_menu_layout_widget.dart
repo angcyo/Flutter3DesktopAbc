@@ -38,6 +38,8 @@ class _CanvasDesktopMenuLayoutWidgetState
   @override
   Widget build(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
+    /*const Color(0xff474747)*/
+    final unitList = [IUnit.dp, IUnit.mm, IUnit.inch];
     return [
       IconStateWidget(
         icon: loadAbcSvgWidget(Assets.svg.navMenu),
@@ -47,7 +49,7 @@ class _CanvasDesktopMenuLayoutWidgetState
         }),
         onTap: () {},
       ).paddingOnly(left: kH),
-      vLine(context, color: const Color(0xff474747)).paddingOnly(vertical: kX),
+      vLine(context, color: globalTheme.borderColor).paddingOnly(vertical: kX),
       IconStateWidget(
         icon: loadAbcSvgWidget(Assets.svg.navCanvas),
         text: textSpanBuilder((builder) {
@@ -102,6 +104,32 @@ class _CanvasDesktopMenuLayoutWidgetState
           canvasDelegate
               ?.updateCanvasStyleModeChanged(CanvasStyleMode.dragMode);
         },
+      ).paddingOnly(left: kH),
+      //--
+      vLine(context, color: globalTheme.borderColor).paddingOnly(vertical: kX),
+      SegmentTile(
+        segments: unitList
+            .map(
+              (e) => e.suffix
+                  .text(
+                      textAlign: TextAlign.center,
+                      textColor: globalTheme.whiteColor)
+                  .paddingOnly(horizontal: kX, vertical: kH),
+            )
+            .toList(),
+        selectedIndexList: [
+          unitList.indexOf(canvasDelegate?.axisUnit ?? IUnit.mm)
+        ],
+        /*selectedTextStyle:
+          globalTheme.textBodyStyle.copyWith(fontWeight: FontWeight.bold),*/
+        /*tilePadding: edgeOnly(all: kM),*/
+        selectedDecoration: null,
+        onSelectedAction: (list) {
+          canvasDelegate?.axisUnit =
+              unitList.getOrNull(list.firstOrNull ?? 0) ?? IUnit.mm;
+          updateState();
+        },
+        borderColor: globalTheme.itemWhiteBgColor,
       ).paddingOnly(left: kH),
     ]
         .scrollHorizontal()!
