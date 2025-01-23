@@ -263,7 +263,7 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
         final fileName = (selectedElement.elementName ?? "element")
             .ensureSuffix(
                 ".${_exportTypeList[_exportTypeIndex].toLowerCase()}");
-
+        //debugger();
         if (_exportTypeIndex == 0) {
           //png
           selectedElement.elementOutputImage?.let((image) async {
@@ -281,14 +281,16 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
               await [selectedElement].toSvgXml(byEngrave: _exportByEngrave);
           if (_exportTypeIndex == 2) {
             //gcode
-            svgXml.saveToFile((await cacheFilePath(
+            final svgFile = (await cacheFilePath(
                     (selectedElement.elementName ?? "element")
                         .ensureSuffix(".${_exportTypeList[1].toLowerCase()}"),
                     _exportFolder))
-                .file());
+                .file();
+            await svgXml.saveToFile(svgFile);
             svgXml = await LpEngraveHelper.generateGcodeFromSvg(
                   bean,
                   svgXml: svgXml,
+                  /*svgXmlPath: svgFile.path,*/
                 ) ??
                 "";
           }
