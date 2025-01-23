@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter3_abc/flutter3_abc.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
@@ -98,7 +96,9 @@ class _MainPageState extends State<MainPage>
     bool? isUnmaximize,
   }) {
     super.onSelfWindowSizeChanged(
-        isMaximize: isMaximize, isUnmaximize: isUnmaximize);
+      isMaximize: isMaximize,
+      isUnmaximize: isUnmaximize,
+    );
     final size = windowSizeMixin;
     if (size == null) {
       return;

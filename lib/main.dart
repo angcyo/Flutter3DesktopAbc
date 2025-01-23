@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter3_desktop_abc/src/desktop_app.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
@@ -8,7 +10,7 @@ import 'package:lp_module/lp_module.dart';
 /// @since 2024-12-25
 ///
 @pragma("vm:entry-point", "call")
-void main() async {
+void main([List<String>? args]) async {
   //await initWindow(size: Size(1280, 720));
   //runApp(const DesktopApp());
   runGlobalApp(const DesktopApp(), beforeAction: () async {
@@ -19,7 +21,6 @@ void main() async {
 
     await initDesktopApp();
     await initWindow(size: Size(1280, 720));
-
     //lp
     initLpModule();
   });
