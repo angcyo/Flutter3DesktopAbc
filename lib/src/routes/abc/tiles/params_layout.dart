@@ -34,6 +34,9 @@ const _exportTypeList = [
 /// 导出的缓存路径
 const _exportFolder = "export";
 
+/// 导出的文件名
+String _exportName = "export";
+
 ///
 /// 当前只能修改第一个元素的属性, 其余元素不会修改
 @implementation
@@ -223,6 +226,15 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
       canvasDelegate?.allSelectedSingleElementList?.firstOrNull?.elementBean;
   return [
     "导出".text(style: globalTheme.textDesStyle).paddingOnly(all: kH),
+    SingleInputWidget(
+      config: TextFieldConfig(
+          text: _exportName,
+          hintText: "导出文件名",
+          hintTextStyle: globalTheme.textDesStyle,
+          onChanged: (value) {
+            _exportName = value;
+          }),
+    ).paddingOnly(horizontal: kH, vertical: kL),
     SegmentTile(
       segments: _exportTypeList
           .map(
@@ -260,9 +272,9 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
         if (selectedElement == null) {
           return;
         }
-        final fileName = (selectedElement.elementName ?? "element")
-            .ensureSuffix(
-                ".${_exportTypeList[_exportTypeIndex].toLowerCase()}");
+        //导出
+        final fileName = _exportName.ensureSuffix(
+            ".${_exportTypeList[_exportTypeIndex].toLowerCase()}");
         //debugger();
         if (_exportTypeIndex == 0) {
           //png
@@ -282,7 +294,7 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
           if (_exportTypeIndex == 2) {
             //gcode
             final svgFile = (await cacheFilePath(
-                    (selectedElement.elementName ?? "element")
+                    _exportName
                         .ensureSuffix(".${_exportTypeList[1].toLowerCase()}"),
                     _exportFolder))
                 .file();
@@ -305,6 +317,7 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
       }, child: "导出".text()),
       if (_exportTypeIndex == 2)
         GradientButton.normal(() async {
+          //仿真
           if (selectedElement == null) {
             return;
           }
