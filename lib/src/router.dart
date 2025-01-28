@@ -5,6 +5,7 @@ import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'routes/abc/canvas_desktop_abc.dart';
 import 'routes/abc/drop_file_abc.dart';
 import 'routes/abc/go_router_abc.dart';
+import 'routes/abc/gpu_abc.dart';
 import 'routes/abc/image_pixel_abc.dart';
 import 'routes/abc/start_abc.dart';
 import 'routes/abc/test_abc.dart';
@@ -52,6 +53,7 @@ final flutter3DesktopAbcRoutes = <AbcRouteConfig>[
   ),
   ("/go_router", "GoRouterAbc", (context) => const GoRouterAbc()),
   ("/dragFile", "DragFileAbc", (context) => const DropFileAbc()),
+  ("/gpu", "GpuAbc", (context) => const GpuAbc()),
   ("/test", "TestAbc", (context) => const TestAbc()),
 ];
 
