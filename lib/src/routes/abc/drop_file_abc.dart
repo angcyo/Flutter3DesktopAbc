@@ -76,7 +76,7 @@ class _DropFileAbcState extends State<DropFileAbc> with DropStateMixin {
 
         if (reader.canProvide(Formats.png)) {
           reader.getFile(Formats.png, (file) {
-            debugger();
+            //debugger();
             // Binary files may be too large to be loaded in memory and thus
             // are exposed as stream.
             final stream = file.getStream();
@@ -87,7 +87,7 @@ class _DropFileAbcState extends State<DropFileAbc> with DropStateMixin {
             // can only use one of them)
             // final data = file.readAll();
 
-            debugger();
+            //debugger();
           }, onError: (error) {
             print('Error reading value $error');
           });

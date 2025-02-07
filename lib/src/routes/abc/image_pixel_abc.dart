@@ -6,7 +6,7 @@ import 'package:flutter3_canvas/flutter3_canvas.dart';
 import 'package:flutter3_code/flutter3_code.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 
-import 'core/ImagePixelPainter.dart';
+import 'core/image_pixel_painter.dart';
 import 'tiles/image_pixel_property_control_widget.dart';
 
 ///
@@ -108,7 +108,8 @@ class _ImagePixelAbcState extends State<ImagePixelAbc>
 
   @override
   FutureOr onHandleDropDone(PerformDropEvent event) async {
-    dropStateInfoSignal.value = null;
+    //2025-02-07 mac上不需要
+    //dropStateInfoSignal.value = null;
     final dropImageList = await event.session.images;
     final dropUriList = await event.session.uris;
 

@@ -3,7 +3,7 @@ import 'package:flutter3_canvas/flutter3_canvas.dart';
 import 'package:flutter3_code/flutter3_code.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 
-import '../core/ImagePixelPainter.dart';
+import '../core/image_pixel_painter.dart';
 
 ///
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>
@@ -129,7 +129,7 @@ class _ImagePixelPropertyControlWidgetState
           editColor = value;
         },
       ),
-      "画布颜色: "
+      "画笔颜色: "
           .text()
           .rowOf(
               paintWidget((canvas, size) {
