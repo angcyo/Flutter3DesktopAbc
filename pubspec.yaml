@@ -42,6 +42,17 @@ workspace:
   - Flutter3Core/flutter3_shelf
   - Flutter3Core/flutter3_vector
   - Flutter3Core/flutter3_fonts
+  - Flutter3Extend/lp_device
+  - Flutter3Extend/umeng
+  - Flutter3Extend/lp_canvas
+  - Flutter3Extend/lp_module
+  #- Flutter3Extend/lp_plugin
+  - Flutter3Extend/google_firebase
+  - Flutter3Extend/lp_algorithm
+  - Flutter3Extend/lp_res
+  - Flutter3Desktop/flutter3_desktop_app
+  - Flutter3Desktop/flutter3_desktop_core
+  - Flutter3Abc/flutter3_abc
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions

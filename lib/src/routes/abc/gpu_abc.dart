@@ -31,44 +31,48 @@ class _GpuAbcState extends State<GpuAbc> {
       //Default color format: PixelFormat.b8g8r8a8UNormInt
       l.d('Default color format: ${gpu.gpuContext.defaultColorFormat}');
 
-      final texture = gpu.gpuContext.createTexture(
-          gpu.StorageMode.devicePrivate,
-          (size.width / 2).toInt(),
-          (size.height / 2).toInt())!;
+      try {
+        final texture = gpu.gpuContext.createTexture(
+            gpu.StorageMode.devicePrivate,
+            (size.width / 2).toInt(),
+            (size.height / 2).toInt())!;
 
-      final renderTarget = gpu.RenderTarget.singleColor(gpu.ColorAttachment(
-          texture: texture, clearValue: vector_math.Colors.lightBlue));
+        final renderTarget = gpu.RenderTarget.singleColor(gpu.ColorAttachment(
+            texture: texture, clearValue: vector_math.Colors.lightBlue));
 
-      final commandBuffer = gpu.gpuContext.createCommandBuffer();
-      final renderPass = commandBuffer.createRenderPass(renderTarget);
-      // ... draw calls will go here!
+        final commandBuffer = gpu.gpuContext.createCommandBuffer();
+        final renderPass = commandBuffer.createRenderPass(renderTarget);
+        // ... draw calls will go here!
 
-      /*final vert = shaderLibrary['SimpleVertex']!;
-      final frag = shaderLibrary['SimpleFragment']!;
-      final pipeline = gpu.gpuContext.createRenderPipeline(vert, frag);*/
+        /*final vert = gpu.shaderLibrary['SimpleVertex']!;
+        final frag = gpu.shaderLibrary['SimpleFragment']!;
+        final pipeline = gpu.gpuContext.createRenderPipeline(vert, frag);*/
 
-      final vertices = Float32List.fromList([
-        -0.5, -0.5, // First vertex
-        0.5, -0.5, // Second vertex
-        0.0,  0.5, // Third vertex
-      ]);
-      final verticesDeviceBuffer = gpu.gpuContext
-          .createDeviceBufferWithCopy(ByteData.sublistView(vertices))!;
-      //renderPass.bindPipeline(pipeline);
+        final vertices = Float32List.fromList([
+          -0.5, -0.5, // First vertex
+          0.5, -0.5, // Second vertex
+          0.0, 0.5, // Third vertex
+        ]);
+        final verticesDeviceBuffer = gpu.gpuContext
+            .createDeviceBufferWithCopy(ByteData.sublistView(vertices))!;
+        //renderPass.bindPipeline(pipeline);
 
-      final verticesView = gpu.BufferView(
-        verticesDeviceBuffer,
-        offsetInBytes: 0,
-        lengthInBytes: verticesDeviceBuffer.sizeInBytes,
-      );
-      renderPass.bindVertexBuffer(verticesView, 3);
+        final verticesView = gpu.BufferView(
+          verticesDeviceBuffer,
+          offsetInBytes: 0,
+          lengthInBytes: verticesDeviceBuffer.sizeInBytes,
+        );
+        renderPass.bindVertexBuffer(verticesView, 3);
 
-      renderPass.draw();
+        //renderPass.draw();
 
-      //
-      commandBuffer.submit();
-      final image = texture.asImage();
-      canvas.drawImage(image, Offset.zero, Paint());
+        //
+        commandBuffer.submit();
+        final image = texture.asImage();
+        canvas.drawImage(image, Offset.zero, Paint());
+      } catch (e, s) {
+        printError(e, s);
+      }
     });
   }
 }
