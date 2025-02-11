@@ -147,6 +147,9 @@ dev_dependencies:
   # in flutter3_res
   yaml: ^3.1.3
 
+  # https://pub.dev/packages/flutter_launcher_icons
+  flutter_launcher_icons: ^0.14.3
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
