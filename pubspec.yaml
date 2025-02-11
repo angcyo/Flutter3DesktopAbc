@@ -46,7 +46,7 @@ workspace:
   #- Flutter3Extend/umeng
   - Flutter3Extend/lp_canvas
   - Flutter3Extend/lp_module
-  #- Flutter3Extend/lp_plugin
+  - Flutter3Extend/lp_plugin
   #- Flutter3Extend/google_firebase
   - Flutter3Extend/lp_algorithm
   - Flutter3Extend/lp_res
