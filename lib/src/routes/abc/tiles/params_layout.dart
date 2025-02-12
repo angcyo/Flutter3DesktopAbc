@@ -157,7 +157,7 @@ WidgetNullList buildParamsLayout(
             .darkColorFiltered(),
         "功率(%)".text(),
       ].row(gap: kL)?.paddingOnly(horizontal: kX),
-      value: bean?.printPower ?? 1,
+      value: bean?.printPower ?? kLpBasePrintPower,
       minValue: 1,
       maxValue: 100,
       inactiveTrackGradientColors: EngraveTileMixin.sActiveTrackGradientColors,
@@ -174,7 +174,7 @@ WidgetNullList buildParamsLayout(
               .darkColorFiltered(),
           "深度(%)".text(),
         ].row(gap: kL)?.paddingOnly(horizontal: kX),
-        value: bean?.printDepth ?? 1,
+        value: bean?.printDepth ?? kLpBasePrintDepth,
         minValue: 1,
         maxValue: 100,
         inactiveTrackGradientColors:
