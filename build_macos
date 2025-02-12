@@ -6,4 +6,5 @@ set +x
 # 将工作目录设置为脚本所在目录
 cd "$(dirname "$0")"
 
+# ✓ Built build/macos/Build/Products/Release/flutter3_desktop_abc.app (123.1MB)
 dart run Flutter3Core/script/build_config.dart & flutter build macos --release

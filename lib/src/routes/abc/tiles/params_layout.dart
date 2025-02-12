@@ -24,6 +24,9 @@ var _exportTypeIndex = 0;
 /// 用于雕刻?
 var _exportByEngrave = false;
 
+/// 使用svg标签数据?
+var _exportUseTag = false;
+
 /// 支持导出的类型
 const _exportTypeList = [
   "PNG",
@@ -255,7 +258,7 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
       },
       borderColor: globalTheme.itemWhiteBgColor,
     ).paddingOnly(horizontal: kH),
-    if (_exportTypeIndex != 0)
+    if (_exportTypeIndex != 0) ...[
       LabelSwitchTile(
         label: "用于雕刻",
         value: _exportByEngrave,
@@ -263,6 +266,14 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
           _exportByEngrave = value;
         },
       ).paddingOnly(top: kH),
+      LabelSwitchTile(
+        label: "使用标签",
+        value: _exportUseTag,
+        onValueChanged: (value) {
+          _exportUseTag = value;
+        },
+      ).paddingOnly(top: kH),
+    ],
     [
       GradientButton.normal(() async {
         openFilePath((await cacheFolder(_exportFolder)).path);
@@ -289,8 +300,10 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
           });
         } else {
           //svg / gcode
-          String svgXml =
-              await [selectedElement].toSvgXml(byEngrave: _exportByEngrave);
+          String svgXml = await [selectedElement].toSvgXml(
+            byEngrave: _exportByEngrave,
+            useSvgTagData: _exportUseTag,
+          );
           if (_exportTypeIndex == 2) {
             //gcode
             final svgFile = (await cacheFilePath(
@@ -321,8 +334,10 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
           if (selectedElement == null) {
             return;
           }
-          final svgXml =
-              await [selectedElement].toSvgXml(byEngrave: _exportByEngrave);
+          final svgXml = await [selectedElement].toSvgXml(
+            byEngrave: _exportByEngrave,
+            useSvgTagData: _exportUseTag,
+          );
           final gcode = await LpEngraveHelper.generateGcodeFromSvg(
                 bean,
                 svgXml: svgXml,
