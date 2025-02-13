@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter3_abc/flutter3_abc.dart' as abc;
 import 'package:flutter3_canvas/flutter3_canvas.dart';
@@ -275,6 +277,12 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
       ).paddingOnly(top: kH),
     ],
     [
+      GradientButton.normal(() async {
+        final path = (await fileFolder(kLogPathName)).path;
+        openFilePath(path);
+        //debugger();
+        l.i("test..$path");
+      }, child: "打开日志路径".text()),
       GradientButton.normal(() async {
         openFilePath((await cacheFolder(_exportFolder)).path);
       }, child: "打开缓存路径".text()),
