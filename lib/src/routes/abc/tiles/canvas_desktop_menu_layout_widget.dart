@@ -4,6 +4,8 @@ import 'package:flutter3_canvas/flutter3_canvas.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:lp_canvas/lp_canvas.dart';
 
+import '../core/canvas_desktop_main_menu_route.dart';
+
 ///
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>
 /// @date 2025/01/20
@@ -41,14 +43,20 @@ class _CanvasDesktopMenuLayoutWidgetState
     /*const Color(0xff474747)*/
     final unitList = [IUnit.dp, IUnit.mm, IUnit.inch];
     return [
-      IconStateWidget(
-        icon: loadAbcSvgWidget(Assets.svg.navMenu),
-        text: textSpanBuilder((builder) {
-          builder.addText("主菜单");
-          builder.addWidget(loadAbcSvgWidget(Assets.svg.navArrowTip, size: 8));
-        }),
-        onTap: () {},
-      ).paddingOnly(left: kH),
+      layout((ctx, _) => IconStateWidget(
+            icon: loadAbcSvgWidget(Assets.svg.navMenu),
+            text: textSpanBuilder((builder) {
+              builder.addText("主菜单");
+              builder
+                  .addWidget(loadAbcSvgWidget(Assets.svg.navArrowTip, size: 8));
+            }),
+            onTap: () {
+              context.showArrowPopupRoute(
+                CanvasDesktopMainMenuRoute(),
+                anchorChild: ctx,
+              );
+            },
+          )).paddingOnly(left: kH),
       vLine(context, color: globalTheme.borderColor).paddingOnly(vertical: kX),
       IconStateWidget(
         icon: loadAbcSvgWidget(Assets.svg.navCanvas),
