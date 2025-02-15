@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter3_abc/flutter3_abc.dart' as abc;
 import 'package:flutter3_canvas/flutter3_canvas.dart';
@@ -29,6 +27,9 @@ var _exportByEngrave = false;
 /// 使用svg标签数据?
 var _exportUseTag = false;
 
+/// 使用自动激光
+var _exportUseAutoLaser = true;
+
 /// 支持导出的类型
 const _exportTypeList = [
   "PNG",
@@ -45,13 +46,12 @@ String _exportName = "export";
 ///
 /// 当前只能修改第一个元素的属性, 其余元素不会修改
 @implementation
-WidgetNullList buildParamsLayout(
-  State state,
-  Iterable<LpElementMixin>? elements, {
-  bool showFeed = false,
-  int minFeed = 1,
-  int maxFeed = 800,
-}) {
+WidgetNullList buildParamsLayout(State state,
+    Iterable<LpElementMixin>? elements, {
+      bool showFeed = false,
+      int minFeed = 1,
+      int maxFeed = 800,
+    }) {
   //final beans = elements?.map((e) => e.elementBean);
   final context = state.context;
   final globalTheme = GlobalTheme.of(context);
@@ -66,21 +66,21 @@ WidgetNullList buildParamsLayout(
     SegmentTile(
       segments: (dataEngraveType == null || isImage)
           ? [
-              "雕刻"
-                  .text(textAlign: TextAlign.center)
-                  .paddingOnly(horizontal: _hP, vertical: _vP),
-            ]
+        "雕刻"
+            .text(textAlign: TextAlign.center)
+            .paddingOnly(horizontal: _hP, vertical: _vP),
+      ]
           : [
-              "线条雕刻"
-                  .text(textAlign: TextAlign.center)
-                  .paddingOnly(horizontal: _hP, vertical: _vP),
-              "填充雕刻"
-                  .text(textAlign: TextAlign.center)
-                  .paddingOnly(horizontal: _hP, vertical: _vP),
-              "切割雕刻"
-                  .text(textAlign: TextAlign.center)
-                  .paddingOnly(horizontal: _hP, vertical: _vP),
-            ],
+        "线条雕刻"
+            .text(textAlign: TextAlign.center)
+            .paddingOnly(horizontal: _hP, vertical: _vP),
+        "填充雕刻"
+            .text(textAlign: TextAlign.center)
+            .paddingOnly(horizontal: _hP, vertical: _vP),
+        "切割雕刻"
+            .text(textAlign: TextAlign.center)
+            .paddingOnly(horizontal: _hP, vertical: _vP),
+      ],
       selectedIndexList: [
         switch (dataEngraveType) {
           DataEngraveTypeEnum.line => 0,
@@ -90,7 +90,7 @@ WidgetNullList buildParamsLayout(
         },
       ],
       selectedTextStyle:
-          globalTheme.textBodyStyle.copyWith(fontWeight: FontWeight.bold),
+      globalTheme.textBodyStyle.copyWith(fontWeight: FontWeight.bold),
       tilePadding: edgeOnly(all: kM),
       equalWidthRange: "",
       onSelectedAction: (list) {
@@ -114,7 +114,7 @@ WidgetNullList buildParamsLayout(
         valueList: $deviceSettingBeanCache?.fillDpiList,
         arrowWidget: abc
             .loadAbcSvgWidget(abc.Assets.svg.navArrowTip,
-                tintColor: globalTheme.icoGrayColor)
+            tintColor: globalTheme.icoGrayColor)
             .paddingOnly(all: kS),
         onSelectedAction: (index, value) {
           bean?.fillDpi = value;
@@ -132,11 +132,11 @@ WidgetNullList buildParamsLayout(
         ],
         arrowWidget: abc
             .loadAbcSvgWidget(abc.Assets.svg.navArrowTip,
-                tintColor: globalTheme.icoGrayColor)
+            tintColor: globalTheme.icoGrayColor)
             .paddingOnly(all: kS),
         onSelectedAction: (index, value) {
           bean?.imageType =
-              index == 0 ? null : MachineImageType.values[index - 1].name;
+          index == 0 ? null : MachineImageType.values[index - 1].name;
         },
       ),
     if (isFill)
@@ -180,7 +180,7 @@ WidgetNullList buildParamsLayout(
         minValue: 1,
         maxValue: 100,
         inactiveTrackGradientColors:
-            EngraveTileMixin.sActiveTrackGradientColors,
+        EngraveTileMixin.sActiveTrackGradientColors,
         onValueChanged: (value) {
           final printDepth = value.toInt();
           bean?.printDepth = printDepth;
@@ -198,7 +198,7 @@ WidgetNullList buildParamsLayout(
         minValue: minFeed,
         maxValue: maxFeed,
         inactiveTrackGradientColors:
-            EngraveTileMixin.sActiveTrackGradientColors.reversed.toList(),
+        EngraveTileMixin.sActiveTrackGradientColors.reversed.toList(),
         onValueChanged: (value) {
           final feed = value.toInt();
           bean?.feed = feed;
@@ -243,10 +243,11 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
     SegmentTile(
       segments: _exportTypeList
           .map(
-            (e) => e
+            (e) =>
+            e
                 .text(textAlign: TextAlign.center)
                 .paddingOnly(horizontal: _hP, vertical: _vP),
-          )
+      )
           .toList(),
       selectedIndexList: [_exportTypeIndex],
       /*selectedTextStyle:
@@ -261,6 +262,13 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
       borderColor: globalTheme.itemWhiteBgColor,
     ).paddingOnly(horizontal: kH),
     if (_exportTypeIndex != 0) ...[
+      LabelSwitchTile(
+        label: "自动激光",
+        value: _exportUseAutoLaser,
+        onValueChanged: (value) {
+          _exportUseAutoLaser = value;
+        },
+      ).paddingOnly(top: kH),
       LabelSwitchTile(
         label: "用于雕刻",
         value: _exportByEngrave,
@@ -299,41 +307,42 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
           //png
           selectedElement.elementOutputImage?.let((image) async {
             final filePath =
-                await saveFile(dialogTitle: "另存为...", fileName: fileName);
+            await saveFile(dialogTitle: "另存为...", fileName: fileName);
             if (!isNil(filePath)) {
               final file = filePath!.file();
               await image.saveToFile(file);
               file.copyTo((await cacheFolder(_exportFolder)).path);
             }
           });
-        } else {
-          //svg / gcode
-          String svgXml = await [selectedElement].toSvgXml(
+        } else if (_exportTypeIndex == 1) {
+          //svg
+          final svgXml = await [selectedElement].toSvgXml(
             byEngrave: _exportByEngrave,
             useSvgTagData: _exportUseTag,
           );
-          if (_exportTypeIndex == 2) {
-            //gcode
-            final svgFile = (await cacheFilePath(
-                    _exportName
-                        .ensureSuffix(".${_exportTypeList[1].toLowerCase()}"),
-                    _exportFolder))
-                .file();
-            await svgXml.saveToFile(svgFile);
-            svgXml = await LpEngraveHelper.generateGcodeFromSvg(
-                  bean,
-                  svgXml: svgXml,
-                  /*svgXmlPath: svgFile.path,*/
-                ) ??
-                "";
-          }
           final filePath =
-              await saveFile(dialogTitle: "另存为...", fileName: fileName);
+          await saveFile(dialogTitle: "另存为...", fileName: fileName);
           if (!isNil(filePath)) {
             final file = filePath!.file();
             await svgXml.saveToFile(file);
             file.copyTo((await cacheFolder(_exportFolder)).path);
           }
+        } else if (_exportTypeIndex == 2) {
+          //gcode
+          final gcode = await [selectedElement].toGCode(
+            byEngrave: _exportByEngrave,
+            useSvgTagData: _exportUseTag,
+            autoLaser: _exportUseAutoLaser,
+          );
+          final filePath =
+          await saveFile(dialogTitle: "另存为...", fileName: fileName);
+          if (!isNil(filePath)) {
+            final file = filePath!.file();
+            await gcode.saveToFile(file);
+            file.copyTo((await cacheFolder(_exportFolder)).path);
+          }
+        } else {
+          toastInfo("未知的导出类型[$_exportTypeIndex]");
         }
       }, child: "导出".text()),
       if (_exportTypeIndex == 2)
@@ -342,15 +351,11 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
           if (selectedElement == null) {
             return;
           }
-          final svgXml = await [selectedElement].toSvgXml(
+          final gcode = await [selectedElement].toGCode(
             byEngrave: _exportByEngrave,
             useSvgTagData: _exportUseTag,
+            autoLaser: _exportUseAutoLaser,
           );
-          final gcode = await LpEngraveHelper.generateGcodeFromSvg(
-                bean,
-                svgXml: svgXml,
-              ) ??
-              "";
           context?.pushWidget(abc.SimulationAbc(gcode: gcode));
         }, child: "仿真".text()),
     ].flowLayout(padding: edgeOnly(all: kH), childGap: kX),
