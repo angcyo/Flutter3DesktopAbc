@@ -71,12 +71,14 @@ class _CanvasDesktopPropertyLayoutWidgetState
     ].column()!;
   }
 
-  /// 构建内容
+  /// 构建属性内容
+  /// 设置/属性 x-y-w-h
   WidgetNullList _buildPropertyList(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
     if (isSelectedElement) {
       final canvasDelegate = widget.canvasDelegate;
       final selectedElement = canvasDelegate.selectedElement;
+      @dp
       final selectedElementBounds = canvasDelegate.selectedElementBounds;
       final unit = canvasDelegate.axisUnit;
       return [
@@ -91,7 +93,67 @@ class _CanvasDesktopPropertyLayoutWidgetState
         hLine(context, indent: kH).paddingOnly(vertical: kH),
         //--size
         [
-          textSpanBuilder((builder) {
+          LabelNumberInputTile(
+            label: "X",
+            number: unit.toUnitFromDp(selectedElementBounds?.left ?? 0.0),
+            trailingWidget: unit.suffix.text(),
+            onSubmitted: (value) {
+              //l.i("onSubmitted[${value.runtimeType}] X:$value");
+              if (value is double) {
+                final valueDp = value.toDpFrom(unit);
+                canvasElementControlManager?.translateElement(
+                  selectComponent,
+                  dx: valueDp - (selectedElementBounds?.left ?? 0.0),
+                );
+              }
+            },
+          ).paddingOnly(all: kM),
+          LabelNumberInputTile(
+            label: "Y",
+            number: unit.toUnitFromDp(selectedElementBounds?.top ?? 0.0),
+            trailingWidget: unit.suffix.text(),
+            onSubmitted: (value) {
+              //l.i("onSubmitted[${value.runtimeType}] Y:$value");
+              if (value is double) {
+                final valueDp = value.toDpFrom(unit);
+                canvasElementControlManager?.translateElement(
+                  selectComponent,
+                  dy: valueDp - (selectedElementBounds?.top ?? 0.0),
+                );
+              }
+            },
+          ).paddingOnly(all: kM),
+          LabelNumberInputTile(
+            label: "W",
+            number: unit.toUnitFromDp(selectedElementBounds?.width ?? 0.0),
+            trailingWidget: unit.suffix.text(),
+            onSubmitted: (value) {
+              //l.i("onSubmitted[${value.runtimeType}] X:$value");
+              if (value is double) {
+                final valueDp = value.toDpFrom(unit);
+                canvasElementControlManager?.updateElementSize(
+                  selectComponent,
+                  width: valueDp,
+                );
+              }
+            },
+          ).paddingOnly(all: kM),
+          LabelNumberInputTile(
+            label: "H",
+            number: unit.toUnitFromDp(selectedElementBounds?.height ?? 0.0),
+            trailingWidget: unit.suffix.text(),
+            onSubmitted: (value) {
+              //l.i("onSubmitted[${value.runtimeType}] Y:$value");
+              if (value is double) {
+                final valueDp = value.toDpFrom(unit);
+                canvasElementControlManager?.updateElementSize(
+                  selectComponent,
+                  height: valueDp,
+                );
+              }
+            },
+          ).paddingOnly(all: kM),
+          /*textSpanBuilder((builder) {
             builder.addText("X ", style: globalTheme.textDesStyle);
             builder.addText(
               unit.formatFromDp(selectedElementBounds?.left ?? 0),
@@ -118,7 +180,7 @@ class _CanvasDesktopPropertyLayoutWidgetState
               unit.formatFromDp(selectedElementBounds?.height ?? 0),
               style: globalTheme.textBodyStyle,
             );
-          }).paddingOnly(all: kL),
+          }).paddingOnly(all: kL),*/
         ]
             .flowLayout(equalWidthRange: "2~", lineChildCount: 2)
             ?.matchParentWidth(),
