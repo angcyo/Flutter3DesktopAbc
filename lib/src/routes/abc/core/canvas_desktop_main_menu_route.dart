@@ -28,9 +28,9 @@ class _CanvasDesktopMainMenuRouteState
       ).popMenu(),
       MenuItemButton(
         onPressed: () {
-          toastInfo("关于...");
+          toastInfo("关于${$appBuildVersionCache}...");
         },
-        child: "关于...".text(),
+        child: "关于 ${$appBuildVersionCache}...".text(),
       ).popMenu(),
       MenuItemButton(
         onPressed: () {

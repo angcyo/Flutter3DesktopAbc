@@ -28,7 +28,7 @@ var _exportByEngrave = false;
 var _exportUseTag = false;
 
 /// 使用自动激光
-var _exportUseAutoLaser = true;
+bool? _exportUseAutoLaser;
 
 /// 支持导出的类型
 const _exportTypeList = [
@@ -264,9 +264,13 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
     if (_exportTypeIndex == 2)
       LabelSwitchTile(
         label: "自动激光",
-        value: _exportUseAutoLaser,
+        value: _exportUseAutoLaser == true,
         onValueChanged: (value) {
-          _exportUseAutoLaser = value;
+          if (value) {
+            _exportUseAutoLaser = true;
+          } else {
+            _exportUseAutoLaser = null;
+          }
         },
       ).paddingOnly(top: kH),
     if (_exportTypeIndex != 0) ...[
@@ -333,7 +337,7 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
           final gcode = await [selectedElement].toGCode(
             byEngrave: _exportByEngrave,
             useSvgTagData: _exportUseTag,
-            autoLaser: _exportUseAutoLaser,
+            forceAutoLaser: _exportUseAutoLaser,
           );
           final filePath =
               await saveFile(dialogTitle: "另存为...", fileName: fileName);
@@ -355,7 +359,7 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
           final gcode = await [selectedElement].toGCode(
             byEngrave: _exportByEngrave,
             useSvgTagData: _exportUseTag,
-            autoLaser: _exportUseAutoLaser,
+            forceAutoLaser: _exportUseAutoLaser,
           );
           context?.pushWidget(abc.SimulationAbc(gcode: gcode));
         }, child: "仿真".text()),
