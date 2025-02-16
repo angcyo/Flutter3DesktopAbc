@@ -46,12 +46,13 @@ String _exportName = "export";
 ///
 /// 当前只能修改第一个元素的属性, 其余元素不会修改
 @implementation
-WidgetNullList buildParamsLayout(State state,
-    Iterable<LpElementMixin>? elements, {
-      bool showFeed = false,
-      int minFeed = 1,
-      int maxFeed = 800,
-    }) {
+WidgetNullList buildParamsLayout(
+  State state,
+  Iterable<LpElementMixin>? elements, {
+  bool showFeed = false,
+  int minFeed = 1,
+  int maxFeed = 800,
+}) {
   //final beans = elements?.map((e) => e.elementBean);
   final context = state.context;
   final globalTheme = GlobalTheme.of(context);
@@ -66,21 +67,21 @@ WidgetNullList buildParamsLayout(State state,
     SegmentTile(
       segments: (dataEngraveType == null || isImage)
           ? [
-        "雕刻"
-            .text(textAlign: TextAlign.center)
-            .paddingOnly(horizontal: _hP, vertical: _vP),
-      ]
+              "雕刻"
+                  .text(textAlign: TextAlign.center)
+                  .paddingOnly(horizontal: _hP, vertical: _vP),
+            ]
           : [
-        "线条雕刻"
-            .text(textAlign: TextAlign.center)
-            .paddingOnly(horizontal: _hP, vertical: _vP),
-        "填充雕刻"
-            .text(textAlign: TextAlign.center)
-            .paddingOnly(horizontal: _hP, vertical: _vP),
-        "切割雕刻"
-            .text(textAlign: TextAlign.center)
-            .paddingOnly(horizontal: _hP, vertical: _vP),
-      ],
+              "线条雕刻"
+                  .text(textAlign: TextAlign.center)
+                  .paddingOnly(horizontal: _hP, vertical: _vP),
+              "填充雕刻"
+                  .text(textAlign: TextAlign.center)
+                  .paddingOnly(horizontal: _hP, vertical: _vP),
+              "切割雕刻"
+                  .text(textAlign: TextAlign.center)
+                  .paddingOnly(horizontal: _hP, vertical: _vP),
+            ],
       selectedIndexList: [
         switch (dataEngraveType) {
           DataEngraveTypeEnum.line => 0,
@@ -90,7 +91,7 @@ WidgetNullList buildParamsLayout(State state,
         },
       ],
       selectedTextStyle:
-      globalTheme.textBodyStyle.copyWith(fontWeight: FontWeight.bold),
+          globalTheme.textBodyStyle.copyWith(fontWeight: FontWeight.bold),
       tilePadding: edgeOnly(all: kM),
       equalWidthRange: "",
       onSelectedAction: (list) {
@@ -114,7 +115,7 @@ WidgetNullList buildParamsLayout(State state,
         valueList: $deviceSettingBeanCache?.fillDpiList,
         arrowWidget: abc
             .loadAbcSvgWidget(abc.Assets.svg.navArrowTip,
-            tintColor: globalTheme.icoGrayColor)
+                tintColor: globalTheme.icoGrayColor)
             .paddingOnly(all: kS),
         onSelectedAction: (index, value) {
           bean?.fillDpi = value;
@@ -132,11 +133,11 @@ WidgetNullList buildParamsLayout(State state,
         ],
         arrowWidget: abc
             .loadAbcSvgWidget(abc.Assets.svg.navArrowTip,
-            tintColor: globalTheme.icoGrayColor)
+                tintColor: globalTheme.icoGrayColor)
             .paddingOnly(all: kS),
         onSelectedAction: (index, value) {
           bean?.imageType =
-          index == 0 ? null : MachineImageType.values[index - 1].name;
+              index == 0 ? null : MachineImageType.values[index - 1].name;
         },
       ),
     if (isFill)
@@ -180,7 +181,7 @@ WidgetNullList buildParamsLayout(State state,
         minValue: 1,
         maxValue: 100,
         inactiveTrackGradientColors:
-        EngraveTileMixin.sActiveTrackGradientColors,
+            EngraveTileMixin.sActiveTrackGradientColors,
         onValueChanged: (value) {
           final printDepth = value.toInt();
           bean?.printDepth = printDepth;
@@ -198,7 +199,7 @@ WidgetNullList buildParamsLayout(State state,
         minValue: minFeed,
         maxValue: maxFeed,
         inactiveTrackGradientColors:
-        EngraveTileMixin.sActiveTrackGradientColors.reversed.toList(),
+            EngraveTileMixin.sActiveTrackGradientColors.reversed.toList(),
         onValueChanged: (value) {
           final feed = value.toInt();
           bean?.feed = feed;
@@ -243,11 +244,10 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
     SegmentTile(
       segments: _exportTypeList
           .map(
-            (e) =>
-            e
+            (e) => e
                 .text(textAlign: TextAlign.center)
                 .paddingOnly(horizontal: _hP, vertical: _vP),
-      )
+          )
           .toList(),
       selectedIndexList: [_exportTypeIndex],
       /*selectedTextStyle:
@@ -261,7 +261,7 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
       },
       borderColor: globalTheme.itemWhiteBgColor,
     ).paddingOnly(horizontal: kH),
-    if (_exportTypeIndex != 0) ...[
+    if (_exportTypeIndex == 2)
       LabelSwitchTile(
         label: "自动激光",
         value: _exportUseAutoLaser,
@@ -269,6 +269,7 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
           _exportUseAutoLaser = value;
         },
       ).paddingOnly(top: kH),
+    if (_exportTypeIndex != 0) ...[
       LabelSwitchTile(
         label: "用于雕刻",
         value: _exportByEngrave,
@@ -307,7 +308,7 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
           //png
           selectedElement.elementOutputImage?.let((image) async {
             final filePath =
-            await saveFile(dialogTitle: "另存为...", fileName: fileName);
+                await saveFile(dialogTitle: "另存为...", fileName: fileName);
             if (!isNil(filePath)) {
               final file = filePath!.file();
               await image.saveToFile(file);
@@ -321,7 +322,7 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
             useSvgTagData: _exportUseTag,
           );
           final filePath =
-          await saveFile(dialogTitle: "另存为...", fileName: fileName);
+              await saveFile(dialogTitle: "另存为...", fileName: fileName);
           if (!isNil(filePath)) {
             final file = filePath!.file();
             await svgXml.saveToFile(file);
@@ -335,7 +336,7 @@ WidgetNullList buildExportLayout(State state, CanvasDelegate? canvasDelegate) {
             autoLaser: _exportUseAutoLaser,
           );
           final filePath =
-          await saveFile(dialogTitle: "另存为...", fileName: fileName);
+              await saveFile(dialogTitle: "另存为...", fileName: fileName);
           if (!isNil(filePath)) {
             final file = filePath!.file();
             await gcode.saveToFile(file);
