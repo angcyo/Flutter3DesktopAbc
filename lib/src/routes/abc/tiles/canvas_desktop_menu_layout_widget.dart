@@ -4,7 +4,7 @@ import 'package:flutter3_canvas/flutter3_canvas.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:lp_canvas/lp_canvas.dart';
 
-import '../core/canvas_desktop_main_menu_route.dart';
+import '../routes/canvas_desktop_main_menu_route.dart';
 
 ///
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>

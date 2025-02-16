@@ -7,6 +7,7 @@ import 'canvas_align_tile.dart';
 import 'canvas_average_tile.dart';
 import 'canvas_flip_tile.dart';
 import 'canvas_path_tile.dart';
+import 'canvas_text_element_edit_tile.dart';
 import 'params_layout.dart';
 
 ///
@@ -81,6 +82,12 @@ class _CanvasDesktopPropertyLayoutWidgetState
       @dp
       final selectedElementBounds = canvasDelegate.selectedElementBounds;
       final unit = canvasDelegate.axisUnit;
+
+      final isGroup = selectedElement is ElementGroupPainter;
+      final isText = selectedElement is LpTextElement;
+      final isImage = selectedElement is LpImageElement;
+      final isPath = selectedElement is LpPathElement;
+
       return [
         "设计".text(style: globalTheme.textDesStyle).paddingOnly(all: kH),
         //--
@@ -185,6 +192,11 @@ class _CanvasDesktopPropertyLayoutWidgetState
             .flowLayout(equalWidthRange: "2~", lineChildCount: 2)
             ?.matchParentWidth(),
         hLine(context, indent: kH).paddingOnly(vertical: kH),
+        //--element
+        if (isText) ...[
+          CanvasTextElementEditTile(selectedElement),
+          hLine(context, indent: kH).paddingOnly(vertical: kH),
+        ],
         //--params
         ...buildParamsLayout(this, selectedEngraveSingleElements),
         hLine(context, indent: kH).paddingOnly(vertical: kH),

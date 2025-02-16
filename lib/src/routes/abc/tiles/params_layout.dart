@@ -111,7 +111,7 @@ WidgetNullList buildParamsLayout(
       LabelMenuTile(
         label: "雕刻密度",
         labelTextStyle: globalTheme.textDesStyle,
-        value: bean?.fillDpi ?? kLpBaseFillDpi,
+        value: bean?.fillDpi ?? LpConstants.kLpBaseFillDpi,
         valueList: $deviceSettingBeanCache?.fillDpiList,
         arrowWidget: abc
             .loadAbcSvgWidget(abc.Assets.svg.navArrowTip,
@@ -160,7 +160,7 @@ WidgetNullList buildParamsLayout(
             .darkColorFiltered(),
         "功率(%)".text(),
       ].row(gap: kL)?.paddingOnly(horizontal: kX),
-      value: bean?.printPower ?? kLpBasePrintPower,
+      value: bean?.printPower ?? LpConstants.kLpBasePrintPower,
       minValue: 1,
       maxValue: 100,
       inactiveTrackGradientColors: EngraveTileMixin.sActiveTrackGradientColors,
@@ -177,7 +177,7 @@ WidgetNullList buildParamsLayout(
               .darkColorFiltered(),
           "深度(%)".text(),
         ].row(gap: kL)?.paddingOnly(horizontal: kX),
-        value: bean?.printDepth ?? kLpBasePrintDepth,
+        value: bean?.printDepth ?? LpConstants.kLpBasePrintDepth,
         minValue: 1,
         maxValue: 100,
         inactiveTrackGradientColors:
