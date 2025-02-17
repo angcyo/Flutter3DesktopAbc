@@ -140,7 +140,7 @@ WidgetNullList buildParamsLayout(
               index == 0 ? null : MachineImageType.values[index - 1].name;
         },
       ),
-    if (isFill)
+    if (isFill || isImage)
       LabelNumberSliderTile(
         labelWidget: [
           "过点扫描(%)".text(),
@@ -170,7 +170,7 @@ WidgetNullList buildParamsLayout(
         //_updateElementLaserOption();
       },
     ).paddingOnly(top: kX),
-    if (!showFeed)
+    if (!showFeed || isDebug)
       LabelNumberSliderTile(
         labelWidget: [
           lpCanvasSvgWidget(Assets.svg.optionDepth, size: iconSize)
@@ -188,14 +188,14 @@ WidgetNullList buildParamsLayout(
           //_updateElementLaserOption();
         },
       ).paddingOnly(top: kX),
-    if (showFeed)
+    if (showFeed || isDebug)
       LabelNumberSliderTile(
         labelWidget: [
           lpCanvasSvgWidget(Assets.svg.optionSpeed, size: iconSize)
               .darkColorFiltered(),
           "速度(mm/s)".text(),
         ].row(gap: kL)?.paddingOnly(horizontal: kX),
-        value: bean?.feed ?? minFeed,
+        value: bean?.feed ?? LpConstants.kLpBaseFeed,
         minValue: minFeed,
         maxValue: maxFeed,
         inactiveTrackGradientColors:
