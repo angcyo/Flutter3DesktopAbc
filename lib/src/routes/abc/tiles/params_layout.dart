@@ -22,7 +22,7 @@ const _vP = kL;
 var _exportTypeIndex = 0;
 
 /// 用于雕刻?
-var _exportByEngrave = false;
+var _exportByEngrave = true;
 
 /// 使用svg标签数据?
 var _exportUseTag = false;
