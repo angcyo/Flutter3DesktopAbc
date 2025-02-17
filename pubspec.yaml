@@ -126,11 +126,16 @@ dependency_overrides:
   # Because flutter_html 3.0.0-beta.2 depends on csslib ^0.17.2 and no versions of flutter_html match >3.0.0-beta.2 <4.0.0, flutter_html ^3.0.0-beta.2 requires csslib ^0.17.2.
   #And because html >=0.15.5 depends on csslib ^1.0.0, html >=0.15.5 is incompatible with flutter_html ^3.0.0-beta.2.
   csslib: ^1.0.2
-  device_info_plus: ^11.2.0
+  device_info_plus: ^11.3.0
 
   #Because flutter3_res depends on intl_utils ^2.8.7 which depends on analyzer ^6.0.0, analyzer ^6.0.0 is required.
   #So, because flutter3_core depends on isar_generator ^3.1.0+1 which depends on analyzer >=4.6.0 <6.0.0, version solving failed.
   analyzer: ^6.0.0
+
+  # Because flutter3_res depends on intl_utils ^2.8.10 which depends on dart_style ^3.0.0, dart_style ^3.0.0 is required.
+  #And because isar_generator 3.1.0+1 depends on dart_style ^2.2.3, isar_generator 3.1.0+1 is forbidden.
+  #Because flutter3_core depends on isar_generator ^3.1.0+1 and no versions of isar_generator match >3.1.0+1 <4.0.0, isar_generator 3.1.0+1 is required.
+  dart_style: ^3.0.1
 
 dev_dependencies:
   flutter_test:
