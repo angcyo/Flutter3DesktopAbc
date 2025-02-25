@@ -9,6 +9,27 @@ import '../../router.dart';
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>
 /// @date 2024/12/26
 ///
+/// https://pub.dev/packages/go_router
+///
+/// https://pub.dev/documentation/go_router/latest/topics/Configuration-topic.html
+///
+/// # 获取路径参数
+/// ```
+/// GoRoute(
+///   path: '/users/:userId',
+///   builder: (context, state) => const UserScreen(id: state.pathParameters['userId']),
+/// ),
+/// ```
+///
+/// # 获取查询参数
+/// `/users?filter=admins`
+/// ```
+/// GoRoute(
+///   path: '/users',
+///   builder: (context, state) => const UsersScreen(filter: state.uri.queryParameters['filter']),
+/// ),
+/// ```
+///
 class GoRouterAbc extends StatefulWidget {
   const GoRouterAbc({super.key});
 
@@ -31,6 +52,13 @@ class _GoRouterAbcState extends State<GoRouterAbc> {
     final goRouter = context.goRouter;
     final goRouterStateOrNull = context.goRouterStateOrNull;
     final currentConfiguration = goRouter.routerDelegate.currentConfiguration;
+
+    //获取路径参数:
+    //currentConfiguration.pathParameters
+
+    //获取查询参数:
+    //currentConfiguration.uri.queryParameters
+
     return [
       textSpanBuilder((builder) {
         builder.addText("${nowTimeString()}->${buildCount++}");
