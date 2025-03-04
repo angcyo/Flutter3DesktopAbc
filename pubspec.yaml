@@ -132,6 +132,7 @@ dependency_overrides:
   #So, because flutter3_core depends on isar_generator ^3.1.0+1 which depends on analyzer >=4.6.0 <6.0.0, version solving failed.
   analyzer: ^6.0.0
 
+  # https://pub.dev/packages/dart_style
   # Because flutter3_res depends on intl_utils ^2.8.10 which depends on dart_style ^3.0.0, dart_style ^3.0.0 is required.
   #And because isar_generator 3.1.0+1 depends on dart_style ^2.2.3, isar_generator 3.1.0+1 is forbidden.
   #Because flutter3_core depends on isar_generator ^3.1.0+1 and no versions of isar_generator match >3.1.0+1 <4.0.0, isar_generator 3.1.0+1 is required.
