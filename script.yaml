@@ -2,9 +2,10 @@
 pgyer_path:
   - "E:/AndroidProjects/LaserPeckerRNPro/android/.apk/"
   - "E:/AndroidProjects/LaserPeckerRNPro-lenovo/android/.apk/"
-  - "/Users/angcyo/project/android/laserpecker-rn-pro/android/.apk"
-  - "/Users/angcyo/project/android/AutoCalibrate/.apk/AutoCalibrate-2.6.0_apk_release_app.apk"
-use_feishu_webhook: false
+  - "/Users/angcyo/project/android/laserpecker-rn-pro/android/.apk/"
+  - "/Users/angcyo/project/android/FirmwareUpdate/.apk/"
+  - "/Users/angcyo/project/android/AutoCalibrate/.apk/"
+use_feishu_webhook: true
 androidCompileSdk: 34
 zipArbFiles:
   - "Flutter3Core/flutter3_res/lib/l10n/intl_zh.arb": "lib_intl_zh.arb"
