@@ -2,6 +2,7 @@
 rem 设置当前控制台为UTF-8编码
 chcp 65001 >> nul
 
+git remote -v
 git fetch
 git rebase origin/main
 
@@ -10,6 +11,7 @@ echo "%CD%\%coreFolder%\"
 IF EXIST "%CD%\%coreFolder%\" (
     cd %coreFolder%
     echo 准备拉取仓库：%coreFolder%
+    git remote -v
     git fetch
     git rebase origin/main
     cd ..
@@ -23,6 +25,7 @@ echo "%CD%\%extendFolder%\"
 IF EXIST "%CD%\%extendFolder%\" (
     cd %extendFolder%
     echo 准备拉取仓库：%extendFolder%
+    git remote -v
     git fetch
     git rebase origin/main
     cd ..
@@ -36,6 +39,7 @@ echo "%CD%\%desktopFolder%\"
 IF EXIST "%CD%\%desktopFolder%\" (
     cd %desktopFolder%
     echo 准备拉取仓库：%desktopFolder%
+    git remote -v
     git fetch
     git rebase origin/main
     cd ..
@@ -48,6 +52,7 @@ set "abcFolder=Flutter3Abc"
 IF EXIST "%CD%\%abcFolder%\" (
     cd %abcFolder%
     echo 准备拉取仓库：%abcFolder%
+    git remote -v
     git fetch
     git rebase origin/main
     cd ..
@@ -57,4 +62,4 @@ IF EXIST "%CD%\%abcFolder%\" (
 )
 
 echo "结束"
-pause
+rem pause
