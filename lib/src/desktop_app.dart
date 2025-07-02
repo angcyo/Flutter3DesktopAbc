@@ -16,14 +16,15 @@ class DesktopApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final title = 'Flutter Desktop Demo';
-    final themeData = ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      useMaterial3: true,
-      fontFamily: "menlo", //默认字体
-    );
 
-    GlobalConfig.def.globalThemeData = themeData;
-    /*GlobalConfig.def.globalTheme = appColor;*/
+    GlobalConfig.def.initGlobalTheme(
+      context,
+      (globalTheme, isLight) => ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+        fontFamily: "menlo", //默认字体
+      ),
+    );
 
     /*return MaterialApp(
       title: title,
@@ -34,7 +35,9 @@ class DesktopApp extends StatelessWidget {
     //路由
     return MaterialApp.router(
       title: title,
-      theme: themeData,
+      theme: GlobalConfig.def.themeData,
+      locale: GlobalConfig.def.locale,
+      themeMode: GlobalConfig.def.themeMode,
       routerConfig: router,
       //--
       localizationsDelegates: const [
