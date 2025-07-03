@@ -168,7 +168,9 @@ class _MainPageState extends State<MainPage>
       brightness: globalTheme.accentBrightness,
       title: [
         _buildLeadingButton(context),
-        "Flutter3DesktopAbc - ${context.goRouterState.uri}".text()
+        "Flutter3DesktopAbc - ${context.goRouterState.uri}".text(
+          style: globalTheme.textGeneralStyle,
+        )
       ].row(key: ValueKey("Title")),
     );
   }
@@ -197,6 +199,7 @@ class _MainPageState extends State<MainPage>
       //--
       SingleInputWidget(
         config: searchRouteConfig,
+        textStyle: globalTheme.textGeneralStyle,
       ).paddingOnly(horizontal: kX, vertical: kH),
       /*Autocomplete<AbcRouteConfig>(
         optionsBuilder: (TextEditingValue textEditingValue) {
@@ -263,7 +266,7 @@ class _MainPageState extends State<MainPage>
                       ));
                 }
               }
-            }),
+            }, style: globalTheme.textGeneralStyle),
             hoverColor: globalTheme.accentColor.withHoverAlphaColor,
             selectedTileColor: globalTheme.accentColor,
             selected:
