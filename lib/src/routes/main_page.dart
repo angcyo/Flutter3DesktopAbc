@@ -35,6 +35,8 @@ class _MainPageState extends State<MainPage>
     updateState();
   }
 
+  /// 导航被缩放到最小宽度状态
+  /// 自适应布局
   bool get isMinNavigation => _navigationWidth <= _kMinNavigationWidth;
 
   //--
