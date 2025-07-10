@@ -261,7 +261,7 @@ class _MainPageState extends State<MainPage>
                 builder.addText("${index + 1}");
               } else {
                 builder.addText("${index + 1}.${abcConfig.$2}");
-                if (abcConfig.$1 == lastJumpPath) {
+                if (abcConfig.$1 == lastJumpRoutePath) {
                   builder.addText(" last",
                       style: globalTheme.textDesStyle.copyWith(
                         color: globalTheme.successColor,
@@ -311,8 +311,8 @@ class _MainPageState extends State<MainPage>
     int? scrollIndex;
     if (goKey != null) {
       //指定跳转
-    } else if (lastJumpPath != null) {
-      goKey = lastJumpPath;
+    } else if (lastJumpRoutePath != null) {
+      goKey = lastJumpRoutePath;
     }
 
     int index = -1;
@@ -334,7 +334,7 @@ class _MainPageState extends State<MainPage>
 
     //goKey ??= _abcKeyList.lastOrNull;
     if (goKey?.isNotEmpty == true) {
-      lastJumpPath = goKey;
+      lastJumpRoutePath = goKey;
       postDelayCallback(() {
         context.go(goKey!);
         if (scrollIndex != null && scrollToIndex == true) {
