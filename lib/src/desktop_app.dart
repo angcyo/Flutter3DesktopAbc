@@ -19,10 +19,14 @@ class DesktopApp extends StatelessWidget {
 
     GlobalConfig.def.initGlobalTheme(
       context,
-      (globalTheme, isLight) => ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      (globalTheme, isLight, themeMode) => ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.deepPurple,
+          brightness: themeMode.brightness,
+        ),
         useMaterial3: true,
         fontFamily: "menlo", //默认字体
+        brightness: themeMode.brightness,
       ),
     );
 
