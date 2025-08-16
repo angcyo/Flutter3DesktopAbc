@@ -57,7 +57,9 @@ PODS:
     - FlutterMacOS
   - url_launcher_macos (0.0.1):
     - FlutterMacOS
-  - window_manager (0.2.0):
+  - wakelock_plus (0.0.1):
+    - FlutterMacOS
+  - window_manager (0.5.0):
     - FlutterMacOS
 
 DEPENDENCIES:
@@ -87,6 +89,7 @@ DEPENDENCIES:
   - super_native_extensions (from `Flutter/ephemeral/.symlinks/plugins/super_native_extensions/macos`)
   - tray_manager (from `Flutter/ephemeral/.symlinks/plugins/tray_manager/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
+  - wakelock_plus (from `Flutter/ephemeral/.symlinks/plugins/wakelock_plus/macos`)
   - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
 
 SPEC REPOS:
@@ -147,6 +150,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/tray_manager/macos
   url_launcher_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
+  wakelock_plus:
+    :path: Flutter/ephemeral/.symlinks/plugins/wakelock_plus/macos
   window_manager:
     :path: Flutter/ephemeral/.symlinks/plugins/window_manager/macos
 
@@ -157,14 +162,14 @@ SPEC CHECKSUMS:
   flutter_blue_plus_darwin: 20a08bfeaa0f7804d524858d3d8744bcc1b6dbc3
   flutter_inappwebview_macos: c2d68649f9f8f1831bfcd98d73fd6256366d9d1d
   flutter_local_notifications: 4bf37a31afde695b56091b4ae3e4d9c7a7e6cda0
-  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
+  FlutterMacOS: d0db08ddef1a9af05a5ec4b724367152bb0500b1
   HotKey: 400beb7caa29054ea8d864c96f5ba7e5b4852277
   hotkey_manager_macos: a4317849af96d2430fa89944d3c58977ca089fbe
   irondash_engine_context: 893c7d96d20ce361d7e996f39d360c4c2f9869ba
   isar_flutter_libs: a65381780401f81ad6bf3f2e7cd0de5698fb98c4
   lp_image_handle_ffi: e0963d8aa1c5e03346527cfba606e1809d9a6f34
   lp_plugin: c2d1b5d0d2a40b1254eae8c15d24b3dfee45bb7b
-  macos_window_utils: 3bca8603c2a1cf2257351dfe6bbccc9accf739fd
+  macos_window_utils: 23f54331a0fd51eea9e0ed347253bf48fd379d1d
   mobile_scanner: bd1e7cd9b67b442f4d903747f4778e040513f860
   network_info_plus: 21d1cd6a015ccb2fdff06a1fbfa88d54b4e92f61
   nsd_macos: a472240e770b92f6c6df1022403aa29c90d012e3
@@ -179,7 +184,8 @@ SPEC CHECKSUMS:
   super_native_extensions: c2795d6d9aedf4a79fae25cb6160b71b50549189
   tray_manager: a104b5c81b578d83f3c3d0f40a997c8b10810166
   url_launcher_macos: 0fba8ddabfc33ce0a9afe7c5fef5aab3d8d2d673
-  window_manager: 1d01fa7ac65a6e6f83b965471b1a7fdd3f06166c
+  wakelock_plus: 21ddc249ac4b8d018838dbdabd65c5976c308497
+  window_manager: b729e31d38fb04905235df9ea896128991cad99e
 
 PODFILE CHECKSUM: 16208599a12443d53889ba2270a4985981cfb204
 
