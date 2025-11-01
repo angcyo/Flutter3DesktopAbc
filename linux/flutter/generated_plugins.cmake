@@ -5,9 +5,10 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   file_selector_linux
   flutter_acrylic
+  flutter_angle
   hotkey_manager_linux
   irondash_engine_context
-  isar_flutter_libs
+  isar_community_flutter_libs
   lp_plugin
   open_dir_linux
   open_file_linux

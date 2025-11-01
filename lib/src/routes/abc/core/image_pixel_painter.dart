@@ -223,7 +223,7 @@ class ImagePixelPainter extends ElementPainter {
   Offset? _hoverPoint;
 
   @override
-  bool handleEvent(PointerEvent event) {
+  bool handlePainterPointerEvent(PointerEvent event) {
     if (event.isPointerHover || event.isPointerDown) {
       _hoverPoint = event.localPosition;
       _hoverCellValue = null;
@@ -234,9 +234,9 @@ class ImagePixelPainter extends ElementPainter {
       }
       //l.d("!!handleEvent->${event.localPosition} $point ${_hoverCellValue?.uiColor.toHexColor()}");
       if (_hoverCellValue == null) {
-        canvasDelegate?.addCursorStyle(MouseCursor.defer);
+        canvasDelegate?.addCursorStyle("pixel", MouseCursor.defer);
       } else {
-        canvasDelegate?.addCursorStyle(SystemMouseCursors.click);
+        canvasDelegate?.addCursorStyle("pixel", SystemMouseCursors.click);
         if (event.isPointerDown) {
           if (enableCellColorEdit) {
             //开始编辑颜色
@@ -250,7 +250,7 @@ class ImagePixelPainter extends ElementPainter {
       }
       refresh();
     }
-    return super.handleEvent(event);
+    return super.handlePainterPointerEvent(event);
   }
 
   @override

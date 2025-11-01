@@ -8,12 +8,13 @@ import Foundation
 import device_info_plus
 import file_picker
 import file_selector_macos
+import flutter_angle
 import flutter_blue_plus_darwin
 import flutter_inappwebview_macos
 import flutter_local_notifications
 import hotkey_manager_macos
 import irondash_engine_context
-import isar_flutter_libs
+import isar_community_flutter_libs
 import lp_plugin
 import macos_window_utils
 import mobile_scanner
@@ -36,6 +37,7 @@ func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   DeviceInfoPlusMacosPlugin.register(with: registry.registrar(forPlugin: "DeviceInfoPlusMacosPlugin"))
   FilePickerPlugin.register(with: registry.registrar(forPlugin: "FilePickerPlugin"))
   FileSelectorPlugin.register(with: registry.registrar(forPlugin: "FileSelectorPlugin"))
+  FlutterAnglePlugin.register(with: registry.registrar(forPlugin: "FlutterAnglePlugin"))
   FlutterBluePlusPlugin.register(with: registry.registrar(forPlugin: "FlutterBluePlusPlugin"))
   InAppWebViewFlutterPlugin.register(with: registry.registrar(forPlugin: "InAppWebViewFlutterPlugin"))
   FlutterLocalNotificationsPlugin.register(with: registry.registrar(forPlugin: "FlutterLocalNotificationsPlugin"))

@@ -24,24 +24,27 @@ environment:
 # https://dart.dev/tools/pub/workspaces/
 # Support for pub workspaces was introduced in Dart 3.6.0.
 workspace:
-  - Flutter3Core/flutter3_oss
-  - Flutter3Core/flutter3_ffi
-  - Flutter3Core/flutter3_http
-  - Flutter3Core/flutter3_basics
-  - Flutter3Core/flutter3_widgets
-  - Flutter3Core/flutter3_pub
-  - Flutter3Core/flutter3_scanner
-  - Flutter3Core/flutter3_excel
   - Flutter3Core/flutter3_app
-  - Flutter3Core/flutter3_core
+  - Flutter3Core/flutter3_basics
   - Flutter3Core/flutter3_canvas
+  - Flutter3Core/flutter3_code
+  - Flutter3Core/flutter3_core
+  - Flutter3Core/flutter3_excel
+  - Flutter3Core/flutter3_ffi
+  - Flutter3Core/flutter3_fonts
+  - Flutter3Core/flutter3_http
+  - Flutter3Core/flutter3_notification
+  - Flutter3Core/flutter3_opencv
+  - Flutter3Core/flutter3_oss
+  - Flutter3Core/flutter3_pub
   - Flutter3Core/flutter3_pub_core
   - Flutter3Core/flutter3_res
-  - Flutter3Core/flutter3_code
-  - Flutter3Core/flutter3_web
+  - Flutter3Core/flutter3_scanner
   - Flutter3Core/flutter3_shelf
+  - Flutter3Core/flutter3_three_js
   - Flutter3Core/flutter3_vector
-  - Flutter3Core/flutter3_fonts
+  - Flutter3Core/flutter3_webview
+  - Flutter3Core/flutter3_widgets
   - Flutter3Extend/lp_device
   #- Flutter3Extend/umeng
   - Flutter3Extend/lp_canvas
@@ -82,6 +85,9 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+
+  flutter3_basics:
+    path: Flutter3Core/flutter3_basics
 
   flutter3_canvas:
     path: Flutter3Core/flutter3_canvas

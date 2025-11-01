@@ -18,7 +18,7 @@ class WindowManagerAbc extends StatefulWidget {
 class _WindowManagerAbcState extends State<WindowManagerAbc>
     with
         BaseAbcStateMixin,
-        AppLifecycleMixin,
+        AppLifecycleStateMixin,
         WindowListener,
         WindowListenerMixin,
         TileMixin,

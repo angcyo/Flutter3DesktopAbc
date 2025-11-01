@@ -8,10 +8,11 @@
 
 #include <file_selector_windows/file_selector_windows.h>
 #include <flutter_acrylic/flutter_acrylic_plugin.h>
+#include <flutter_angle/flutter_angle_plugin.h>
 #include <flutter_inappwebview_windows/flutter_inappwebview_windows_plugin_c_api.h>
 #include <hotkey_manager_windows/hotkey_manager_windows_plugin_c_api.h>
 #include <irondash_engine_context/irondash_engine_context_plugin_c_api.h>
-#include <isar_flutter_libs/isar_flutter_libs_plugin.h>
+#include <isar_community_flutter_libs/isar_flutter_libs_plugin.h>
 #include <lp_plugin/lp_plugin_c_api.h>
 #include <nsd_windows/nsd_windows_plugin_c_api.h>
 #include <open_dir_windows/open_dir_windows_plugin_c_api.h>
@@ -28,6 +29,8 @@ void RegisterPlugins(flutter::PluginRegistry* registry) {
       registry->GetRegistrarForPlugin("FileSelectorWindows"));
   FlutterAcrylicPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterAcrylicPlugin"));
+  FlutterAnglePluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FlutterAnglePlugin"));
   FlutterInappwebviewWindowsPluginCApiRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FlutterInappwebviewWindowsPluginCApi"));
   HotkeyManagerWindowsPluginCApiRegisterWithRegistrar(
