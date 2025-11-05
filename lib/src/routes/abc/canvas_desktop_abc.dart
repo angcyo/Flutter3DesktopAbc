@@ -30,8 +30,8 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
         TickerProviderStateMixin {
   //--
   final CanvasDelegate canvasDelegate = CanvasDelegate();
-  late final CanvasListener canvasListener =
-      CanvasListener(onBuildCanvasMenu: (delegate, manger, menus) {
+  late final CanvasListener canvasListener = CanvasListener(
+      onBuildCanvasMenu: (delegate, manger, anchorPosition, menus) {
     if (manger.isSelectedElement) {
       menus.add("导出Svg...".text().menuStyleItem().ink(() {
         exportSvg(manger);
