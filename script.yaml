@@ -1,11 +1,13 @@
 #[pgyer.dart] apk/ipa所在的文件夹路径, 相对于工程根目录
-pgyer_path:
-  - "E:/AndroidProjects/LaserPeckerRNPro/android/.apk/"
-  - "E:/AndroidProjects/LaserPeckerRNPro-lenovo/android/.apk/"
-  - "/Users/angcyo/project/android/laserpecker-rn-pro/android/.apk/"
-  - "/Users/angcyo/project/android/FirmwareUpdate/.apk/"
-  - "/Users/angcyo/project/android/AutoCalibrate/.apk/"
-use_feishu_webhook: true
+pgyer:
+  path:
+    - "/Users/angcyo/project/android/ComposeDemo/.apk"
+    - "E:/AndroidProjects/LaserPeckerRNPro/android/.apk/"
+    - "E:/AndroidProjects/LaserPeckerRNPro-lenovo/android/.apk/"
+    - "/Users/angcyo/project/android/laserpecker-rn-pro/android/.apk/"
+    - "/Users/angcyo/project/android/FirmwareUpdate/.apk/"
+    - "/Users/angcyo/project/android/AutoCalibrate/.apk/"
+  use_feishu_webhook: false
 #[android_compile_sdk.dart]
 androidCompileSdk: 34
 #[zip_arb_files.dart]
