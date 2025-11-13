@@ -302,6 +302,11 @@ class _MainPageState extends State<MainPage>
           ),
         ),
       ]).expanded(),
+      RandomIdiomWidget().matchParentWidth().paddingOnly(
+            horizontal: kH,
+            top: kH,
+            bottom: kX,
+          ),
     ].column(key: ValueKey("Navigation"))!;
   }
 
