@@ -8,6 +8,12 @@ pgyer:
     - "/Users/angcyo/project/android/FirmwareUpdate/.apk/"
     - "/Users/angcyo/project/android/AutoCalibrate/.apk/"
   use_feishu_webhook: false
+# webhook.dart
+webhook:
+  # 发送版本相关的`webhook`信息
+  version:
+    path: "/Users/angcyo/project/android/laserpecker-rn-pro/android/.apk/version.json"
+
 #[android_compile_sdk.dart]
 androidCompileSdk: 34
 #[zip_arb_files.dart]
