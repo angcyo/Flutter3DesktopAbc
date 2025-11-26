@@ -5,6 +5,19 @@
 #include "flutter_window.h"
 #include "utils.h"
 
+#ifndef FLUTTER_VERSION
+#define FLUTTER_VERSION "1.0.0+1"
+#endif
+
+std::string getCleanVersion() {
+    std::string version = FLUTTER_VERSION;
+    size_t plusPos = version.find('+');
+    if (plusPos != std::string::npos) {
+        return version.substr(0, plusPos);
+    }
+    return version;
+}
+
 int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
                       _In_ wchar_t *command_line, _In_ int show_command) {
   // Attach to console when present (e.g., 'flutter run') or create a
@@ -26,8 +39,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
 
   FlutterWindow window(project);
   Win32Window::Point origin(10, 10);
-  Win32Window::Size size(1280, 720);
-  if (!window.Create(L"Flutter3DesktopAbc", origin, size)) {
+  Win32Window::Size size(1280, 800);
+
+  std::string version_str = getCleanVersion();
+  std::wstring version_wstr = std::wstring(version_str.begin(), version_str.end());
+  std::wstring title = L"Flutter3 Desktop ABC v" + version_wstr;
+
+  if (!window.Create(title, origin, size)) {
     return EXIT_FAILURE;
   }
   window.SetQuitOnClose(true);

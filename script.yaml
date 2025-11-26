@@ -7,7 +7,7 @@ pgyer:
     - "/Users/angcyo/project/android/laserpecker-rn-pro/android/.apk/"
     - "/Users/angcyo/project/android/FirmwareUpdate/.apk/"
     - "/Users/angcyo/project/android/AutoCalibrate/.apk/"
-  use_feishu_webhook: false
+  use_feishu_webhook: true
 # webhook.dart
 webhook:
   # 发送版本相关的`webhook`信息
