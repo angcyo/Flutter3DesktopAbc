@@ -38,4 +38,4 @@ collect_product:
   ios_ipa_name: "#an-#vn_#bn_#fn.ipa"
   #macos_app_name: "#an-#vn_#bn_#fn.app"
   macos_app_name: "#an-macos-arm64-v#vn-#bn.zip"
-  windows_exe_name: "#an-windows-x64-v#vn-#bn.exe"
+  windows_exe_name: "#an-windows-x64-v#vn-#bn.zip"
