@@ -1,4 +1,5 @@
-name: Flutter3DesktopAbc
+name: flutter3_desktop_abc
+app_name: Flutter3DesktopAbc
 description: "Flutter3DesktopAbc project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.

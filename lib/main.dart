@@ -1,7 +1,8 @@
-import 'package:Flutter3DesktopAbc/src/desktop_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter3_desktop_app/flutter3_desktop_app.dart';
 import 'package:lp_module/lp_module.dart';
+
+import 'src/desktop_app.dart';
 
 ///
 /// @author <a href="mailto:angcyo@126.com">angcyo</a>
