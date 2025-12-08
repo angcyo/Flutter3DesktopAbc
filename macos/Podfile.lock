@@ -5,7 +5,7 @@ PODS:
     - FlutterMacOS
   - file_selector_macos (0.0.1):
     - FlutterMacOS
-  - flutter_angle (0.3.7):
+  - flutter_angle (0.3.8):
     - Flutter
     - FlutterAngle (~> 0.0.8)
     - FlutterMacOS
@@ -169,7 +169,7 @@ SPEC CHECKSUMS:
   device_info_plus: 4fb280989f669696856f8b129e4a5e3cd6c48f76
   file_picker: 7584aae6fa07a041af2b36a2655122d42f578c1a
   file_selector_macos: 6280b52b459ae6c590af5d78fc35c7267a3c4b31
-  flutter_angle: 667171798186da22259bed91555207507060bd4d
+  flutter_angle: 7b1a2b3e733221bf2e0325e42fc3edf95b5d44c4
   flutter_blue_plus_darwin: 20a08bfeaa0f7804d524858d3d8744bcc1b6dbc3
   flutter_inappwebview_macos: c2d68649f9f8f1831bfcd98d73fd6256366d9d1d
   flutter_local_notifications: 4bf37a31afde695b56091b4ae3e4d9c7a7e6cda0
