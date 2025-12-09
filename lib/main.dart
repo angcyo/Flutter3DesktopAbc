@@ -26,6 +26,8 @@ void main([List<String>? args]) async {
       await initLpModule();
       //--
       SvgBuilder.customSvgHeaderAnnotation = null;
+      //nsd
+      $nsdHelper.registerNsdService();
     },
   );
 }
