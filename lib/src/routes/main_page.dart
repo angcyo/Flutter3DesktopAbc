@@ -13,11 +13,7 @@ class MainPage extends StatefulWidget {
   final List<AbcRouteConfig> abcRouteList;
   final Widget? body;
 
-  const MainPage({
-    super.key,
-    required this.abcRouteList,
-    this.body,
-  });
+  const MainPage({super.key, required this.abcRouteList, this.body});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -54,21 +50,20 @@ class _MainPageState extends State<MainPage>
     autoOptionsMaxHeight: isDesktopOrWeb ? screenHeight / 2 : screenHeight / 3,
     autoDisplayStringForOption: (option) =>
         (option as AbcRouteConfig?)?.$2 ?? "",
-    autoOptionsBuilder: (
-      TextFieldConfig config,
-      TextEditingValue textEditingValue,
-    ) {
-      final text = textEditingValue.text;
-      if (isNil(text)) {
-        return routeList;
-      }
-      //过滤路由
-      final result = routeList
-          .filter(
-              (e) => e.$2?.toLowerCase().contains(text.toLowerCase()) == true)
-          .toList();
-      return result;
-    },
+    autoOptionsBuilder:
+        (TextFieldConfig config, TextEditingValue textEditingValue) {
+          final text = textEditingValue.text;
+          if (isNil(text)) {
+            return routeList;
+          }
+          //过滤路由
+          final result = routeList
+              .filter(
+                (e) => e.$2?.toLowerCase().contains(text.toLowerCase()) == true,
+              )
+              .toList();
+          return result;
+        },
     onAutoOptionSelected: (value) {
       if (value is AbcRouteConfig) {
         _jumpToTarget(value.$1);
@@ -93,10 +88,7 @@ class _MainPageState extends State<MainPage>
   }
 
   @override
-  void onSelfWindowSizeChanged({
-    bool? isMaximize,
-    bool? isUnmaximize,
-  }) {
+  void onSelfWindowSizeChanged({bool? isMaximize, bool? isUnmaximize}) {
     super.onSelfWindowSizeChanged(
       isMaximize: isMaximize,
       isUnmaximize: isUnmaximize,
@@ -139,11 +131,11 @@ class _MainPageState extends State<MainPage>
       );
       //导航大小拖拽线
       DragLineWidget(
-              onDragChanged: (from, to, delta) {
-                _navigationWidth += delta;
-              },
-              key: ValueKey("DragLine"))
-          .alignConstraint();
+        onDragChanged: (from, to, delta) {
+          _navigationWidth += delta;
+        },
+        key: ValueKey("DragLine"),
+      ).alignConstraint();
       //内容区域
       _buildContentWidget(context, widget.body).applyConstraint(
         left: sId(-1).right,
@@ -171,8 +163,8 @@ class _MainPageState extends State<MainPage>
       title: [
         _buildLeadingButton(context),
         "Flutter3DesktopAbc - ${context.goRouterState.uri}".text(
-          style: globalTheme.textGeneralStyle,
-        )
+          textStyle: globalTheme.textGeneralStyle,
+        ),
       ].row(key: ValueKey("Title")),
     );
   }
@@ -242,56 +234,57 @@ class _MainPageState extends State<MainPage>
       ),*/
       //--
       buildObserverCustomScrollView(context, [
-        buildObserverSliverListBuilder(context, (context, index) {
-          final abcConfig = routeList.getOrNull(index);
-          if (abcConfig == null) {
-            return null;
-          }
-          l.d("build abc item[$index]:${abcConfig.$1}");
-          //debugger();
-          const size = 24.0;
-          Widget? result = ListTile(
-            leading: SizedBox(
+        buildObserverSliverListBuilder(
+          context,
+          itemBuilder: (context, index) {
+            final abcConfig = routeList.getOrNull(index);
+            if (abcConfig == null) {
+              return null;
+            }
+            l.d("build abc item[$index]:${abcConfig.$1}");
+            //debugger();
+            const size = 24.0;
+            Widget? result = ListTile(
+              leading: SizedBox(
                 width: size,
                 height: size,
-                child: loadAssetImageWidget("assets/png/flutter.png"
-                    .ensurePackagePrefix("flutter3_abc"))),
-            title: textSpanBuilder((builder) {
-              if (isMinNavigation) {
-                builder.addText("${index + 1}");
-              } else {
-                builder.addText("${index + 1}.${abcConfig.$2}");
-                if (abcConfig.$1 == lastJumpRoutePath) {
-                  builder.addText(" last",
+                child: loadAssetImageWidget(
+                  "assets/png/flutter.png".ensurePackagePrefix("flutter3_abc"),
+                ),
+              ),
+              title: textSpanBuilder((builder) {
+                if (isMinNavigation) {
+                  builder.addText("${index + 1}");
+                } else {
+                  builder.addText("${index + 1}.${abcConfig.$2}");
+                  if (abcConfig.$1 == lastJumpRoutePath) {
+                    builder.addText(
+                      " last",
                       style: globalTheme.textDesStyle.copyWith(
                         color: globalTheme.successColor,
-                      ));
+                      ),
+                    );
+                  }
                 }
-              }
-            }, style: globalTheme.textGeneralStyle),
-            hoverColor: globalTheme.accentColor.withHoverAlphaColor,
-            selectedTileColor: globalTheme.accentColor,
-            selected:
-                "/${context.goRouterState.uri.pathSegments.firstOrNull}" ==
-                    abcConfig.$1,
-            onTap: () {
-              //l.d("...$index");
-              //Navigator.pushNamed(context, '/abc/$index');
-              //Navigator.push(context, '/abc/$index');
-              _jumpToTarget(abcConfig.$1, false);
-            },
-          ).material();
-          result = Column(
-            children: [
-              result,
-              const Divider(
-                height: 0.5,
-                thickness: 0.5,
-              ),
-            ],
-          );
-          return result;
-        }),
+              }, style: globalTheme.textGeneralStyle),
+              hoverColor: globalTheme.accentColor.withHoverAlphaColor,
+              selectedTileColor: globalTheme.accentColor,
+              selected:
+                  "/${context.goRouterState.uri.pathSegments.firstOrNull}" ==
+                  abcConfig.$1,
+              onTap: () {
+                //l.d("...$index");
+                //Navigator.pushNamed(context, '/abc/$index');
+                //Navigator.push(context, '/abc/$index');
+                _jumpToTarget(abcConfig.$1, false);
+              },
+            ).material();
+            result = Column(
+              children: [result, const Divider(height: 0.5, thickness: 0.5)],
+            );
+            return result;
+          },
+        ),
         //底部显示
         SliverFillRemaining(
           hasScrollBody: false,
@@ -303,10 +296,10 @@ class _MainPageState extends State<MainPage>
         ),
       ]).expanded(),
       RandomIdiomWidget().matchParentWidth().paddingOnly(
-            horizontal: kH,
-            top: kH,
-            bottom: kX,
-          ),
+        horizontal: kH,
+        top: kH,
+        bottom: kX,
+      ),
     ].column(key: ValueKey("Navigation"))!;
   }
 
