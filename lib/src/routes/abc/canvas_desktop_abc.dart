@@ -31,16 +31,21 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
   //--
   final CanvasDelegate canvasDelegate = CanvasDelegate();
   late final CanvasListener canvasListener = CanvasListener(
-      onBuildCanvasMenu: (delegate, manger, anchorPosition, menus) {
-    if (manger.isSelectedElement) {
-      menus.add("导出Svg...".text().menuStyleItem().ink(() {
-        exportSvg(manger);
-      }).popMenu());
-      menus.add("导出Svg(加工)...".text().menuStyleItem().ink(() {
-        exportSvg(manger, byEngrave: true);
-      }).popMenu());
-    }
-  });
+    onBuildCanvasMenu: (delegate, manger, anchorPosition, menus) {
+      if (manger.isSelectedElement) {
+        menus.add(
+          "导出Svg...".text().menuStyleItem().ink(() {
+            exportSvg(manger);
+          }).popMenu(),
+        );
+        menus.add(
+          "导出Svg(加工)...".text().menuStyleItem().ink(() {
+            exportSvg(manger, byEngrave: true);
+          }).popMenu(),
+        );
+      }
+    },
+  );
 
   //--
 
@@ -59,9 +64,10 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
       useSvgTagData: isDebug,
     );
     final fileName = firstName == null ? "untitled.svg" : "$firstName.svg";
-    svgXml
-        ?.writeToFile(fileName: fileName, useCacheFolder: true)
-        .getValue((file, error) async {
+    svgXml?.writeToFile(fileName: fileName, useCacheFolder: true).getValue((
+      file,
+      error,
+    ) async {
       if (isDesktop) {
         final saveFilePath = await saveFile(
           dialogTitle: "导出Svg...",
@@ -82,57 +88,54 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
   void initState() {
     canvasDelegate.addCanvasListener(canvasListener);
     //粘贴
-    registerKeyEvent([
-      if (isMacOS) ...[
-        [
-          LogicalKeyboardKey.meta,
-          LogicalKeyboardKey.keyV,
+    registerKeyEvent(
+      [
+        if (isMacOS) ...[
+          [LogicalKeyboardKey.meta, LogicalKeyboardKey.keyV],
+        ],
+        if (!isMacOS) ...[
+          [LogicalKeyboardKey.control, LogicalKeyboardKey.keyV],
         ],
       ],
-      if (!isMacOS) ...[
-        [
-          LogicalKeyboardKey.control,
-          LogicalKeyboardKey.keyV,
-        ],
-      ],
-    ], (info) {
-      () async {
-        // 获取剪切板image
-        final image = await readClipboardImage();
-        if (image != null) {
-          LpElementParser()
-            ..image = image
-            ..parse(
-              autoAddToCanvas: true,
-              canvasDelegate: canvasDelegate,
-              context: buildContext,
-            );
-        }
-        // 获取剪切板text
-        final text = await readClipboardText();
-        if (!isNil(text)) {
-          LpElementParser()
-            ..text = text
-            ..parse(
-              autoAddToCanvas: true,
-              canvasDelegate: canvasDelegate,
-              context: buildContext,
-            );
-        }
-        // 获取剪切板Uri
-        final uri = await readClipboardUri();
-        if (uri != null) {
-          LpElementParser()
-            ..url = uri.filePath
-            ..parse(
-              autoAddToCanvas: true,
-              canvasDelegate: canvasDelegate,
-              context: buildContext,
-            );
-        }
-      }();
-      return true;
-    });
+      (info) {
+        () async {
+          // 获取剪切板image
+          final image = await readClipboardImage();
+          if (image != null) {
+            LpElementParser()
+              ..image = image
+              ..parse(
+                autoAddToCanvas: true,
+                canvasDelegate: canvasDelegate,
+                context: buildContext,
+              );
+          }
+          // 获取剪切板text
+          final text = await readClipboardText();
+          if (!isNil(text)) {
+            LpElementParser()
+              ..text = text
+              ..parse(
+                autoAddToCanvas: true,
+                canvasDelegate: canvasDelegate,
+                context: buildContext,
+              );
+          }
+          // 获取剪切板Uri
+          final uri = await readClipboardUFileUri();
+          if (uri != null) {
+            LpElementParser()
+              ..url = uri.filePath
+              ..parse(
+                autoAddToCanvas: true,
+                canvasDelegate: canvasDelegate,
+                context: buildContext,
+              );
+          }
+        }();
+        return .handled;
+      },
+    );
     super.initState();
   }
 
@@ -149,8 +152,10 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
   Widget build(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
     final lineColor = globalTheme.lineColor;
-    return [dropStateInfoSignal, layoutController.showPropertyTypeValue]
-        .buildFn(() {
+    return [
+      dropStateInfoSignal,
+      layoutController.showPropertyTypeValue,
+    ].buildFn(() {
       return buildDropRegion(
         context,
         cLayout(() {
@@ -158,17 +163,16 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
           CanvasDesktopMenuLayoutWidget(
             canvasDelegate,
             key: ValueKey("CanvasDesktopMenuLayout"),
-          ).alignParentConstraint(
-            alignment: Alignment.topCenter,
-            height: 60,
-          );
+          ).alignParentConstraint(alignment: Alignment.topCenter, height: 60);
           //左边导航
-          _buildLeftNavigation(context).alignParentConstraint(
-            top: sId(-1).bottom,
-            width: 54,
-          );
-          Line(thickness: 1, color: lineColor, axis: Axis.vertical)
-              .applyConstraint(
+          _buildLeftNavigation(
+            context,
+          ).alignParentConstraint(top: sId(-1).bottom, width: 54);
+          Line(
+            thickness: 1,
+            color: lineColor,
+            axis: Axis.vertical,
+          ).applyConstraint(
             left: sId(-1).right,
             top: sId(-1).top,
             bottom: parent.bottom,
@@ -302,8 +306,9 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
         if (event.isPointerUp) {
           @dp
           @sceneCoordinate
-          final position =
-              canvasDelegate.canvasViewBox.toScenePoint(event.localPosition);
+          final position = canvasDelegate.canvasViewBox.toScenePoint(
+            event.localPosition,
+          );
           LpElementParser()
             ..text = "HELLO"
             ..textFontSize = 10
@@ -386,7 +391,8 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
       ).size(size: _navItemSize),
       IconStateWidget(
         icon: loadAbcSvgWidget(Assets.svg.addMaterial),
-        selectedDecoration: layoutController.showPropertyTypeValue.value ==
+        selectedDecoration:
+            layoutController.showPropertyTypeValue.value ==
                 DesignShowPropertyType.shape
             ? selectedDecoration
             : null,
@@ -397,12 +403,15 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
           );
         },
       ).size(size: _navItemSize),
-      loadAbcSvgWidget(Assets.svg.addApps).icon(() {
-        lpToast("click1".text());
-      }).size(size: _navItemSize),
+      loadAbcSvgWidget(Assets.svg.addApps)
+          .icon(() {
+            lpToast("click1".text());
+          })
+          .size(size: _navItemSize),
       IconStateWidget(
         icon: loadAbcSvgWidget(Assets.svg.iconLayer),
-        selectedDecoration: layoutController.showPropertyTypeValue.value ==
+        selectedDecoration:
+            layoutController.showPropertyTypeValue.value ==
                 DesignShowPropertyType.layer
             ? selectedDecoration
             : null,

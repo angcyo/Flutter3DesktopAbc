@@ -35,33 +35,30 @@ class _ImagePixelAbcState extends State<ImagePixelAbc>
     canvasDelegate.canvasElementManager.addElement(imagePixelPainter);
     super.initState();
     //粘贴
-    registerKeyEvent([
-      if (isMacOS) ...[
-        [
-          LogicalKeyboardKey.meta,
-          LogicalKeyboardKey.keyV,
+    registerKeyEvent(
+      [
+        if (isMacOS) ...[
+          [LogicalKeyboardKey.meta, LogicalKeyboardKey.keyV],
+        ],
+        if (!isMacOS) ...[
+          [LogicalKeyboardKey.control, LogicalKeyboardKey.keyV],
         ],
       ],
-      if (!isMacOS) ...[
-        [
-          LogicalKeyboardKey.control,
-          LogicalKeyboardKey.keyV,
-        ],
-      ],
-    ], (info) {
-      () async {
-        final imageBytes = await readClipboardImageBytes();
-        if (imageBytes != null) {
-          _handleImage(bytes: imageBytes);
-        }
-        // 获取剪切板Uri
-        final uri = await readClipboardUri();
-        if (uri != null) {
-          _handleImage(uri: uri);
-        }
-      }();
-      return true;
-    });
+      (info) {
+        () async {
+          final imageBytes = await readClipboardImageBytes();
+          if (imageBytes != null) {
+            _handleImage(bytes: imageBytes);
+          }
+          // 获取剪切板Uri
+          final uri = await readClipboardUFileUri();
+          if (uri != null) {
+            _handleImage(uri: uri);
+          }
+        }();
+        return .handled;
+      },
+    );
   }
 
   @override
@@ -69,40 +66,43 @@ class _ImagePixelAbcState extends State<ImagePixelAbc>
     final globalTheme = GlobalTheme.of(context);
     final lineColor = globalTheme.lineColor;
     return [dropStateInfoSignal].buildFn(() {
-      return buildDropRegion(context, cLayout(() {
-        //中间画布
-        CanvasWidget(
-          canvasDelegate,
-          key: ValueKey("canvas"),
-        ).matchParentConstraint(
-          right: sId(1).left,
-        );
+      return buildDropRegion(
+        context,
+        cLayout(() {
+          //中间画布
+          CanvasWidget(
+            canvasDelegate,
+            key: ValueKey("canvas"),
+          ).matchParentConstraint(right: sId(1).left);
 
-        //属性控制
-        ImagePixelPropertyControlWidget(canvasDelegate, imagePixelPainter)
-            .alignParentConstraint(
-          alignment: Alignment.centerRight,
-          width: 200,
-        );
-        Line(thickness: 1, color: lineColor, axis: Axis.vertical)
-            .applyConstraint(
-          right: sId(-1).left,
-          top: sId(-1).top,
-          bottom: parent.bottom,
-          height: matchConstraint,
-          width: 1,
-        );
+          //属性控制
+          ImagePixelPropertyControlWidget(
+            canvasDelegate,
+            imagePixelPainter,
+          ).alignParentConstraint(alignment: Alignment.centerRight, width: 200);
+          Line(
+            thickness: 1,
+            color: lineColor,
+            axis: Axis.vertical,
+          ).applyConstraint(
+            right: sId(-1).left,
+            top: sId(-1).top,
+            bottom: parent.bottom,
+            height: matchConstraint,
+            width: 1,
+          );
 
-        //拖拽文件覆盖层
-        if (isDropOverMixin) {
-          "放开这个文本"
-              .text(textColor: Colors.white, fontSize: 40)
-              .center()
-              .backgroundColor(Colors.black12)
-              .blur(sigma: 2)
-              .matchParentConstraint();
-        }
-      }));
+          //拖拽文件覆盖层
+          if (isDropOverMixin) {
+            "放开这个文本"
+                .text(textColor: Colors.white, fontSize: 40)
+                .center()
+                .backgroundColor(Colors.black12)
+                .blur(sigma: 2)
+                .matchParentConstraint();
+          }
+        }),
+      );
     });
   }
 
@@ -124,10 +124,7 @@ class _ImagePixelAbcState extends State<ImagePixelAbc>
   }
 
   @callPoint
-  void _handleImage({
-    Uint8List? bytes,
-    Uri? uri,
-  }) async {
+  void _handleImage({Uint8List? bytes, Uri? uri}) async {
     bytes ??= await uri?.getBytes();
     //--
     if (bytes != null) {
@@ -140,8 +137,9 @@ class _ImagePixelAbcState extends State<ImagePixelAbc>
           imageFormat: imageFormat,
           image: image,
         );
-        canvasDelegate.canvasFollowManager
-            .followCanvasContent(restoreDef: true);
+        canvasDelegate.canvasFollowManager.followCanvasContent(
+          restoreDef: true,
+        );
       }
     }
   }
