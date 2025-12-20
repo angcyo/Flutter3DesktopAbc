@@ -43,13 +43,13 @@ final flutter3DesktopAbcRoutes = <AbcRouteConfig>[
   (
     "/windowManager",
     "WindowManagerAbc $kGo",
-    (context) => const WindowManagerAbc()
+    (context) => const WindowManagerAbc(),
   ),
   ("/imagePixel", 'ImagePixelAbc ', (context) => const ImagePixelAbc()),
   (
     "/canvasDesktop",
     'CanvasDesktopAbc ',
-    (context) => const CanvasDesktopAbc()
+    (context) => const CanvasDesktopAbc(),
   ),
   ("/go_router", "GoRouterAbc", (context) => const GoRouterAbc()),
   ("/dragFile", "DragFileAbc", (context) => const DropFileAbc()),
@@ -58,10 +58,16 @@ final flutter3DesktopAbcRoutes = <AbcRouteConfig>[
 ];
 
 /// 路由配置
+/// - [goRouter]
 final router = GoRouter(
   //初始化的路由
   initialLocation: "/",
   navigatorKey: rootGoRouterNavigatorKey,
+  observers: [
+    lifecycleNavigatorObserver,
+    navigatorObserverDispatcher,
+    NavigatorObserverLog(),
+  ],
   //路由列表
   routes: [
     ShellRoute(
@@ -73,17 +79,19 @@ final router = GoRouter(
         ).material();
       },
       routes: flutter3DesktopAbcRoutes
-          .map((e) => GoRoute(
-                path: e.$1,
-                name: e.$2,
-                pageBuilder: (context, state) {
-                  //debugger();
-                  final child = e.$3(context);
-                  final route = child.toRoute(type: TranslationType.zoom);
-                  return CustomTransitionPage(
-                      key: state.pageKey,
-                      child: child,
-                      transitionsBuilder: (
+          .map(
+            (e) => GoRoute(
+              path: e.$1,
+              name: e.$2,
+              pageBuilder: (context, state) {
+                //debugger();
+                final child = e.$3(context);
+                final route = child.toRoute(type: TranslationType.zoom);
+                return CustomTransitionPage(
+                  key: state.pageKey,
+                  child: child,
+                  transitionsBuilder:
+                      (
                         BuildContext context,
                         Animation<double> animation,
                         Animation<double> secondaryAnimation,
@@ -104,11 +112,13 @@ final router = GoRouter(
                           secondaryAnimation,
                           child,
                         );*/
-                      });
-                },
-              ))
+                      },
+                );
+              },
+            ),
+          )
           .toList(),
-    )
+    ),
   ],
   //--
   //路由重定向
