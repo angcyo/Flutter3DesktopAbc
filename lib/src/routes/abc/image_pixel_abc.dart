@@ -51,7 +51,7 @@ class _ImagePixelAbcState extends State<ImagePixelAbc>
             _handleImage(bytes: imageBytes);
           }
           // 获取剪切板Uri
-          final uri = await readClipboardUFileUri();
+          final uri = await readClipboardFileUri();
           if (uri != null) {
             _handleImage(uri: uri);
           }

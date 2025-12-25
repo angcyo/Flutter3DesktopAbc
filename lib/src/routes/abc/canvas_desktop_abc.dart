@@ -122,7 +122,7 @@ class _CanvasDesktopAbcState extends State<CanvasDesktopAbc>
               );
           }
           // 获取剪切板Uri
-          final uri = await readClipboardUFileUri();
+          final uri = await readClipboardFileUri();
           if (uri != null) {
             LpElementParser()
               ..url = uri.filePath
