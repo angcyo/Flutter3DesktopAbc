@@ -107,20 +107,24 @@ class _ImagePixelAbcState extends State<ImagePixelAbc>
   }
 
   @override
-  FutureOr onHandleDropDone(PerformDropEvent event) async {
+  FutureOr<DropStateInfo> onSelfHandleDropDone(
+    BuildContext context,
+    PerformDropEvent event,
+  ) async {
     //2025-02-07 mac上不需要
     //dropStateInfoSignal.value = null;
-    final dropImageList = await event.session.images;
+    final dropImageBytesList = await event.session.imageBytes;
     final dropUriList = await event.session.uris;
 
     Uint8List? bytes;
-    if (!isNil(dropImageList)) {
-      bytes = dropImageList.first;
+    if (!isNil(dropImageBytesList)) {
+      bytes = dropImageBytesList.first;
     } else if (!isNil(dropUriList)) {
       bytes = await dropUriList.first.getBytes();
     }
 
     _handleImage(bytes: bytes);
+    return DropStateInfo(DropStateEnum.done);
   }
 
   @callPoint
