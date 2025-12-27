@@ -34,6 +34,7 @@ workspace:
   - Flutter3Core/flutter3_ffi
   - Flutter3Core/flutter3_fonts
   - Flutter3Core/flutter3_http
+  - Flutter3Core/flutter3_mcp
   - Flutter3Core/flutter3_notification
   - Flutter3Core/flutter3_opencv
   - Flutter3Core/flutter3_oss
