@@ -13,7 +13,7 @@ void main([List<String>? args]) async {
   //await initWindow(size: Size(1280, 720));
   //runApp(const DesktopApp());
   runGlobalApp(
-    const DesktopApp().wrapAboutDialog(),
+    const DesktopApp().wrapAboutDialog().wrapLogPanel(),
     beforeAction: () async {
       /*GlobalConfig.def.openUrlFn = (context, url, meta) {
       context?.openSingleWebView(url);
