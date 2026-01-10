@@ -1336,10 +1336,10 @@ packages:
     dependency: transitive
     description:
       name: mcp_dart
-      sha256: c44fe3b5cfcc0010a3ef6875ccfc5ec3bcfce158ddab0f7f898cef9d55eea9d9
+      sha256: "5b6c3b7085e02c085cc48efc77b560c2fb509dcdb57afc781bc2239eac9d8c7e"
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   menu_base:
     dependency: transitive
     description:
@@ -1815,6 +1815,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.3"
+  process_run:
+    dependency: transitive
+    description:
+      name: process_run
+      sha256: "6ec839cdd3e6de4685318e7686cd4abb523c3d3a55af0e8d32a12ae19bc66622"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.4"
   provider:
     dependency: transitive
     description:
@@ -2161,10 +2169,10 @@ packages:
     dependency: transitive
     description:
       name: synchronized
-      sha256: "69fe30f3a8b04a0be0c15ae6490fc859a78ef4c43ae2dd5e8a623d45bfcf9225"
+      sha256: c254ade258ec8282947a0acbbc90b9575b4f19673533ee46f2f6e9b3aeefd7c0
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.0+3"
+    version: "3.4.0"
   term_glyph:
     dependency: transitive
     description:
