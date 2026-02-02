@@ -917,22 +917,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
-  hive:
+  hive_ce:
     dependency: transitive
     description:
-      name: hive
-      sha256: "8dcf6db979d7933da8217edcec84e9df1bdb4e4edc7fc77dbd5aa74356d6d941"
+      name: hive_ce
+      sha256: b844955c89f61f479170632b971dcf6fbb8e7233d2a5c2e3c7b89e1b2986bdb5
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.3"
-  hive_flutter:
+    version: "2.19.1"
+  hive_ce_flutter:
     dependency: transitive
     description:
-      name: hive_flutter
-      sha256: dca1da446b1d808a51689fb5d0c6c9510c0a2ba01e22805d492c73b68e33eecc
+      name: hive_ce_flutter
+      sha256: "2677e95a333ff15af43ccd06af7eb7abbf1a4f154ea071997f3de4346cae913a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "2.3.4"
   hotkey_manager:
     dependency: transitive
     description:
@@ -1025,10 +1025,10 @@ packages:
     dependency: "direct main"
     description:
       name: image
-      sha256: "4e973fcf4caae1a4be2fa0a13157aa38a8f9cb049db6529aa00b4d71abc4d928"
+      sha256: "492bd52f6c4fbb6ee41f781ff27765ce5f627910e1e0cbecfa3d9add5562604c"
       url: "https://pub.dev"
     source: hosted
-    version: "4.5.4"
+    version: "4.7.2"
   image_gallery_saver_plus:
     dependency: transitive
     description:
@@ -1173,6 +1173,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.0"
+  isolate_channel:
+    dependency: transitive
+    description:
+      name: isolate_channel
+      sha256: d9e706ce2b0d871c9e05dcdf6fc0e35b0ce90c59ebfcdb3aba5d221ba228a087
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.2"
   js:
     dependency: transitive
     description:
@@ -1530,10 +1538,10 @@ packages:
     dependency: transitive
     description:
       name: open_file
-      sha256: d17e2bddf5b278cb2ae18393d0496aa4f162142ba97d1a9e0c30d476adf99c0e
+      sha256: b22decdae85b459eac24aeece48f33845c6f16d278a9c63d75c5355345ca236b
       url: "https://pub.dev"
     source: hosted
-    version: "3.5.10"
+    version: "3.5.11"
   open_file_android:
     dependency: transitive
     description:
@@ -1546,10 +1554,10 @@ packages:
     dependency: transitive
     description:
       name: open_file_ios
-      sha256: "02996f01e5f6863832068e97f8f3a5ef9b613516db6897f373b43b79849e4d07"
+      sha256: a5acd07ba1f304f807a97acbcc489457e1ad0aadff43c467987dd9eef814098f
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   open_file_linux:
     dependency: transitive
     description:
@@ -1562,10 +1570,10 @@ packages:
     dependency: transitive
     description:
       name: open_file_mac
-      sha256: "1440b1e37ceb0642208cfeb2c659c6cda27b25187a90635c9d1acb7d0584d324"
+      sha256: cd293f6750de6438ab2390513c99128ade8c974825d4d8128886d1cda8c64d01
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4"
   open_file_platform_interface:
     dependency: transitive
     description:
