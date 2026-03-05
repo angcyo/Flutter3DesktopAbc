@@ -41,20 +41,20 @@ final flutter3DesktopAbcRoutes = <AbcRouteConfig>[
   ("/", null, (context) => const StartAbc()),
   ...flutter3AbcRoutes,
   (
-    "/windowManager",
+    "/!windowManager",
     "WindowManagerAbc $kGo",
     (context) => const WindowManagerAbc(),
   ),
-  ("/imagePixel", 'ImagePixelAbc ', (context) => const ImagePixelAbc()),
+  ("/!imagePixel", 'ImagePixelAbc ', (context) => const ImagePixelAbc()),
   (
-    "/canvasDesktop",
+    "/!canvasDesktop",
     'CanvasDesktopAbc ',
     (context) => const CanvasDesktopAbc(),
   ),
-  ("/go_router", "GoRouterAbc", (context) => const GoRouterAbc()),
-  ("/dragFile", "DragFileAbc", (context) => const DropFileAbc()),
-  ("/gpu", "GpuAbc", (context) => const GpuAbc()),
-  ("/test", "TestAbc", (context) => const TestAbc()),
+  ("/!go_router", "GoRouterAbc", (context) => const GoRouterAbc()),
+  ("/!dragFile", "DragFileAbc", (context) => const DropFileAbc()),
+  ("/!gpu", "GpuAbc", (context) => const GpuAbc()),
+  ("/!test", "TestAbc", (context) => const TestAbc()),
 ];
 
 /// 路由配置

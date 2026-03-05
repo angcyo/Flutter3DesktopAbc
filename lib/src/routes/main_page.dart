@@ -241,15 +241,19 @@ class _MainPageState extends State<MainPage>
             if (abcConfig == null) {
               return null;
             }
-            l.d("build abc item[$index]:${abcConfig.$1}");
+            final path = abcConfig.$1;
+            l.d("build abc item[$index]:$path");
             //debugger();
             const size = 24.0;
+            final iconKey = path.contains("/!")
+                ? "assets/png/flutter_solid.png"
+                : "assets/png/flutter.png";
             Widget? result = ListTile(
               leading: SizedBox(
                 width: size,
                 height: size,
                 child: loadAssetImageWidget(
-                  "assets/png/flutter.png".ensurePackagePrefix("flutter3_abc"),
+                  iconKey.ensurePackagePrefix("flutter3_abc"),
                 ),
               ),
               title: textSpanBuilder((builder) {
