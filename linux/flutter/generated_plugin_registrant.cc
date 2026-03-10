@@ -9,6 +9,7 @@
 #include <file_selector_linux/file_selector_plugin.h>
 #include <flutter_acrylic/flutter_acrylic_plugin.h>
 #include <flutter_angle/flutter_angle_plugin.h>
+#include <flutter_gemma/flutter_gemma_plugin.h>
 #include <hotkey_manager_linux/hotkey_manager_linux_plugin.h>
 #include <irondash_engine_context/irondash_engine_context_plugin.h>
 #include <isar_community_flutter_libs/isar_flutter_libs_plugin.h>
@@ -31,6 +32,9 @@ void fl_register_plugins(FlPluginRegistry* registry) {
   g_autoptr(FlPluginRegistrar) flutter_angle_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "FlutterAnglePlugin");
   flutter_angle_plugin_register_with_registrar(flutter_angle_registrar);
+  g_autoptr(FlPluginRegistrar) flutter_gemma_registrar =
+      fl_plugin_registry_get_registrar_for_plugin(registry, "FlutterGemmaPlugin");
+  flutter_gemma_plugin_register_with_registrar(flutter_gemma_registrar);
   g_autoptr(FlPluginRegistrar) hotkey_manager_linux_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "HotkeyManagerLinuxPlugin");
   hotkey_manager_linux_plugin_register_with_registrar(hotkey_manager_linux_registrar);

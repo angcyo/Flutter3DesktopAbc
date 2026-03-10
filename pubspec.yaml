@@ -25,6 +25,7 @@ environment:
 # https://dart.dev/tools/pub/workspaces/
 # Support for pub workspaces was introduced in Dart 3.6.0.
 workspace:
+  - Flutter3Core/flutter3_ai
   - Flutter3Core/flutter3_app
   - Flutter3Core/flutter3_basics
   - Flutter3Core/flutter3_canvas
