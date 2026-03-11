@@ -424,6 +424,7 @@
 		};
 		FB30C97FF4AC4925D12B821E /* Setup LiteRT-LM Desktop */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
