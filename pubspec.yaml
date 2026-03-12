@@ -27,6 +27,7 @@ environment:
 workspace:
   - Flutter3Core/flutter3_ai
   - Flutter3Core/flutter3_app
+  - Flutter3Core/flutter3_audio
   - Flutter3Core/flutter3_basics
   - Flutter3Core/flutter3_canvas
   - Flutter3Core/flutter3_code
