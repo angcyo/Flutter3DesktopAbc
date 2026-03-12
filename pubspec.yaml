@@ -39,6 +39,7 @@ workspace:
   - Flutter3Core/flutter3_notification
   - Flutter3Core/flutter3_opencv
   - Flutter3Core/flutter3_oss
+  - Flutter3Core/flutter3_protobuf
   - Flutter3Core/flutter3_pub
   - Flutter3Core/flutter3_pub_core
   - Flutter3Core/flutter3_res
