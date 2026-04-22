@@ -77,7 +77,7 @@ class _MainPageState extends State<MainPage>
   @override
   void reassemble() {
     l.w("${classHash()}->reassemble");
-    $restoreMaximizedIfReassemble();
+    //$restoreMaximizedIfReassemble();
     super.reassemble();
   }
 
