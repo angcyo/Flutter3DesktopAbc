@@ -43,7 +43,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prev,
 
   std::string version_str = getCleanVersion();
   std::wstring version_wstr = std::wstring(version_str.begin(), version_str.end());
-  std::wstring title = L"Flutter3 Desktop ABC v" + version_wstr;
+  std::wstring title = L"Flutter3 Desktop Abc v" + version_wstr;
 
   if (!window.Create(title, origin, size)) {
     return EXIT_FAILURE;
