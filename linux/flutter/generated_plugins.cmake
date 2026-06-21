@@ -7,6 +7,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   file_selector_linux
   flutter_acrylic
   flutter_angle
+  gtk
   hotkey_manager_linux
   irondash_engine_context
   isar_community_flutter_libs
