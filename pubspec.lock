@@ -665,6 +665,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
+  flutter_confetti:
+    dependency: transitive
+    description:
+      name: flutter_confetti
+      sha256: "3c57824aeb64f038c7d92eab851b679cea472d84f07cafdc37296288afb48e9e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.0"
   flutter_constraintlayout:
     dependency: transitive
     description:
@@ -2158,10 +2166,10 @@ packages:
     dependency: transitive
     description:
       name: shelf_router_generator
-      sha256: "50e7e65a2da6c74bf4d06b99ae591c9c6f8e9109797227fe7d449d0927d023ac"
+      sha256: "6ffeb743ac2c3472a3f2431046fcc2ea2d6f55df2862d18f152ab6b568e0a776"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.4"
+    version: "1.1.5"
   shelf_static:
     dependency: transitive
     description:
