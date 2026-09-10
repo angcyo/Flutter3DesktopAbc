@@ -73,6 +73,7 @@ final router = GoRouter(
     ShellRoute(
       navigatorKey: shellGoRouterNavigatorKey,
       builder: (context, state, child) {
+        initGlobalAppAtContext(context);
         return MainPage(
           abcRouteList: flutter3DesktopAbcRoutes, //abcRouteList,
           body: child,

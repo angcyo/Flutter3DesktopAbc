@@ -53,9 +53,10 @@ class DesktopApp extends StatelessWidget {
       ],
       //http://www.lingoes.net/en/translator/langcode.htm
       supportedLocales: [
-        /*...LibRes.delegate.supportedLocales,*/ //可以不需要
+        /*...LibRes.delegate.supportedLocales,*/
+        //可以不需要
         const Locale.fromSubtags(languageCode: 'zh', countryCode: 'CN'),
       ],
-    );
+    ).wrapDebugPage(context);
   }
 }
