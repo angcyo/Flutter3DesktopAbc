@@ -22,6 +22,7 @@ void main([List<String>? args]) async {
 
       await initDesktopApp();
       await initWindow(size: Size(1280, 720));
+      //initNativeWindow(size: Size(1280, 720));
       //lp
       await initLpModule();
       //--

@@ -9,7 +9,6 @@ list(APPEND FLUTTER_PLUGIN_LIST
   flutter_acrylic
   flutter_angle
   flutter_inappwebview_windows
-  hotkey_manager_windows
   irondash_engine_context
   isar_community_flutter_libs
   lp_plugin

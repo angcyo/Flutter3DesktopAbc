@@ -20,7 +20,10 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage>
-    with ScrollObserverMixin, WindowListener, WindowListenerMixin {
+    with
+        ScrollObserverMixin,
+        WindowListenerTypedef,
+        WindowListenerMixin /*NativeWindowEventStateMixin*/ {
   static const _kMinNavigationWidth = 100.0;
 
   /// 导航栏宽度
@@ -104,9 +107,24 @@ class _MainPageState extends State<MainPage>
       _navigationWidth = 400.0;
     } else {
       _navigationWidth = 300.0;
-    }
     updateState();*/
   }
+
+  /*@override
+  void onWindowEventMixin(Object event) {
+    super.onWindowEventMixin(event);
+    if (event.isWindowResizedEvent) {
+      final size = $nativeCurrentWindow?.size;
+      */ /*final wm = size.width;
+      if (wm >= 1200) {
+        _navigationWidth = 400.0;
+      } else {
+        _navigationWidth = 300.0;
+      }
+      updateState();*/ /*
+      l.i("onWindowEventMixin 窗口大小改变->$size");
+    }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +176,7 @@ class _MainPageState extends State<MainPage>
         "title".text(),
       ].row()!,
     );*/
-    return WindowCaption(
+    return WindowCaptionTypedef(
       brightness: globalTheme.accentBrightness,
       title: [
         _buildLeadingButton(context),

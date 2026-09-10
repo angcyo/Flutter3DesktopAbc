@@ -19,11 +19,12 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
     with
         BaseAbcStateMixin,
         AppLifecycleStateMixin,
-        WindowListener,
-        WindowListenerMixin,
         TileMixin,
-        TrayListener,
-        TrayListenerStateMixin {
+        WindowListenerTypedef,
+        WindowListenerMixin,
+        TrayListenerTypedef,
+        TrayListenerStateMixin /*NativeWindowEventStateMixin,
+        TrayIconStateMixin*/ {
   final _wmInfoSignal = $signal();
   double _progress = 0.0;
   double _opacity = 0.0;
@@ -50,6 +51,14 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
   }
 
   void _updateWindowInfo() async {
+    /*final cw = $nativeCurrentWindow;
+    _wmInfoSignal.value =
+        "鼠标位置:${$nativeCursorPosition}\n"
+        "窗口边界:${cw?.bounds}\n"
+        "窗口大小:${cw?.size} 位置:${cw?.position}"
+        "焦点:${cw?.isFocused.dc} 是否最大化:${cw?.isMaximized.dc} 是否全屏:${cw?.isFullScreen.dc} 置顶:${cw?.isAlwaysOnTop.dc}"
+        "\n\n主屏幕:${$nativePrimaryDisplay}\n\n"
+        "屏幕列表:\n${$nativeDisplays.connect("\n")}\n";*/
     _wmInfoSignal.value =
         "鼠标位置:${await $wm.cursorScreenPoint}\n"
         "窗口边界:${await $wm.getBounds()}\n"
@@ -72,6 +81,8 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
   @override
   WidgetList buildBodyList(BuildContext context) {
     final globalTheme = GlobalTheme.of(context);
+    //final cw = $nativeCurrentWindow;
+    final cw = $wm;
     return [
       _wmInfoSignal.buildFn(
         () => "${_wmInfoSignal.value ?? ""}".text().click(() {
@@ -83,54 +94,60 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
         "physicalSize:${flutterView.physicalSize} sw:$screenWidth sh:$screenHeight"
             .text(),
         GradientButton.normal(() {
-          $wm.setFullScreen(true);
+          cw.setFullScreen(true);
+          //cw?.isFullScreen = true;
         }, child: "全屏".text()),
         GradientButton.normal(() {
-          $wm.setFullScreen(false);
+          cw.setFullScreen(false);
+          //cw?.isFullScreen = false;
         }, child: "退出全屏".text()),
         GradientButton.normal(() {
-          $wm.center(animate: true);
+          cw?.center();
         }, child: "居中显示".text()),
         GradientButton.normal(() {
-          $wm.setAlwaysOnTop(true);
+          cw.setAlwaysOnTop(true);
+          //cw?.isAlwaysOnTop = true;
           _updateWindowInfo();
         }, child: "置顶".text()),
         GradientButton.normal(() {
-          $wm.setAlwaysOnTop(false);
+          cw.setAlwaysOnTop(false);
+          //cw?.isAlwaysOnTop = false;
           _updateWindowInfo();
         }, child: "取消置顶".text()),
         GradientButton.normal(() {
-          $wm.setTitle("新标题->${nowTimeString()}");
+          final title = "新标题->${nowTimeString()}";
+          cw.setTitle(title);
+          //cw?.title = title;
         }, child: "设置标题".text()),
         GradientButton.normal(() {
-          $wm.setTitleBarStyle(TitleBarStyle.hidden);
+          cw.setTitleBarStyle(.hidden);
+          //cw?.titleBarStyle = .hidden;
         }, child: "设置标题样式(hidden)".text()),
         GradientButton.normal(() {
-          $wm.setTitleBarStyle(TitleBarStyle.normal);
+          cw.setTitleBarStyle(.normal);
+          //cw?.titleBarStyle = .normal;
         }, child: "设置标题样式(normal)".text()),
         GradientButton.normal(() {
-          $wm.setTitleBarStyle(
-            TitleBarStyle.normal,
-            windowButtonVisibility: false,
-          );
+          cw.setTitleBarStyle(.normal, windowButtonVisibility: false);
+          //cw?.isWindowControlButtonsVisible = false;
         }, child: "隐藏标题按钮".text()),
         GradientButton.normal(() {
-          $wm.setTitleBarStyle(
-            TitleBarStyle.normal,
-            windowButtonVisibility: true,
-          );
+          cw.setTitleBarStyle(.normal, windowButtonVisibility: true);
+          //cw?.isWindowControlButtonsVisible = true;
         }, child: "显示标题按钮".text()),
         GradientButton.normal(() {
-          $wm.setSkipTaskbar(true);
+          cw.setSkipTaskbar(true);
+          //cw?.isSkipTaskbar = true;
         }, child: "隐藏任务栏按钮".text()),
         GradientButton.normal(() {
-          $wm.setSkipTaskbar(false);
+          cw.setSkipTaskbar(false);
+          //cw?.isSkipTaskbar = false;
         }, child: "显示任务栏按钮".text()),
         GradientButton.normal(() {
-          $wm.setBrightness(.dark);
+          cw?.setBrightness(.dark);
         }, child: "dark".text()),
         GradientButton.normal(() {
-          $wm.setBrightness(.light);
+          cw?.setBrightness(.light);
         }, child: "light".text()),
       ].flowLayout(padding: kXInsets, childGap: kX)!,
       SliderTile(
@@ -139,7 +156,7 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
         onChanged: (value) {
           //任务栏进度条
           _progress = value;
-          $wm.setProgressBar(value);
+          cw?.setProgressBar(value);
           updateState();
         },
       ),
@@ -149,7 +166,8 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
         onChanged: (value) {
           //任务栏进度条
           _opacity = value;
-          $wm.setOpacity(1 - value);
+          //cw?.opacity = 1 - value;
+          cw.setOpacity(1 - value);
           updateState();
         },
       ),
@@ -229,21 +247,21 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
           final uri = await readClipboardUri();
           _resultSignal.value = uri;
         }, child: "粘贴Uri".text()),
-        //--
+        //MARK : - Menu
         GradientButton.normal(() {
           toastInfo("click");
         }, child: "本机上下文菜单".text()).contextMenu(
           actions: [
-            MenuAction(
+            MenuActionTypedef(
               title: "Title 1",
-              image: MenuImage.icon(Icons.access_alarm),
+              image: MenuImageTypedef.icon(Icons.access_alarm),
               callback: () {
                 toastInfo("Title 1");
               },
             ),
-            MenuAction(
+            MenuActionTypedef(
               title: "Title 2",
-              state: MenuActionState.checkOn,
+              state: MenuActionStateTypedef.checkOn,
               activator: SingleActivator(
                 LogicalKeyboardKey.keyA,
                 control: true,
@@ -252,10 +270,10 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
                 toastInfo("Title 2");
               },
             ),
-            MenuAction(
+            MenuActionTypedef(
               title: "Title 3",
-              state: MenuActionState.checkMixed,
-              attributes: MenuActionAttributes(
+              state: MenuActionStateTypedef.checkMixed,
+              attributes: MenuActionAttributesTypedef(
                 destructive: true,
                 disabled: true,
               ),
@@ -263,9 +281,9 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
                 toastInfo("Title 3");
               },
             ),
-            MenuAction(
+            MenuActionTypedef(
               title: "Title 4",
-              state: MenuActionState.radioOn,
+              state: MenuActionStateTypedef.radioOn,
               activator: SingleActivator(
                 LogicalKeyboardKey.keyB,
                 control: true,
@@ -277,13 +295,13 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
                 toastInfo("Title 4");
               },
             ),
-            Menu(
+            MenuTypedef(
               title: "Sub Menu",
-              image: MenuImage.icon(Icons.search),
+              image: MenuImageTypedef.icon(Icons.search),
               children: [
-                MenuAction(
+                MenuActionTypedef(
                   title: "Sub Title 1",
-                  state: MenuActionState.radioOn,
+                  state: MenuActionStateTypedef.radioOn,
                   activator: SingleActivator(
                     LogicalKeyboardKey.keyB,
                     control: true,
@@ -300,10 +318,24 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
           ],
         ),
         GradientButton.normal(() {
+          //createTrayMixin
           setSystemTray(
-            isWindows ? 'assets/ico/app_icon.ico' : 'assets/ico/app_icon.png',
+            iconAssetKey: isWindows
+                ? 'assets/ico/app_icon.ico'
+                : 'assets/ico/app_icon.png',
             title: "Title",
             tooltip: "Tooltip",
+          );
+        }, child: "设置系统托盘".text()),
+        GradientButton.normal(() {
+          //createTrayMixin
+          setSystemTray(
+            iconAssetKey: isWindows
+                ? 'assets/ico/app_icon.ico'
+                : 'assets/ico/app_icon.png',
+            title: "Title",
+            tooltip: "Tooltip",
+            /*menu: $buildNativeMenu(),*/
             menus: [
               MenuInfo(
                 label: "Label 1",
@@ -327,9 +359,10 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
               ),
             ],
           );
-        }, child: "设置系统托盘".text()),
+        }, child: "设置系统托盘(Menu)".text()),
         GradientButton.normal(() {
-          setSystemTray(null);
+          //removeAllTrayMixin();
+          setSystemTray();
         }, child: "清除系统托盘".text()),
       ].flowLayout(padding: kXInsets, childGap: kX)!,
       //--
@@ -429,6 +462,8 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
     _updateWindowInfo();
   }
 
+  //MARK: - window event
+
   @override
   void onWindowFocus() {
     super.onWindowFocus();
@@ -446,4 +481,10 @@ class _WindowManagerAbcState extends State<WindowManagerAbc>
     super.onWindowBlur();
     _updateWindowInfo();
   }
+
+  /*@override
+  void onWindowEventMixin(Object event) {
+    super.onWindowEventMixin(event);
+    _updateWindowInfo();
+  }*/
 }
