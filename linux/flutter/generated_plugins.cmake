@@ -13,6 +13,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   lp_plugin
   open_dir_linux
   open_file_linux
+  pasteboard
   screen_retriever_linux
   super_native_extensions
   tray_manager
