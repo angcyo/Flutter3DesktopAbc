@@ -25,10 +25,6 @@ PODS:
     - FlutterMacOS
   - FlutterAngle (0.0.8)
   - FlutterMacOS (1.0.0)
-  - HotKey (0.2.1)
-  - hotkey_manager_macos (0.0.1):
-    - FlutterMacOS
-    - HotKey
   - irondash_engine_context (0.0.1):
     - FlutterMacOS
   - isar_community_flutter_libs (1.0.0):
@@ -52,6 +48,8 @@ PODS:
     - FlutterMacOS
   - OrderedSet (6.0.3)
   - package_info_plus (0.0.1):
+    - FlutterMacOS
+  - pasteboard (0.0.1):
     - FlutterMacOS
   - path_provider_foundation (0.0.1):
     - Flutter
@@ -85,7 +83,6 @@ DEPENDENCIES:
   - flutter_inappwebview_macos (from `Flutter/ephemeral/.symlinks/plugins/flutter_inappwebview_macos/macos`)
   - flutter_local_notifications (from `Flutter/ephemeral/.symlinks/plugins/flutter_local_notifications/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
-  - hotkey_manager_macos (from `Flutter/ephemeral/.symlinks/plugins/hotkey_manager_macos/macos`)
   - irondash_engine_context (from `Flutter/ephemeral/.symlinks/plugins/irondash_engine_context/macos`)
   - isar_community_flutter_libs (from `Flutter/ephemeral/.symlinks/plugins/isar_community_flutter_libs/macos`)
   - lp_image_handle_ffi (from `Flutter/ephemeral/.symlinks/plugins/lp_image_handle_ffi/macos`)
@@ -97,6 +94,7 @@ DEPENDENCIES:
   - open_dir_macos (from `Flutter/ephemeral/.symlinks/plugins/open_dir_macos/macos`)
   - open_file_mac (from `Flutter/ephemeral/.symlinks/plugins/open_file_mac/macos`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
+  - pasteboard (from `Flutter/ephemeral/.symlinks/plugins/pasteboard/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
   - screen_retriever_macos (from `Flutter/ephemeral/.symlinks/plugins/screen_retriever_macos/macos`)
   - share_plus (from `Flutter/ephemeral/.symlinks/plugins/share_plus/macos`)
@@ -110,7 +108,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - FlutterAngle
-    - HotKey
     - OrderedSet
 
 EXTERNAL SOURCES:
@@ -134,8 +131,6 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_local_notifications/macos
   FlutterMacOS:
     :path: Flutter/ephemeral
-  hotkey_manager_macos:
-    :path: Flutter/ephemeral/.symlinks/plugins/hotkey_manager_macos/macos
   irondash_engine_context:
     :path: Flutter/ephemeral/.symlinks/plugins/irondash_engine_context/macos
   isar_community_flutter_libs:
@@ -158,6 +153,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/open_file_mac/macos
   package_info_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos
+  pasteboard:
+    :path: Flutter/ephemeral/.symlinks/plugins/pasteboard/macos
   path_provider_foundation:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin
   screen_retriever_macos:
@@ -181,7 +178,7 @@ SPEC CHECKSUMS:
   app_links: c3185399a5cabc2e610ee5ad52fb7269b84ff869
   audio_decoder: 88c870b1f398404d97ec7f743db10a590343fa97
   device_info_plus: 1b14eed9bf95428983aed283a8d51cce3d8c4215
-  file_picker_darwin: 49d73317e75d1828d33a2a50338c6caebd6e24ff
+  file_picker_darwin: 27e043831d68462d54f1c40e724b1f53c9d1e8be
   file_selector_macos: cc3858c981fe6889f364731200d6232dac1d812d
   flutter_angle: 94259dda819a90a7d7f9c4993c4eab469f673898
   flutter_blue_plus_darwin: 904ed52825285a15f60e9d90312337a09f11a785
@@ -189,8 +186,6 @@ SPEC CHECKSUMS:
   flutter_local_notifications: 14e285ca39907db50704f7f46c9ab7a526bd7ead
   FlutterAngle: c810891af800750361b1d0e7cc944f2338d5ae18
   FlutterMacOS: d0db08ddef1a9af05a5ec4b724367152bb0500b1
-  HotKey: 400beb7caa29054ea8d864c96f5ba7e5b4852277
-  hotkey_manager_macos: 1e2edb0c7ae4fe67108af44a9d3445de41404160
   irondash_engine_context: da62996ee25616d2f01bbeb85dc115d813359478
   isar_community_flutter_libs: d3749f6775866378fc78328b10f1397a05fba673
   lp_image_handle_ffi: 9e6f0f7ce75d679e289b5d650e178b36adb3db80
@@ -203,6 +198,7 @@ SPEC CHECKSUMS:
   open_file_mac: 4de820e1d27310e4d947a59f6d7f9b876af405fb
   OrderedSet: e539b66b644ff081c73a262d24ad552a69be3a94
   package_info_plus: 12f1c5c2cfe8727ca46cbd0b26677728972d9a5b
+  pasteboard: f179698f095f9778bb5753a249027e697ba98953
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   screen_retriever_macos: 038d3f7b34a779b06f536842003e41e8ec1fb4b7
   share_plus: 1fa619de8392a4398bfaf176d441853922614e89
