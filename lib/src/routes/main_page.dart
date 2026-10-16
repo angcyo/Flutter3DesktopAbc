@@ -13,7 +13,15 @@ class MainPage extends StatefulWidget {
   final List<AbcRouteConfig> abcRouteList;
   final Widget? body;
 
-  const MainPage({super.key, required this.abcRouteList, this.body});
+  /// 导航器的 key
+  final GlobalKey<NavigatorState>? navigatorKey;
+
+  const MainPage({
+    super.key,
+    required this.abcRouteList,
+    this.body,
+    this.navigatorKey,
+  });
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -372,7 +380,7 @@ class _MainPageState extends State<MainPage>
     return DecoratedBox(
       key: ValueKey("Content"),
       decoration: strokeDecoration(color: globalTheme.accentColor),
-      child: body,
+      child: body?.routeBackWidget(navigatorKey: widget.navigatorKey),
     );
   }
 }

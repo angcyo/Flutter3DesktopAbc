@@ -67,6 +67,7 @@ final router = GoRouter(
     lifecycleNavigatorObserver,
     navigatorObserverDispatcher,
     NavigatorObserverLog(),
+    routeBackObserverDispatcher,
   ],
   //路由列表
   routes: [
@@ -77,6 +78,7 @@ final router = GoRouter(
         return MainPage(
           abcRouteList: flutter3DesktopAbcRoutes, //abcRouteList,
           body: child,
+          navigatorKey: shellGoRouterNavigatorKey,
         ).material();
       },
       routes: flutter3DesktopAbcRoutes
