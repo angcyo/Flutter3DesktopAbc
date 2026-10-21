@@ -51,10 +51,11 @@ class DesktopApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      //语言支持
       //http://www.lingoes.net/en/translator/langcode.htm
       supportedLocales: [
         /*...LibRes.delegate.supportedLocales,*/
-        //可以不需要
+        //可以不需要, 默认支持英文 Locale('en', 'US')
         const Locale.fromSubtags(languageCode: 'zh', countryCode: 'CN'),
       ],
     ).wrapDebugPage(context);
